@@ -1,0 +1,289 @@
+{
+  "pickedFirst": {
+    "mode": "playing",
+    "level": 1,
+    "ship": {
+      "x": 540,
+      "y": 825.2842453702284,
+      "vx": 0,
+      "vy": -17.939933408658934,
+      "a": 0,
+      "fuel": 100,
+      "hull": 100,
+      "cargo": 1,
+      "invuln": 0,
+      "shotTime": -4.2833333333333234,
+      "shield": 0
+    },
+    "delivered": 0,
+    "pads": [
+      {
+        "x": 540,
+        "occupied": false
+      },
+      {
+        "x": 1040,
+        "occupied": true
+      }
+    ],
+    "turrets": [
+      {
+        "x": 1330,
+        "hp": 2
+      }
+    ],
+    "score": 250,
+    "objective": {
+      "x": 260,
+      "y": 425,
+      "label": "CARRIER"
+    },
+    "time": 4.2833333333333234
+  },
+  "afterCrash": {
+    "mode": "playing",
+    "level": 1,
+    "ship": {
+      "x": 540,
+      "y": 660.4661010988833,
+      "vx": 0,
+      "vy": 5.054353148863466,
+      "a": 0,
+      "fuel": 100,
+      "hull": 69,
+      "cargo": 1,
+      "invuln": 2.6333333333333337,
+      "shotTime": -4.466666666666656,
+      "shield": 0
+    },
+    "delivered": 0,
+    "pads": [
+      {
+        "x": 540,
+        "occupied": false
+      },
+      {
+        "x": 1040,
+        "occupied": true
+      }
+    ],
+    "turrets": [
+      {
+        "x": 1330,
+        "hp": 2
+      }
+    ],
+    "score": 250,
+    "objective": {
+      "x": 260,
+      "y": 425,
+      "label": "CARRIER"
+    },
+    "time": 4.466666666666656
+  },
+  "pickedSecond": {
+    "mode": "playing",
+    "level": 1,
+    "ship": {
+      "x": 1040,
+      "y": 807.0859061004453,
+      "vx": 0,
+      "vy": -13.31420506992994,
+      "a": 0,
+      "fuel": 100,
+      "hull": 69,
+      "cargo": 2,
+      "invuln": 0.9833333333333395,
+      "shotTime": -6.11666666666665,
+      "shield": 0
+    },
+    "delivered": 0,
+    "pads": [
+      {
+        "x": 540,
+        "occupied": false
+      },
+      {
+        "x": 1040,
+        "occupied": false
+      }
+    ],
+    "turrets": [
+      {
+        "x": 1330,
+        "hp": 2
+      }
+    ],
+    "score": 500,
+    "objective": {
+      "x": 260,
+      "y": 425,
+      "label": "CARRIER"
+    },
+    "time": 6.11666666666665
+  },
+  "win": {
+    "mode": "result",
+    "level": 1,
+    "ship": {
+      "x": 260,
+      "y": 425.00857666666667,
+      "vx": 0,
+      "vy": 0.5146,
+      "a": 0,
+      "fuel": 100,
+      "hull": 69,
+      "cargo": 0,
+      "invuln": 0.9666666666666728,
+      "shotTime": -6.133333333333317,
+      "shield": 0
+    },
+    "delivered": 2,
+    "pads": [
+      {
+        "x": 540,
+        "occupied": false
+      },
+      {
+        "x": 1040,
+        "occupied": false
+      }
+    ],
+    "turrets": [
+      {
+        "x": 1330,
+        "hp": 2
+      }
+    ],
+    "score": 1800,
+    "objective": {
+      "x": 260,
+      "y": 425,
+      "label": "CARRIER"
+    },
+    "time": 6.133333333333317
+  },
+  "result": "MISSION TRANSMISSION\n\nSORTIE REPORT / COMPLETE\nSECTOR CLEAR\n\n2 crew safe. 1,800 points earned in this sector.\n\nNEXT SECTOR",
+  "nextSector": {
+    "mode": "briefing",
+    "level": 2,
+    "ship": {
+      "x": 390,
+      "y": 480,
+      "vx": 0,
+      "vy": 0,
+      "a": 0,
+      "fuel": 100,
+      "hull": 100,
+      "cargo": 0,
+      "invuln": 1.5,
+      "shotTime": 0,
+      "shield": 0
+    },
+    "delivered": 0,
+    "pads": [
+      {
+        "x": 500,
+        "occupied": true
+      },
+      {
+        "x": 1120,
+        "occupied": true
+      },
+      {
+        "x": 1790,
+        "occupied": true
+      }
+    ],
+    "turrets": [
+      {
+        "x": 850,
+        "hp": 3
+      },
+      {
+        "x": 1510,
+        "hp": 3
+      }
+    ],
+    "score": 1800,
+    "objective": {
+      "x": 500,
+      "y": 840.9967564628404,
+      "label": "CREW"
+    },
+    "time": 0
+  },
+  "nextBriefing": "INCOMING TRANSMISSION\n\nMISSION BRIEF / INCOMING\n02 / DEEP SIGNAL\n\nThree crew remain beyond active defenses. Shoot the red sentries or fly around their slow, visible fire. Your carrier refills fuel and repairs your hull.\n\nLAUNCH CRAFT\n\nROTATE · THRUST · RESCUE · RETURN",
+  "errors": [],
+  "pointerCancel": {
+    "fuelStart": 100,
+    "during": {
+      "fuel": 98.29000000000002,
+      "pressed": true
+    },
+    "after": {
+      "fuel": 98.22666666666669,
+      "pressed": false
+    }
+  },
+  "mobilePause": "paused",
+  "mobileRetry": {
+    "mode": "playing",
+    "level": 1,
+    "ship": {
+      "x": 540,
+      "y": 690,
+      "vx": 0,
+      "vy": 0,
+      "a": 0,
+      "fuel": 100,
+      "hull": 100,
+      "cargo": 0,
+      "invuln": 1.5,
+      "shotTime": 0,
+      "shield": 0
+    },
+    "delivered": 0,
+    "pads": [
+      {
+        "x": 540,
+        "occupied": true
+      },
+      {
+        "x": 1040,
+        "occupied": true
+      }
+    ],
+    "turrets": [
+      {
+        "x": 1330,
+        "hp": 2
+      }
+    ],
+    "score": 0,
+    "objective": {
+      "x": 540,
+      "y": 840.9201883909606,
+      "label": "CREW"
+    },
+    "time": 0
+  },
+  "mobileFrameMs": {
+    "median": 16.699999999999818,
+    "p95": 16.700000000000273,
+    "max": 16.800000000000182
+  },
+  "desktopFrameMs": {
+    "median": 16.699999999999818,
+    "p95": 33.399999999999636,
+    "max": 33.40000000000009
+  },
+  "visibility": {
+    "hidden": false,
+    "mode": "playing"
+  },
+  "storageFallback": {
+    "mode": "playing",
+    "errors": []
+  }
+}

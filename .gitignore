@@ -1,0 +1,20 @@
+node_modules/
+.vercel/
+.openai/
+.DS_Store
+*.tar.gz
+
+# QA scripts generate these locally; the selected review artifacts are tracked.
+qa/*.json
+qa/*.png
+!qa/playloop-report.json
+!qa/campaign-report.json
+!qa/edges-report.json
+!qa/combat-report.json
+!qa/desktop-title.png
+!qa/desktop-flight.png
+!qa/portrait-flight.png
+!qa/landscape-flight.png
+!qa/landscape-sector3-briefing.png
+!qa/portrait-final-result.png
+!qa/landscape-final-result.png

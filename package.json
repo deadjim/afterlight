@@ -1,0 +1,17 @@
+{
+  "name": "afterlight-rescue-protocol",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser QA tooling for the AFTERLIGHT static game",
+  "scripts": {
+    "qa": "npm run qa:smoke && npm run qa:playloop && npm run qa:campaign && npm run qa:combat && npm run qa:edges",
+    "qa:smoke": "node qa/smoke.mjs",
+    "qa:playloop": "node qa/playloop.mjs",
+    "qa:campaign": "node qa/campaign.mjs",
+    "qa:combat": "node qa/combat.mjs",
+    "qa:edges": "node qa/edges.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

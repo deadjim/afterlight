@@ -1,0 +1,47 @@
+{
+  "fire": {
+    "before": {
+      "hp": 2,
+      "score": 0
+    },
+    "after": {
+      "hp": 0,
+      "score": 150
+    },
+    "errors": []
+  },
+  "unshielded": {
+    "hull": 88,
+    "fuel": 100,
+    "errors": []
+  },
+  "shielded": {
+    "hull": 100,
+    "fuel": 71.83333333333493,
+    "errors": []
+  },
+  "emptyPadFuel": {
+    "before": 0,
+    "after": 35,
+    "padOccupied": false,
+    "firstPickupFuel": 75
+  },
+  "lost": {
+    "mode": "result",
+    "resultTitle": "SIGNAL LOST",
+    "resultAction": "TRY AGAIN"
+  },
+  "retry": {
+    "mode": "playing",
+    "hull": 100,
+    "pads": [
+      true,
+      true
+    ]
+  },
+  "endErrors": [],
+  "syntheticVisibility": {
+    "mode": "paused",
+    "errors": []
+  }
+}

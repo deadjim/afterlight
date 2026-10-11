@@ -18,6 +18,7 @@ const cases = [
   { name: 'small-portrait', width: 320, height: 568, mobile: true },
   { name: 'compact-portrait', width: 375, height: 667, mobile: true },
   { name: 'small-landscape', width: 568, height: 320, mobile: true },
+  { name: 'browser-landscape', width: 568, height: 280, mobile: true },
 ];
 const report = [];
 for (const config of cases) {
@@ -43,6 +44,7 @@ for (const config of cases) {
     assert.deepEqual(mobileLayout.outOfBounds,[],`${config.name} touch buttons fully inside viewport`);
     assert.deepEqual(mobileLayout.overlaps,[],`${config.name} HUD readouts clear touch buttons`);
     assert.deepEqual(mobileLayout.legacy,[],`${config.name} retired mobile controls are absent`);
+    assert.ok(mobileLayout.controls.some(c=>c.id==='shield'),`${config.name} restored Shield is visible`);
   }
   if (config.mobile) {
     const joystick = await center(page, '#flightJoystick');
@@ -146,7 +148,7 @@ async function inspectMobileLayout(page){
   return page.evaluate(()=>{
     const rect=el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,w:r.width,h:r.height}};
     const controls=[...document.querySelectorAll('.touch-controls [data-control], #flightJoystick')].map(el=>({id:el.dataset.control||el.id,...rect(el)}));
-    const legacy=[...document.querySelectorAll('[data-control="left"], [data-control="right"], [data-control="thrust"], [data-control="shield"]')].filter(el=>rect(el).w>0).map(el=>el.dataset.control);
+    const legacy=[...document.querySelectorAll('[data-control="left"], [data-control="right"], [data-control="thrust"]')].filter(el=>rect(el).w>0).map(el=>el.dataset.control);
     const ids=['hudCrew','hudFuel','hudHull','hudShield','hudBoost','hudAltitude','hudScore','hudObjective'];
     const hud=ids.map(id=>({id,...rect(document.getElementById(id))})).filter(r=>r.w>0&&r.h>0);
     const outOfBounds=controls.filter(r=>r.x<-.5||r.y<-.5||r.right>innerWidth+.5||r.bottom>innerHeight+.5).map(r=>r.id);

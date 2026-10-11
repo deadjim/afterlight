@@ -22,11 +22,11 @@ Install the test tools, then run the checks in a second terminal while the serve
 
 ```sh
 npm ci
-npx playwright install chromium
+npx playwright install chromium webkit
 npm run qa
 ```
 
-To run an individual check, use `npm run qa:smoke`, `npm run qa:joystick`, `npm run qa:playloop`, `npm run qa:campaign`, `npm run qa:combat`, `npm run qa:edges`, `npm run qa:wrap`, `npm run qa:audio`, `npm run qa:balance`, or `npm run qa:expedition`. Set `CHROME_PATH` to a local Chrome or Chromium executable to use it instead of Playwright's bundled Chromium. The smoke check accepts an optional base URL as its first argument.
+To run an individual check, use `npm run qa:smoke`, `npm run qa:gesture`, `npm run qa:joystick`, `npm run qa:playloop`, `npm run qa:campaign`, `npm run qa:combat`, `npm run qa:edges`, `npm run qa:wrap`, `npm run qa:audio`, `npm run qa:landing`, `npm run qa:balance`, `npm run qa:planet`, or `npm run qa:expedition`. Set `CHROME_PATH` to a local Chrome or Chromium executable to use it instead of Playwright's bundled Chromium. The gesture check also uses Playwright's WebKit engine when installed. The smoke check accepts an optional base URL as its first argument.
 
 ## Flight controls
 
@@ -39,11 +39,11 @@ To run an individual check, use `npm run qa:smoke`, `npm run qa:joystick`, `npm 
 | Pause | P or Escape |
 | Restart current sortie | R |
 
-Mobile uses a left virtual joystick and one FIRE button on the right. Drag up for thrust, sideways to steer, or diagonally to do both; use the other thumb to fire. Release the stick to coast. Fly in either direction through a continuous, wrapping landscape. Follow amber rescue beacons, land gently, then carry the crew back to the blue extraction ship. A sector clears only when every stranded person is safely delivered. Rescue pads provide a fuel top-up, and the carrier refuels and repairs your ship.
+Mobile uses a left virtual joystick with FIRE and SHIELD buttons on the right. Drag up for thrust, sideways to steer, or diagonally to do both; use the other thumb to fire or hold the emergency shield. The ring around SHIELD shows its remaining charge. Release the stick to coast. Fly in either direction through a continuous, wrapping landscape. Follow amber rescue beacons, land gently, then carry the crew back to the blue extraction ship. A sector clears only when every stranded person is safely delivered. Rescue pads provide a fuel top-up, and the carrier refuels and repairs your ship.
 
-Holding thrust builds progressively stronger afterburner stages: 1.5× power after one second, 1.75× after two, and up to 6.25× after ten. Longer exhaust trails and a rising engine roar show the escalation. Higher power uses more fuel; releasing thrust preserves momentum, so turn and thrust against your velocity to brake. The desktop shield has a separate two-second reserve and recharges over fourteen seconds after a short delay. Release Shift to begin recharging and rearm it. Use it for a brief escape through enemy fire. Red ground sentries and flying interceptors can both be destroyed. Hard landings damage the hull; slow down before touching a rescue pad.
+Holding thrust builds progressively stronger afterburner stages: 1.5× power after one second, 1.75× after two, and up to 6.25× after ten. Longer exhaust trails and a rising engine roar show the escalation. Higher power uses more fuel; releasing thrust preserves momentum, so turn and thrust against your velocity to brake. The shield has a separate two-second reserve and recharges over fourteen seconds after a short delay. Release Shift or the mobile SHIELD button to begin recharging and rearm it. Use it for a brief escape through enemy fire. Red ground sentries and flying interceptors can both be destroyed. Hard or crooked landings damage the hull even with the shield active. Level the ship and slow its descent and sideways drift before touching a rescue pad.
 
-Climb for an extended burn of just over ten seconds to reach space at roughly 5.5 km and see the planet below. An approach warning gives you time to release thrust and coast into orbit. Spaceflight consumes fuel at twice the current throttle rate. The cockpit warns when fuel falls below 20%. Motion trails in the starfield help judge your direction and speed. Releasing thrust conserves fuel while you coast; turn back toward the surface to return. As you travel farther, the homeworld shrinks into a distant globe.
+Climb for an extended burn of just over ten seconds to reach space at roughly 5.5 km and see the planet below. An approach warning gives you time to release thrust and coast into orbit. Spaceflight consumes fuel at twice the current throttle rate. The cockpit warns when fuel falls below 20%. Motion trails in the starfield help judge your direction and speed. Releasing thrust conserves fuel while you coast; turn back toward the surface to return. As you leave orbit, the curved horizon rapidly recedes into a complete globe; the planet continues shrinking as you travel farther.
 
 Two optional planetoid outposts offer refuelling, repairs, and salvage bonuses. Follow their beacons, brake for docking, and watch for tougher sentinels that fire spread volleys. Each outpost awards salvage once per sector; visiting it again can replenish supplies. Homeworld rescues still determine sector completion, so space exploration remains an optional detour.
 

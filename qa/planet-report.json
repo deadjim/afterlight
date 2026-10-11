@@ -1,0 +1,176 @@
+{
+  "cases": [
+    {
+      "config": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 900,
+        "mobile": false
+      },
+      "samples": [
+        {
+          "altitude": 5499.948419401398,
+          "radiusPx": 267.7369526406552,
+          "centerYPx": 738.0100174952022,
+          "opacity": 0.9999864261582625,
+          "distance": 0.1874935524251747,
+          "far": 0
+        },
+        {
+          "altitude": 7499.9183674765245,
+          "radiusPx": 143.696890287078,
+          "centerYPx": 738,
+          "opacity": 1,
+          "distance": 0.43748979593456555,
+          "far": 0
+        },
+        {
+          "altitude": 11999.957570942908,
+          "radiusPx": 65.17255668632302,
+          "centerYPx": 738,
+          "opacity": 1,
+          "distance": 0.9999946963678635,
+          "far": 0
+        }
+      ],
+      "hudClearanceAt7500": null,
+      "coast": {
+        "startAltitude": 5533.18084204629,
+        "endAltitude": 7281.362076277959,
+        "startRadius": 264.19194519104184,
+        "endRadius": 151.78369534984924,
+        "centerDrift": 0
+      },
+      "errors": []
+    },
+    {
+      "config": {
+        "name": "portrait",
+        "width": 390,
+        "height": 844,
+        "mobile": true
+      },
+      "samples": [
+        {
+          "altitude": 5499.948419401398,
+          "radiusPx": 251.07776447634777,
+          "centerYPx": 692.0893941843897,
+          "opacity": 0.9999864261582625,
+          "distance": 0.1874935524251747,
+          "far": 0
+        },
+        {
+          "altitude": 7499.950573373862,
+          "radiusPx": 134.75468672922366,
+          "centerYPx": 692.0799999999999,
+          "opacity": 1,
+          "distance": 0.4374938216717328,
+          "far": 0
+        },
+        {
+          "altitude": 11999.97797073877,
+          "radiusPx": 61.11721303966303,
+          "centerYPx": 692.0799999999999,
+          "opacity": 1,
+          "distance": 0.9999972463423462,
+          "far": 0
+        }
+      ],
+      "hudClearanceAt7500": null,
+      "coast": {
+        "startAltitude": 5533.18084204629,
+        "endAltitude": 7281.454308943142,
+        "startRadius": 247.75333526804368,
+        "endRadius": 142.33601474585885,
+        "centerDrift": 0
+      },
+      "errors": []
+    },
+    {
+      "config": {
+        "name": "landscape",
+        "width": 844,
+        "height": 390,
+        "mobile": true
+      },
+      "samples": [
+        {
+          "altitude": 5499.948419401398,
+          "radiusPx": 116.01934614428393,
+          "centerYPx": 226.2056114261742,
+          "opacity": 0.9999864261582625,
+          "distance": 0.1874935524251747,
+          "far": 0
+        },
+        {
+          "altitude": 7499.950573373862,
+          "radiusPx": 62.26816092938061,
+          "centerYPx": 226.19999999999993,
+          "opacity": 1,
+          "distance": 0.4374938216717328,
+          "far": 0
+        },
+        {
+          "altitude": 11999.957571926565,
+          "radiusPx": 28.24144122712279,
+          "centerYPx": 226.19999999999993,
+          "opacity": 1,
+          "distance": 0.9999946964908206,
+          "far": 0
+        }
+      ],
+      "hudClearanceAt7500": 48.641214070619455,
+      "coast": {
+        "startAltitude": 5539.771351173119,
+        "endAltitude": 7281.362076277959,
+        "startRadius": 114.18287398889458,
+        "endRadius": 65.77293465160135,
+        "centerDrift": 0
+      },
+      "errors": []
+    },
+    {
+      "config": {
+        "name": "browser-landscape",
+        "width": 568,
+        "height": 280,
+        "mobile": true
+      },
+      "samples": [
+        {
+          "altitude": 5499.948419401398,
+          "radiusPx": 83.29594082153717,
+          "centerYPx": 162.40402871622763,
+          "opacity": 0.9999864261582625,
+          "distance": 0.1874935524251747,
+          "far": 0
+        },
+        {
+          "altitude": 7499.950573373862,
+          "radiusPx": 44.705346308273256,
+          "centerYPx": 162.39999999999995,
+          "opacity": 1,
+          "distance": 0.4374938216717328,
+          "far": 0
+        },
+        {
+          "altitude": 11999.957572011806,
+          "radiusPx": 20.27590652181183,
+          "centerYPx": 162.39999999999995,
+          "opacity": 1,
+          "distance": 0.9999946965014758,
+          "far": 0
+        }
+      ],
+      "hudClearanceAt7500": 27.004028691726795,
+      "coast": {
+        "startAltitude": 5533.18084204629,
+        "endAltitude": 7281.454308943142,
+        "startRadius": 82.19304961499078,
+        "endRadius": 47.22047882564037,
+        "centerDrift": 0
+      },
+      "errors": []
+    }
+  ]
+}

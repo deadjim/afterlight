@@ -1,0 +1,66 @@
+{
+  "chrome": [
+    {
+      "config": {
+        "name": "portrait",
+        "width": 390,
+        "height": 844
+      },
+      "gestureDefault": {
+        "gesturestart": true,
+        "gesturechange": true,
+        "gestureend": true,
+        "touchstart": true,
+        "touchmove": true,
+        "touchend": true
+      },
+      "cycles": 10,
+      "peakBullets": 5,
+      "minShield": 93.33333333333337,
+      "pausedByRealTouch": true,
+      "muteTouchOnce": true,
+      "cancelledMenuNoAction": true,
+      "retryTouchOnce": true,
+      "scale": 1,
+      "errors": []
+    },
+    {
+      "config": {
+        "name": "landscape",
+        "width": 568,
+        "height": 320
+      },
+      "gestureDefault": {
+        "gesturestart": true,
+        "gesturechange": true,
+        "gestureend": true,
+        "touchstart": true,
+        "touchmove": true,
+        "touchend": true
+      },
+      "cycles": 10,
+      "peakBullets": 5,
+      "minShield": 92.50000000000004,
+      "pausedByRealTouch": true,
+      "muteTouchOnce": true,
+      "cancelledMenuNoAction": true,
+      "retryTouchOnce": true,
+      "scale": 1,
+      "errors": []
+    }
+  ],
+  "webkit": {
+    "available": true,
+    "singleTouchPause": true,
+    "muteTapOnce": true,
+    "mode": "paused",
+    "scale": 1,
+    "width": 390,
+    "innerWidth": 390,
+    "errors": []
+  },
+  "limitations": [
+    "Synthetic gesture event cancellation and Chromium CDP multi-touch cover browser behavior, not hardware iPhone pinch arbitration."
+  ],
+  "desktopGestureDefault": false
+}

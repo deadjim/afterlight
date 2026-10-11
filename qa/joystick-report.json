@@ -13,14 +13,20 @@
       "active": {
         "throttle": 0.6594265951452413,
         "turn": 0.659426384358344,
-        "fuelUsed": 0.9188010559023212,
-        "angleChanged": 0.7616374739338874
+        "fuelUsed": 0.9605647402615176,
+        "angleChanged": 0.7962573591127005
       },
       "analogAudio": {
-        "samples": 22,
+        "samples": 23,
         "example": 0.6594265951452413
       },
       "firingBullets": 2,
+      "threeFinger": {
+        "shieldCharge": 88.3333333333334,
+        "ring": "87.50000000000007%",
+        "depleted": 0,
+        "recharged": 3.6904761904761907
+      },
       "far": {
         "dx": 0.7761139672514761,
         "dy": -0.6305926655434354
@@ -40,14 +46,20 @@
       "active": {
         "throttle": 0.6594264897517994,
         "turn": 0.6594264897517994,
-        "fuelUsed": 0.877037231370025,
-        "angleChanged": 0.7270177049513589
+        "fuelUsed": 0.9188009090543119,
+        "angleChanged": 0.7616375956633283
       },
       "analogAudio": {
-        "samples": 21,
+        "samples": 22,
         "example": 0.6594264897517994
       },
       "firingBullets": 2,
+      "threeFinger": {
+        "shieldCharge": 87.50000000000007,
+        "ring": "86.66666666666674%",
+        "depleted": 0,
+        "recharged": 3.6904761904761907
+      },
       "far": {
         "dx": 0.7761140040197461,
         "dy": -0.6305926202901819

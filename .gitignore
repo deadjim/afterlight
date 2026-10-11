@@ -27,3 +27,6 @@ qa/*.png
 !qa/portrait-final-result.png
 !qa/landscape-final-result.png
 !qa/joystick-report.json
+!qa/landing-report.json
+!qa/gesture-report.json
+!qa/planet-report.json

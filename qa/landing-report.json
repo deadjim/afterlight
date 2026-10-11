@@ -1,0 +1,34 @@
+{
+  "initial": {
+    "invuln": 1.5,
+    "pad": {
+      "id": 1,
+      "x": 540,
+      "occupied": true
+    }
+  },
+  "hard": {
+    "hull": 70.29443287784896,
+    "cargo": 0,
+    "fuel": 30,
+    "shieldActive": true,
+    "invuln": 1.2500000000000009
+  },
+  "crooked": {
+    "hull": 80.78,
+    "cargo": 0,
+    "fuel": 30
+  },
+  "gentle": {
+    "hull": 100,
+    "cargo": 1,
+    "fuel": 75
+  },
+  "planetoid": {
+    "hull": 77.7803131285502,
+    "invuln": 1.1500000000000012,
+    "docks": 0,
+    "salvage": 0
+  },
+  "errors": []
+}

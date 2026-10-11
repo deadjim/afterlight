@@ -49,6 +49,7 @@
       delivered:0, score:0, time:0, deaths:0, status:'', statusUntil:0, landingHint:'', objectiveX:pads[0].x,
       camera:{x:index===0?435:390,y:530}, ended:false, shake:0, pulse:0, outpostLatch:null,outpostImpactUntil:0,
     };
+    if(index===0)s.ship.y=ground(s.ship.x,s)-65;
     return s;
   }
   function groundBase(x,w) {
@@ -201,11 +202,11 @@
   }
   function terrainImpact(pad,below) {
     const g=game,s=g.ship;
-    const impactSpeed=Math.hypot(s.vx*.7,Math.max(0,s.vy));
-    const damage=clamp(4+Math.max(0,impactSpeed-85)*.13+Math.max(0,Math.abs(s.a)-.8)*12,4,60);
+    const damage=clamp(8+Math.max(0,Math.abs(s.vy)-55)*.17+Math.max(0,Math.abs(s.vx)-40)*.11+Math.max(0,Math.abs(s.a)-.24)*22,8,70);
     s.y=below-17;s.vy=-clamp(Math.abs(s.vy)*.42+28,40,230);s.vx*=.65;
-    if(s.invuln>0)return;
-    s.hull=Math.max(0,s.hull-damage);s.invuln=.5;g.shake=Math.max(g.shake,clamp(damage*.25,2,12));
+    if(g.time<(s.landingImpactUntil||0))return;
+    s.landingImpactUntil=g.time+.48;
+    s.hull=Math.max(0,s.hull-damage);g.shake=Math.max(g.shake,clamp(damage*.25,2,12));
     burst(s.x,below-12,pad?'#ffbd78':'#78f9df',Math.round(clamp(damage*.5,8,28)),90+damage*1.4);
     sound('impact',clamp(damage/55,0,1));
     toast(`HARD LANDING • -${Math.round(damage)} HULL`,2.3);
@@ -252,7 +253,7 @@
       const below=ground(s.x);
       if(s.y+14>=below){
         const pad=g.pads.find(p=>Math.abs(deltaX(s.x,p.x,g.width))<p.width*.5-8);
-        const safe=!!pad&&Math.abs(s.vx)<115&&s.vy<132&&Math.abs(s.a)<.9;
+        const safe=!!pad&&Math.abs(s.vx)<45&&s.vy>=-22&&s.vy<60&&Math.abs(s.a)<.24;
         if(safe){
           s.y=below-16;s.vy=Math.min(-13,-Math.abs(s.vy)*.22);s.vx*=.63;
           if(pad.occupied)pickPad(pad);
@@ -264,13 +265,13 @@
         if(d<body.radius+15){
           const nx=d>1?dx/d:0,ny=d>1?dy/d:-1,impact=Math.hypot(s.vx,s.vy);
           s.x=bx+nx*(body.radius+16);s.y=body.y+ny*(body.radius+16);
-          if(ny>.65&&impact<150&&g.outpostLatch!==body.id&&g.time>g.outpostImpactUntil){
+          if(ny>.65&&impact<150&&Math.abs(s.a)<.24&&g.outpostLatch!==body.id&&g.time>g.outpostImpactUntil){
             s.y=body.dockY;dockOutpost(body);continue;
           }
           const toward=s.vx*nx+s.vy*ny;
           if(toward<0){s.vx-=1.45*toward*nx;s.vy-=1.45*toward*ny;}
           g.outpostImpactUntil=g.time+1;
-          if(s.invuln<=0){const damage=clamp(8+impact*.065,8,55);s.hull=Math.max(0,s.hull-damage);s.invuln=.65;g.shake=Math.max(g.shake,8);burst(s.x,s.y,'#ffad79',22,110);sound('impact',damage/55);toast('PLANETOID IMPACT • HULL DAMAGED',2.6);if(s.hull<=0)crash();}
+          if(g.time>=(s.landingImpactUntil||0)){const damage=clamp(8+impact*.065+Math.max(0,Math.abs(s.a)-.24)*14,8,70);s.hull=Math.max(0,s.hull-damage);s.landingImpactUntil=g.time+.48;g.shake=Math.max(g.shake,8);burst(s.x,s.y,'#ffad79',22,110);sound('impact',Math.min(1,damage/55));toast('PLANETOID IMPACT • HULL DAMAGED',2.6);if(s.hull<=0)crash();}
         }
       }
       if(mode!=='playing')return;
@@ -413,9 +414,9 @@
     else if(s.inSpace) objective=`ORBIT · ${s.cargo?'CARRIER':'CREW'} BELOW · ${range} M`;
     else if(s.cargo) objective=`RETURN TO CARRIER  ·  ${range} M`;
     else if(Math.abs(s.x-o.x)<130&&Math.abs(s.y-o.y)<220) {
-      if(Math.abs(s.a)>=.9) objective='LANDING · LEVEL SHIP';
-      else if(s.vy>115) objective=`LANDING · SLOW DESCENT ${Math.round(s.vy)}`;
-      else if(Math.abs(s.vx)>100) objective=`LANDING · BRAKE SIDEWAYS ${Math.round(Math.abs(s.vx))}`;
+      if(Math.abs(s.a)>=.24) objective='LANDING · LEVEL SHIP';
+      else if(s.vy>=60) objective=`LANDING · SLOW DESCENT ${Math.round(s.vy)}`;
+      else if(Math.abs(s.vx)>=45) objective=`LANDING · BRAKE SIDEWAYS ${Math.round(Math.abs(s.vx))}`;
       else objective=`LANDING · DESCENT ${Math.max(0,Math.round(s.vy))} · READY`;
     }
     else objective=`FIND ${o.label} BEACON  ·  ${range} M`;
@@ -442,8 +443,12 @@
     ctx.font=`${size}px "Space Mono", "IBM Plex Mono", monospace`;ctx.textAlign=align;ctx.fillStyle=color;ctx.fillText(t,x,y);
   }
   function homePlanetVisual(altitude) {
-    const reveal=clamp((altitude-1700)/3800,0,1),distance=clamp((altitude-5500)/14500,0,1),far=clamp((altitude-20000)/20000,0,1);
-    return {radiusPx:ch*(.68*Math.pow(1-distance,1.4)+.05*distance)*(1-.9*far),centerYPx:ch*(1.64-reveal*.42-distance*.39),opacity:reveal*(1-clamp((altitude-17000)/11000,0,.9))*(1-far),distance,far};
+    const reveal=clamp((altitude-1700)/3800,0,1),departure=Math.max(0,altitude-4000);
+    const distance=clamp(departure/8000,0,1),far=clamp((altitude-20000)/20000,0,1);
+    const orbitCenter=ch<600&&cw>ch ? .58 : .82;
+    // Perspective recession starts before orbit; the center stops moving at entry.
+    // The full disk clears the bottom edge by 7.5 km instead of retaining a horizon.
+    return {radiusPx:ch*.68/Math.pow(1+departure/1600,1.25),centerYPx:ch*(1.64-reveal*(1.64-orbitCenter)),opacity:reveal*(1-far),distance,far};
   }
   function drawBackground() {
     ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -683,7 +688,21 @@
     else if(mode==='title'||mode==='briefing') {cam.x=mix(cam.x,mode==='title'?580:(game?.ship.x||540),.012);cam.y=mix(cam.y,mode==='title'?520:(game?.ship.y||530),.012);}
     render();requestAnimationFrame(frame);
   }
-  function bindButton(id,fn){const b=$(id);if(b)b.addEventListener('click',e=>{e.preventDefault();sound('click');fn();});}
+  function bindButton(id,fn) {
+    const b=$(id);if(!b)return;
+    let touchPointer=null,lastTouchAction=-Infinity;
+    const act=()=>{sound('click');fn();};
+    b.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')touchPointer=e.pointerId;});
+    b.addEventListener('pointerup',e=>{
+      if(e.pointerType!=='touch'||e.pointerId!==touchPointer)return;
+      touchPointer=null;
+      const r=b.getBoundingClientRect();
+      if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)return;
+      e.preventDefault();lastTouchAction=performance.now();act();
+    });
+    for(const type of ['pointercancel','lostpointercapture'])b.addEventListener(type,e=>{if(e.pointerId===touchPointer)touchPointer=null;});
+    b.addEventListener('click',e=>{e.preventDefault();if(e.detail>0&&performance.now()-lastTouchAction<750)return;act();});
+  }
   function keyAction(e,pressed) {
     const k=e.code;
     const bind={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'thrust',KeyW:'thrust',Space:'fire',KeyJ:'fire',ShiftLeft:'shield',ShiftRight:'shield',KeyK:'shield'};
@@ -702,6 +721,21 @@
       const release=e=>{if(e.pointerId!==owner)return;e.preventDefault();owner=null;touches[control]=false;el.classList.remove('is-pressed');};
       el.addEventListener('pointerdown',press);el.addEventListener('pointerup',release);el.addEventListener('pointercancel',release);el.addEventListener('lostpointercapture',release);
     });
+  }
+  function bindFlightGestures() {
+    const surface=$('game');
+    const hasFlightTouch=()=>joystick.pointerId!==null||Object.values(touches).some(Boolean);
+    const blockTouch=e=>{
+      if(e.target.closest?.('button:not([data-control])'))return;
+      const control=e.target.closest?.('#flightJoystick,[data-control],#gameCanvas');
+      if((control||hasFlightTouch()||(e.touches?.length||0)>1)&&e.cancelable)e.preventDefault();
+    };
+    // Safari gesture zoom needs cancellation in addition to pointer capture/CSS.
+    // Cancel control touches, while preserving ordinary taps on menu buttons.
+    for(const type of ['touchstart','touchmove','touchend'])surface.addEventListener(type,blockTouch,{passive:false});
+    const blockGesture=e=>{if((matchMedia('(pointer: coarse)').matches||hasFlightTouch())&&e.cancelable)e.preventDefault();};
+    for(const type of ['gesturestart','gesturechange','gestureend'])document.addEventListener(type,blockGesture,{passive:false});
+    surface.addEventListener('dblclick',e=>{if(matchMedia('(pointer: coarse)').matches)e.preventDefault();});
   }
   function bindJoystick() {
     const el=$('flightJoystick');if(!el)return;
@@ -731,7 +765,7 @@
   addEventListener('keydown',e=>keyAction(e,true));addEventListener('keyup',e=>keyAction(e,false));
   addEventListener('blur',()=>{Object.keys(keys).forEach(k=>keys[k]=false);Object.keys(touches).forEach(k=>touches[k]=false);clearJoystick();clearTouchVisuals();if(mode==='playing')setPause(true);});
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&mode==='playing')setPause(true);});
-  addEventListener('resize',resize);bindTouch();bindJoystick();resize();
+  addEventListener('resize',resize);bindFlightGestures();bindTouch();bindJoystick();resize();
   game=makeLevel(0);cam={x:580,y:520};show('titleScreen',true);show('briefingScreen',false);show('pauseScreen',false);show('resultScreen',false);updateHud();
   if($('muteButton')){$('muteButton').classList.toggle('is-muted',!!audio.muted);$('muteButton').setAttribute('aria-label',audio.muted?'Unmute audio':'Mute audio');}
   window.__afterlightDebug={snapshot:()=>({mode,level:levelIndex+1,worldWidth:game.width,camera:{...cam},orbit:{enter:ORBIT_ENTER,exit:ORBIT_EXIT,spaceFuelMultiplier:2},homePlanet:homePlanetVisual(game.ship.altitude),joystick:{...joystick},ship:{...game.ship},delivered:game.delivered,salvageCount:game.salvageCount,spaceBodies:game.spaceBodies.map(b=>({...b})),pads:game.pads.map(p=>({id:p.id,x:p.x,occupied:p.occupied})),turrets:game.turrets.map(t=>({x:t.x,hp:t.hp})),flyingEnemies:game.drones.map(e=>({id:e.id,x:e.x,y:e.y,hp:e.hp,space:e.space,shotCount:e.shotCount,cooldown:e.cooldown})),entities:{particles:game.particles.length,bullets:game.bullets.length,enemyBullets:game.enemyBullets.length,flyingEnemies:game.drones.filter(e=>e.hp>0).length},score:totalScore(),objective:nextObjective(),time:game.time}),ground:(x)=>ground(x),wrappedDx:(target,origin)=>deltaX(target,origin,game.width),start:(level=1)=>{campaignScore=0;startLevel(clamp(level-1,0,2),false);},setShip:(x,y,vx=0,vy=0,a=0)=>{Object.assign(game.ship,{x,y,vx,vy,a});cam.x=x;cam.y=y+(cw>ch*1.7&&ch<600?80:0);},setResources:({fuel,hull,shieldCharge}={})=>{const s=game.ship;if(Number.isFinite(fuel))s.fuel=clamp(fuel,0,100);if(Number.isFinite(hull))s.hull=clamp(hull,0,100);if(Number.isFinite(shieldCharge))s.shieldCharge=clamp(shieldCharge,0,100);updateHud();},setMode:(value)=>{if(value==='playing')enterPlay();else if(value==='paused')setPause(true);}};

@@ -30,3 +30,6 @@ qa/*.png
 !qa/landing-report.json
 !qa/gesture-report.json
 !qa/planet-report.json
+!qa/aspect-report.json
+!qa/aspect-baseline-report.json
+!qa/zoom-report.json

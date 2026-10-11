@@ -4,7 +4,7 @@
   "private": true,
   "description": "Browser QA tooling for the AFTERLIGHT static game",
   "scripts": {
-    "qa": "npm run qa:smoke && npm run qa:gesture && npm run qa:joystick && npm run qa:playloop && npm run qa:campaign && npm run qa:combat && npm run qa:edges && npm run qa:wrap && npm run qa:audio && npm run qa:landing && npm run qa:balance && npm run qa:planet && npm run qa:expedition",
+    "qa": "npm run qa:smoke && npm run qa:aspect && npm run qa:zoom && npm run qa:gesture && npm run qa:joystick && npm run qa:playloop && npm run qa:campaign && npm run qa:combat && npm run qa:edges && npm run qa:wrap && npm run qa:audio && npm run qa:landing && npm run qa:balance && npm run qa:planet && npm run qa:expedition",
     "qa:smoke": "node qa/smoke.mjs",
     "qa:playloop": "node qa/playloop.mjs",
     "qa:campaign": "node qa/campaign.mjs",
@@ -17,7 +17,9 @@
     "qa:joystick": "node qa/joystick.mjs",
     "qa:landing": "node qa/landing.mjs",
     "qa:gesture": "node qa/gesture.mjs",
-    "qa:planet": "node qa/planet.mjs"
+    "qa:planet": "node qa/planet.mjs",
+    "qa:aspect": "node qa/aspect.mjs",
+    "qa:zoom": "node qa/zoom.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

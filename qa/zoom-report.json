@@ -1,0 +1,143 @@
+{
+  "cases": [
+    {
+      "factor": 1.5,
+      "title": {
+        "visual": {
+          "width": 260,
+          "height": 562.6666870117188,
+          "scale": 1.5,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "game": {
+          "selector": "#game",
+          "x": 0,
+          "y": 0,
+          "right": 260,
+          "bottom": 562.6666870117188,
+          "width": 260,
+          "height": 562.6666870117188,
+          "display": "block"
+        }
+      },
+      "briefing": {
+        "visual": {
+          "width": 260,
+          "height": 562.6666870117188,
+          "scale": 1.5,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        }
+      },
+      "flight": {
+        "visual": {
+          "width": 260,
+          "height": 562.6666870117188,
+          "scale": 1.5,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "joystickCssWidth": 82.66666412353516,
+        "joystickApparentWidth": 123.99999618530273
+      },
+      "active": {
+        "throttle": 0.6594263711841328,
+        "turn": 0.659426608319449,
+        "bullets": 2,
+        "shield": true
+      },
+      "noOpPreserved": true,
+      "paused": true,
+      "pausePanel": {
+        "visual": {
+          "width": 260,
+          "height": 562.6666870117188,
+          "scale": 1.5,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        }
+      },
+      "restored": {
+        "visual": {
+          "width": 390,
+          "height": 844,
+          "scale": 1,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        }
+      },
+      "errors": []
+    },
+    {
+      "factor": 2,
+      "title": {
+        "visual": {
+          "width": 195,
+          "height": 422,
+          "scale": 2,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "game": {
+          "selector": "#game",
+          "x": 0,
+          "y": 0,
+          "right": 195,
+          "bottom": 422,
+          "width": 195,
+          "height": 422,
+          "display": "block"
+        }
+      },
+      "briefing": {
+        "visual": {
+          "width": 195,
+          "height": 422,
+          "scale": 2,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        }
+      },
+      "flight": {
+        "visual": {
+          "width": 195,
+          "height": 422,
+          "scale": 2,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        },
+        "joystickCssWidth": 62,
+        "joystickApparentWidth": 124
+      },
+      "active": {
+        "throttle": 0.6594265951452413,
+        "turn": 0.659426384358344,
+        "bullets": 2,
+        "shield": true
+      },
+      "noOpPreserved": true,
+      "paused": true,
+      "pausePanel": {
+        "visual": {
+          "width": 195,
+          "height": 422,
+          "scale": 2,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        }
+      },
+      "restored": {
+        "visual": {
+          "width": 390,
+          "height": 844,
+          "scale": 1,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        }
+      },
+      "errors": []
+    }
+  ],
+  "limitation": "CDP page scale reproduces browser zoom in Chromium after a QA-only viewport-meta relaxation. Physical Safari pinch and nonzero visualViewport panning cannot be asserted by this emulator."
+}

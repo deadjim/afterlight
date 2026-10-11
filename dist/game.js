@@ -88,15 +88,38 @@
     for(const list of [game.bullets,game.enemyBullets,game.particles])for(const item of list)item.x-=shift;
   }
   function resize() {
-    const r=canvas.getBoundingClientRect();
-    cw=Math.max(1,r.width||innerWidth); ch=Math.max(1,r.height||innerHeight);
-    dpr=Math.min(devicePixelRatio||1, innerWidth<700?1.65:2);
-    canvas.width=Math.round(cw*dpr); canvas.height=Math.round(ch*dpr);
+    // Measure the layout box, before any visual-viewport compensation transform.
+    const r={width:canvas.clientWidth,height:canvas.clientHeight};
+    if(r.width<=0||r.height<=0)return;
+    const nextDpr=Math.min(devicePixelRatio||1,r.width<700?1.65:2);
+    const width=Math.round(r.width*nextDpr),height=Math.round(r.height*nextDpr);
+    if(cw===r.width&&ch===r.height&&dpr===nextDpr&&canvas.width===width&&canvas.height===height)return;
+    cw=r.width;ch=r.height;dpr=nextDpr;
+    canvas.width=width;canvas.height=height;
     const shortLandscape=cw>ch*1.7&&ch<600;
-    vh=shortLandscape ? 560 : innerWidth<650 ? 840 : 930;
+    vh=shortLandscape ? 560 : cw<650 ? 840 : 930;
     scale=ch/vh; vw=cw/scale;
     clearJoystick();
     Object.keys(touches).forEach(k=>touches[k]=false);clearTouchVisuals();
+  }
+  let resizeQueued=false;
+  let viewportFitted=false;
+  function fitVisualViewport() {
+    const surface=$('game'),v=window.visualViewport;
+    if(!v||!matchMedia('(pointer: coarse)').matches||v.scale<=1.01){
+      if(viewportFitted){for(const name of ['position','left','top','width','height','transform','transform-origin'])surface.style.removeProperty(name);viewportFitted=false;}
+      return;
+    }
+    // Keep the whole cockpit visible if Safari restores an already magnified tab.
+    surface.style.position='fixed';surface.style.left=`${v.offsetLeft}px`;surface.style.top=`${v.offsetTop}px`;
+    surface.style.width=`${v.width*v.scale}px`;surface.style.height=`${v.height*v.scale}px`;
+    surface.style.transformOrigin='top left';surface.style.transform=`scale(${1/v.scale})`;
+    viewportFitted=true;
+  }
+  function queueResize() {
+    if(resizeQueued)return;
+    resizeQueued=true;
+    requestAnimationFrame(()=>{resizeQueued=false;fitVisualViewport();resize();});
   }
   function clearJoystick() {
     joystick.pointerId=null;joystick.dx=0;joystick.dy=0;joystick.turn=0;joystick.throttle=0;
@@ -726,7 +749,7 @@
     const surface=$('game');
     const hasFlightTouch=()=>joystick.pointerId!==null||Object.values(touches).some(Boolean);
     const blockTouch=e=>{
-      if(e.target.closest?.('button:not([data-control])'))return;
+      if(e.target.closest?.('button:not([data-control])')&&!hasFlightTouch()&&(e.touches?.length||0)<2)return;
       const control=e.target.closest?.('#flightJoystick,[data-control],#gameCanvas');
       if((control||hasFlightTouch()||(e.touches?.length||0)>1)&&e.cancelable)e.preventDefault();
     };
@@ -765,7 +788,15 @@
   addEventListener('keydown',e=>keyAction(e,true));addEventListener('keyup',e=>keyAction(e,false));
   addEventListener('blur',()=>{Object.keys(keys).forEach(k=>keys[k]=false);Object.keys(touches).forEach(k=>touches[k]=false);clearJoystick();clearTouchVisuals();if(mode==='playing')setPause(true);});
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&mode==='playing')setPause(true);});
-  addEventListener('resize',resize);bindFlightGestures();bindTouch();bindJoystick();resize();
+  addEventListener('resize',queueResize);
+  addEventListener('orientationchange',queueResize);
+  addEventListener('pageshow',queueResize);
+  window.visualViewport?.addEventListener('resize',queueResize);
+  window.visualViewport?.addEventListener('scroll',queueResize);
+  // Dynamic browser chrome can resize the CSS box without a window resize.
+  // Observe the rendered canvas, and keep its backing bitmap in the same ratio.
+  if(typeof ResizeObserver!=='undefined')new ResizeObserver(resize).observe(canvas);
+  bindFlightGestures();bindTouch();bindJoystick();fitVisualViewport();resize();
   game=makeLevel(0);cam={x:580,y:520};show('titleScreen',true);show('briefingScreen',false);show('pauseScreen',false);show('resultScreen',false);updateHud();
   if($('muteButton')){$('muteButton').classList.toggle('is-muted',!!audio.muted);$('muteButton').setAttribute('aria-label',audio.muted?'Unmute audio':'Mute audio');}
   window.__afterlightDebug={snapshot:()=>({mode,level:levelIndex+1,worldWidth:game.width,camera:{...cam},orbit:{enter:ORBIT_ENTER,exit:ORBIT_EXIT,spaceFuelMultiplier:2},homePlanet:homePlanetVisual(game.ship.altitude),joystick:{...joystick},ship:{...game.ship},delivered:game.delivered,salvageCount:game.salvageCount,spaceBodies:game.spaceBodies.map(b=>({...b})),pads:game.pads.map(p=>({id:p.id,x:p.x,occupied:p.occupied})),turrets:game.turrets.map(t=>({x:t.x,hp:t.hp})),flyingEnemies:game.drones.map(e=>({id:e.id,x:e.x,y:e.y,hp:e.hp,space:e.space,shotCount:e.shotCount,cooldown:e.cooldown})),entities:{particles:game.particles.length,bullets:game.bullets.length,enemyBullets:game.enemyBullets.length,flyingEnemies:game.drones.filter(e=>e.hp>0).length},score:totalScore(),objective:nextObjective(),time:game.time}),ground:(x)=>ground(x),wrappedDx:(target,origin)=>deltaX(target,origin,game.width),start:(level=1)=>{campaignScore=0;startLevel(clamp(level-1,0,2),false);},setShip:(x,y,vx=0,vy=0,a=0)=>{Object.assign(game.ship,{x,y,vx,vy,a});cam.x=x;cam.y=y+(cw>ch*1.7&&ch<600?80:0);},setResources:({fuel,hull,shieldCharge}={})=>{const s=game.ship;if(Number.isFinite(fuel))s.fuel=clamp(fuel,0,100);if(Number.isFinite(hull))s.hull=clamp(hull,0,100);if(Number.isFinite(shieldCharge))s.shieldCharge=clamp(shieldCharge,0,100);updateHud();},setMode:(value)=>{if(value==='playing')enterPlay();else if(value==='paused')setPause(true);}};

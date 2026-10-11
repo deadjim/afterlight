@@ -13,17 +13,17 @@
       "active": {
         "throttle": 0.6594265951452413,
         "turn": 0.659426384358344,
-        "fuelUsed": 0.9605647402615176,
-        "angleChanged": 0.7962573591127005
+        "fuelUsed": 0.9188010559023212,
+        "angleChanged": 0.7616374739338874
       },
       "analogAudio": {
-        "samples": 23,
+        "samples": 22,
         "example": 0.6594265951452413
       },
       "firingBullets": 2,
       "threeFinger": {
-        "shieldCharge": 88.3333333333334,
-        "ring": "87.50000000000007%",
+        "shieldCharge": 87.50000000000007,
+        "ring": "86.66666666666674%",
         "depleted": 0,
         "recharged": 3.6904761904761907
       },

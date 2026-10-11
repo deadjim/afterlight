@@ -1,0 +1,1256 @@
+{
+  "diagnostic": true,
+  "cases": [
+    {
+      "engine": "webkit",
+      "dpr": 2,
+      "mode": "title",
+      "initial": {
+        "label": "webkit dpr2 title initial",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 2,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 94,
+          "height": 406,
+          "aspect": 0.2315270935960591,
+          "count": 29871
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "changed": {
+        "label": "webkit dpr2 title CSS-only height change",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 1080
+          },
+          "game": {
+            "width": 390,
+            "height": 1080
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 2,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 94,
+          "height": 520,
+          "aspect": 0.18076923076923077,
+          "count": 38220
+        },
+        "backingAspect": 5.527295285359801
+      },
+      "restored": {
+        "label": "webkit dpr2 title CSS restored",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 2,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 94,
+          "height": 406,
+          "aspect": 0.2315270935960591,
+          "count": 29869
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "dpr": 2,
+      "mode": "briefing",
+      "initial": {
+        "label": "webkit dpr2 briefing initial",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 2,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 94,
+          "height": 406,
+          "aspect": 0.2315270935960591,
+          "count": 29870
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "changed": {
+        "label": "webkit dpr2 briefing CSS-only height change",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 1080
+          },
+          "game": {
+            "width": 390,
+            "height": 1080
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 2,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 94,
+          "height": 520,
+          "aspect": 0.18076923076923077,
+          "count": 38220
+        },
+        "backingAspect": 5.527295285359801
+      },
+      "restored": {
+        "label": "webkit dpr2 briefing CSS restored",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 2,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 94,
+          "height": 406,
+          "aspect": 0.2315270935960591,
+          "count": 29869
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "dpr": 2,
+      "mode": "flight",
+      "initial": {
+        "label": "webkit dpr2 flight initial",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 2,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 94,
+          "height": 406,
+          "aspect": 0.2315270935960591,
+          "count": 29869
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "changed": {
+        "label": "webkit dpr2 flight CSS-only height change",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 1080
+          },
+          "game": {
+            "width": 390,
+            "height": 1080
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 2,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 94,
+          "height": 520,
+          "aspect": 0.18076923076923077,
+          "count": 38220
+        },
+        "backingAspect": 5.527295285359801
+      },
+      "restored": {
+        "label": "webkit dpr2 flight CSS restored",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 2,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 94,
+          "height": 406,
+          "aspect": 0.2315270935960591,
+          "count": 29869
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "landscape": {
+        "label": "webkit dpr2 rotated landscape",
+        "geometry": {
+          "canvas": {
+            "width": 1688,
+            "height": 780
+          },
+          "css": {
+            "width": 844,
+            "height": 390
+          },
+          "game": {
+            "width": 844,
+            "height": 390
+          },
+          "inner": {
+            "width": 844,
+            "height": 390
+          },
+          "visual": {
+            "width": 844,
+            "height": 390,
+            "scale": 1
+          },
+          "dpr": 2,
+          "resizeEvents": 1
+        },
+        "pixel": {
+          "width": 96,
+          "height": 96,
+          "aspect": 1,
+          "count": 7096
+        },
+        "backingAspect": 1
+      },
+      "portrait": {
+        "label": "webkit dpr2 rotated portrait",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 2,
+          "resizeEvents": 2
+        },
+        "pixel": {
+          "width": 94,
+          "height": 95,
+          "aspect": 0.9894736842105263,
+          "count": 7004
+        },
+        "backingAspect": 1.000471105527638
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "dpr": 2,
+      "mode": "history-return",
+      "history": {
+        "url": "http://127.0.0.1:4174/",
+        "width": 495,
+        "height": 248,
+        "cssWidth": 390,
+        "cssHeight": 843.984375,
+        "visualScale": 1
+      }
+    },
+    {
+      "engine": "webkit",
+      "dpr": 3,
+      "mode": "title",
+      "initial": {
+        "label": "webkit dpr3 title initial",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 142,
+          "height": 610,
+          "aspect": 0.23278688524590163,
+          "count": 67313
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "changed": {
+        "label": "webkit dpr3 title CSS-only height change",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 1080
+          },
+          "game": {
+            "width": 390,
+            "height": 1080
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 142,
+          "height": 781,
+          "aspect": 0.18181818181818182,
+          "count": 86140
+        },
+        "backingAspect": 5.527295285359801
+      },
+      "restored": {
+        "label": "webkit dpr3 title CSS restored",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 142,
+          "height": 610,
+          "aspect": 0.23278688524590163,
+          "count": 67312
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "dpr": 3,
+      "mode": "briefing",
+      "initial": {
+        "label": "webkit dpr3 briefing initial",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 142,
+          "height": 610,
+          "aspect": 0.23278688524590163,
+          "count": 67314
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "changed": {
+        "label": "webkit dpr3 briefing CSS-only height change",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 1080
+          },
+          "game": {
+            "width": 390,
+            "height": 1080
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 142,
+          "height": 781,
+          "aspect": 0.18181818181818182,
+          "count": 86140
+        },
+        "backingAspect": 5.527295285359801
+      },
+      "restored": {
+        "label": "webkit dpr3 briefing CSS restored",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 142,
+          "height": 610,
+          "aspect": 0.23278688524590163,
+          "count": 67313
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "dpr": 3,
+      "mode": "flight",
+      "initial": {
+        "label": "webkit dpr3 flight initial",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 142,
+          "height": 610,
+          "aspect": 0.23278688524590163,
+          "count": 67315
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "changed": {
+        "label": "webkit dpr3 flight CSS-only height change",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 1080
+          },
+          "game": {
+            "width": 390,
+            "height": 1080
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 142,
+          "height": 781,
+          "aspect": 0.18181818181818182,
+          "count": 86140
+        },
+        "backingAspect": 5.527295285359801
+      },
+      "restored": {
+        "label": "webkit dpr3 flight CSS restored",
+        "geometry": {
+          "canvas": {
+            "width": 495,
+            "height": 248
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 142,
+          "height": 610,
+          "aspect": 0.23278688524590163,
+          "count": 67314
+        },
+        "backingAspect": 4.319398941532258
+      },
+      "landscape": {
+        "label": "webkit dpr3 rotated landscape",
+        "geometry": {
+          "canvas": {
+            "width": 1688,
+            "height": 780
+          },
+          "css": {
+            "width": 844,
+            "height": 390
+          },
+          "game": {
+            "width": 844,
+            "height": 390
+          },
+          "inner": {
+            "width": 844,
+            "height": 390
+          },
+          "visual": {
+            "width": 844,
+            "height": 390,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 1
+        },
+        "pixel": {
+          "width": 144,
+          "height": 144,
+          "aspect": 1,
+          "count": 15848
+        },
+        "backingAspect": 1
+      },
+      "portrait": {
+        "label": "webkit dpr3 rotated portrait",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "game": {
+            "width": 390,
+            "height": 843.984375
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 2
+        },
+        "pixel": {
+          "width": 142,
+          "height": 143,
+          "aspect": 0.993006993006993,
+          "count": 15750
+        },
+        "backingAspect": 1.000471105527638
+      },
+      "errors": []
+    },
+    {
+      "engine": "webkit",
+      "dpr": 3,
+      "mode": "history-return",
+      "history": {
+        "url": "http://127.0.0.1:4174/",
+        "width": 495,
+        "height": 248,
+        "cssWidth": 390,
+        "cssHeight": 843.984375,
+        "visualScale": 1
+      }
+    },
+    {
+      "engine": "chromium",
+      "dpr": 3,
+      "mode": "title",
+      "initial": {
+        "label": "chromium dpr3 title initial",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 844
+          },
+          "game": {
+            "width": 390,
+            "height": 844
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 140,
+          "height": 142,
+          "aspect": 0.9859154929577465,
+          "count": 15728
+        },
+        "backingAspect": 1.0004896276253061
+      },
+      "changed": {
+        "label": "chromium dpr3 title CSS-only height change",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 1080
+          },
+          "game": {
+            "width": 390,
+            "height": 1080
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 140,
+          "height": 182,
+          "aspect": 0.7692307692307693,
+          "count": 20136
+        },
+        "backingAspect": 1.2802473908001546
+      },
+      "restored": {
+        "label": "chromium dpr3 title CSS restored",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 844
+          },
+          "game": {
+            "width": 390,
+            "height": 844
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 140,
+          "height": 142,
+          "aspect": 0.9859154929577465,
+          "count": 15728
+        },
+        "backingAspect": 1.0004896276253061
+      },
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "dpr": 3,
+      "mode": "briefing",
+      "initial": {
+        "label": "chromium dpr3 briefing initial",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 844
+          },
+          "game": {
+            "width": 390,
+            "height": 844
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 140,
+          "height": 142,
+          "aspect": 0.9859154929577465,
+          "count": 15728
+        },
+        "backingAspect": 1.0004896276253061
+      },
+      "changed": {
+        "label": "chromium dpr3 briefing CSS-only height change",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 1080
+          },
+          "game": {
+            "width": 390,
+            "height": 1080
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 140,
+          "height": 182,
+          "aspect": 0.7692307692307693,
+          "count": 20136
+        },
+        "backingAspect": 1.2802473908001546
+      },
+      "restored": {
+        "label": "chromium dpr3 briefing CSS restored",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 844
+          },
+          "game": {
+            "width": 390,
+            "height": 844
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 140,
+          "height": 142,
+          "aspect": 0.9859154929577465,
+          "count": 15728
+        },
+        "backingAspect": 1.0004896276253061
+      },
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "dpr": 3,
+      "mode": "flight",
+      "initial": {
+        "label": "chromium dpr3 flight initial",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 844
+          },
+          "game": {
+            "width": 390,
+            "height": 844
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 140,
+          "height": 142,
+          "aspect": 0.9859154929577465,
+          "count": 15728
+        },
+        "backingAspect": 1.0004896276253061
+      },
+      "changed": {
+        "label": "chromium dpr3 flight CSS-only height change",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 1080
+          },
+          "game": {
+            "width": 390,
+            "height": 1080
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 140,
+          "height": 182,
+          "aspect": 0.7692307692307693,
+          "count": 20136
+        },
+        "backingAspect": 1.2802473908001546
+      },
+      "restored": {
+        "label": "chromium dpr3 flight CSS restored",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 844
+          },
+          "game": {
+            "width": 390,
+            "height": 844
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 0
+        },
+        "pixel": {
+          "width": 140,
+          "height": 142,
+          "aspect": 0.9859154929577465,
+          "count": 15728
+        },
+        "backingAspect": 1.0004896276253061
+      },
+      "landscape": {
+        "label": "chromium dpr3 rotated landscape",
+        "geometry": {
+          "canvas": {
+            "width": 1688,
+            "height": 780
+          },
+          "css": {
+            "width": 844,
+            "height": 390
+          },
+          "game": {
+            "width": 844,
+            "height": 390
+          },
+          "inner": {
+            "width": 844,
+            "height": 390
+          },
+          "visual": {
+            "width": 844,
+            "height": 390,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 1
+        },
+        "pixel": {
+          "width": 142,
+          "height": 142,
+          "aspect": 1,
+          "count": 15817
+        },
+        "backingAspect": 1
+      },
+      "portrait": {
+        "label": "chromium dpr3 rotated portrait",
+        "geometry": {
+          "canvas": {
+            "width": 644,
+            "height": 1393
+          },
+          "css": {
+            "width": 390,
+            "height": 844
+          },
+          "game": {
+            "width": 390,
+            "height": 844
+          },
+          "inner": {
+            "width": 390,
+            "height": 844
+          },
+          "visual": {
+            "width": 390,
+            "height": 844,
+            "scale": 1
+          },
+          "dpr": 3,
+          "resizeEvents": 2
+        },
+        "pixel": {
+          "width": 140,
+          "height": 142,
+          "aspect": 0.9859154929577465,
+          "count": 15728
+        },
+        "backingAspect": 1.0004896276253061
+      },
+      "errors": []
+    },
+    {
+      "engine": "chromium",
+      "dpr": 3,
+      "mode": "history-return",
+      "history": {
+        "url": "http://127.0.0.1:4174/",
+        "width": 644,
+        "height": 1393,
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "visualScale": 1
+      }
+    }
+  ],
+  "limitations": [
+    "Playwright WebKit simulates the engine and DPR; it does not reproduce physical iPhone browser chrome or pinch arbitration."
+  ]
+}

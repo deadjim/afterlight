@@ -26,7 +26,7 @@ npx playwright install chromium webkit
 npm run qa
 ```
 
-To run an individual check, use `npm run qa:smoke`, `npm run qa:gesture`, `npm run qa:joystick`, `npm run qa:playloop`, `npm run qa:campaign`, `npm run qa:combat`, `npm run qa:edges`, `npm run qa:wrap`, `npm run qa:audio`, `npm run qa:landing`, `npm run qa:balance`, `npm run qa:planet`, or `npm run qa:expedition`. Set `CHROME_PATH` to a local Chrome or Chromium executable to use it instead of Playwright's bundled Chromium. The gesture check also uses Playwright's WebKit engine when installed. The smoke check accepts an optional base URL as its first argument.
+To run an individual check, use `npm run qa:smoke`, `npm run qa:aspect`, `npm run qa:zoom`, `npm run qa:gesture`, `npm run qa:joystick`, `npm run qa:playloop`, `npm run qa:campaign`, `npm run qa:combat`, `npm run qa:edges`, `npm run qa:wrap`, `npm run qa:audio`, `npm run qa:landing`, `npm run qa:balance`, `npm run qa:planet`, or `npm run qa:expedition`. Set `CHROME_PATH` to a local Chrome or Chromium executable to use it instead of Playwright's bundled Chromium. The aspect check requires Playwright's WebKit engine and tests composited circle proportions on initial screens, browser-size changes, rotation, and history return. The zoom check forces native Chromium page magnification and verifies the visible cockpit and real touch controls. The gesture check also uses WebKit when installed. The smoke check accepts an optional base URL as its first argument.
 
 ## Flight controls
 

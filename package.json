@@ -4,12 +4,14 @@
   "private": true,
   "description": "Browser QA tooling for the AFTERLIGHT static game",
   "scripts": {
-    "qa": "npm run qa:smoke && npm run qa:playloop && npm run qa:campaign && npm run qa:combat && npm run qa:edges",
+    "qa": "npm run qa:smoke && npm run qa:playloop && npm run qa:campaign && npm run qa:combat && npm run qa:edges && npm run qa:wrap && npm run qa:audio",
     "qa:smoke": "node qa/smoke.mjs",
     "qa:playloop": "node qa/playloop.mjs",
     "qa:campaign": "node qa/campaign.mjs",
     "qa:combat": "node qa/combat.mjs",
-    "qa:edges": "node qa/edges.mjs"
+    "qa:edges": "node qa/edges.mjs",
+    "qa:wrap": "node qa/wrap.mjs",
+    "qa:audio": "node qa/audio.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

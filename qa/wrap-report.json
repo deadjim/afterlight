@@ -1,0 +1,135 @@
+{
+  "geometry": {
+    "desktop": {
+      "at0": 924.9756777209267,
+      "atWidth": 924.9756777209267,
+      "left": 924.7246293450561,
+      "right": 924.7246293450561,
+      "forward": 40,
+      "back": -40,
+      "docW": 1440,
+      "docH": 900
+    },
+    "portrait": {
+      "at0": 924.9756777209267,
+      "atWidth": 924.9756777209267,
+      "left": 924.7246293450561,
+      "right": 924.7246293450561,
+      "forward": 40,
+      "back": -40,
+      "docW": 390,
+      "docH": 844
+    },
+    "landscape": {
+      "at0": 924.9756777209267,
+      "atWidth": 924.9756777209267,
+      "left": 924.7246293450561,
+      "right": 924.7246293450561,
+      "forward": 40,
+      "back": -40,
+      "docW": 844,
+      "docH": 390
+    }
+  },
+  "crossings": {
+    "desktop": {
+      "right": {
+        "from": 5964.2013621384,
+        "to": 6096.964971723353,
+        "velocity": 253.04157307871068,
+        "maxScreenStep": 9.255959415266943,
+        "maxCameraStep": 13.166377401721547
+      },
+      "left": {
+        "from": 35.7986378616,
+        "to": -96.9649717233504,
+        "velocity": -253.04157307871068,
+        "maxScreenStep": 9.255959415267057,
+        "maxCameraStep": 12.569713899471267
+      },
+      "rebase": {
+        "right": {
+          "shipShift": -5989.527550081176,
+          "cameraShift": -5994.53625431241,
+          "screenStep": 4.847133127001371,
+          "velocity": 253.04157307871068
+        },
+        "left": {
+          "shipShift": 5989.527550081176,
+          "cameraShift": 5994.53625431241,
+          "screenStep": -4.847133127001371,
+          "velocity": -251.30780429589427
+        }
+      }
+    },
+    "portrait": {
+      "right": {
+        "from": 5967.335156689846,
+        "to": 6096.964971723353,
+        "velocity": 253.04157307871068,
+        "maxScreenStep": 8.536775695233075,
+        "maxCameraStep": 12.569713899471026
+      },
+      "left": {
+        "from": 32.6648433101536,
+        "to": -96.9649717233504,
+        "velocity": -253.04157307871068,
+        "maxScreenStep": 7.06015900756023,
+        "maxCameraStep": 10.494892849773287
+      }
+    },
+    "landscape": {
+      "right": {
+        "from": 5967.153649371168,
+        "to": 6095.313486923429,
+        "velocity": 250.68952122327028,
+        "maxScreenStep": 4.826010275111912,
+        "maxCameraStep": 11.107824914839512
+      },
+      "left": {
+        "from": 35.7986378616,
+        "to": -92.74761217203856,
+        "velocity": -251.30780429589427,
+        "maxScreenStep": 5.094384613475427,
+        "maxCameraStep": 11.706467267273307
+      }
+    }
+  },
+  "rescue": {
+    "padId": 5,
+    "pickupX": -800,
+    "dockedX": 6260,
+    "delivered": 1,
+    "uniquePadsUsed": 1,
+    "stageCompletion": {
+      "delivered": 5,
+      "mode": "result"
+    }
+  },
+  "combat": {
+    "turretX": 5650,
+    "imageX": -350,
+    "hpAfter": 0,
+    "score": 150,
+    "maxEnemyBullets": 1
+  },
+  "laps": {
+    "count": 17,
+    "maxima": {
+      "particles": 36,
+      "bullets": 6,
+      "enemyBullets": 0
+    },
+    "before": {
+      "median": 16.699999999999932,
+      "p95": 16.700000000000273,
+      "max": 16.799999999999955
+    },
+    "after": {
+      "median": 16.699999999999818,
+      "p95": 16.800000000000182,
+      "max": 16.800000000000182
+    }
+  },
+  "errors": []
+}

@@ -2,133 +2,240 @@
   "initial": {
     "mode": "playing",
     "level": 1,
+    "worldWidth": 6000,
+    "camera": {
+      "x": 540,
+      "y": 690
+    },
     "ship": {
       "x": 540,
-      "y": 690.1789140580883,
+      "y": 690,
       "vx": 0,
-      "vy": 3.056888178773898,
+      "vy": 0,
       "a": 0,
       "fuel": 100,
       "hull": 100,
       "cargo": 0,
-      "invuln": 1.4000000000000004,
-      "shotTime": -0.09999999999999999,
+      "invuln": 1.5,
+      "shotTime": 0,
       "shield": 0
     },
     "delivered": 0,
     "pads": [
       {
+        "id": 1,
         "x": 540,
         "occupied": true
       },
       {
+        "id": 2,
         "x": 1040,
+        "occupied": true
+      },
+      {
+        "id": 3,
+        "x": 2200,
+        "occupied": true
+      },
+      {
+        "id": 4,
+        "x": 3650,
+        "occupied": true
+      },
+      {
+        "id": 5,
+        "x": 5200,
         "occupied": true
       }
     ],
     "turrets": [
       {
-        "x": 1330,
+        "x": 1700,
+        "hp": 2
+      },
+      {
+        "x": 3050,
+        "hp": 2
+      },
+      {
+        "x": 5650,
         "hp": 2
       }
     ],
+    "entities": {
+      "particles": 0,
+      "bullets": 0,
+      "enemyBullets": 0
+    },
     "score": 0,
     "objective": {
       "x": 540,
-      "y": 840.9201883909606,
-      "label": "CREW"
+      "y": 856.6639547309022,
+      "label": "CREW",
+      "padId": 1
     },
-    "time": 0.09999999999999999
+    "time": 0
   },
   "afterPassiveLanding": {
     "mode": "playing",
     "level": 1,
+    "worldWidth": 6000,
+    "camera": {
+      "x": 540,
+      "y": 845.4420083687975
+    },
     "ship": {
       "x": 540,
-      "y": 824.9950191423113,
+      "y": 847.9438583855446,
       "vx": 0,
-      "vy": -17.3535736750243,
+      "vy": -28.906402487062422,
       "a": 0,
       "fuel": 100,
       "hull": 100,
       "cargo": 1,
       "invuln": 0,
-      "shotTime": -4.29999999999999,
+      "shotTime": -4.183333333333324,
       "shield": 0
     },
     "delivered": 0,
     "pads": [
       {
+        "id": 1,
         "x": 540,
         "occupied": false
       },
       {
+        "id": 2,
         "x": 1040,
+        "occupied": true
+      },
+      {
+        "id": 3,
+        "x": 2200,
+        "occupied": true
+      },
+      {
+        "id": 4,
+        "x": 3650,
+        "occupied": true
+      },
+      {
+        "id": 5,
+        "x": 5200,
         "occupied": true
       }
     ],
     "turrets": [
       {
-        "x": 1330,
+        "x": 1700,
+        "hp": 2
+      },
+      {
+        "x": 3050,
+        "hp": 2
+      },
+      {
+        "x": 5650,
         "hp": 2
       }
     ],
+    "entities": {
+      "particles": 30,
+      "bullets": 0,
+      "enemyBullets": 0
+    },
     "score": 250,
     "objective": {
       "x": 260,
       "y": 425,
       "label": "CARRIER"
     },
-    "time": 4.29999999999999
+    "time": 4.183333333333324
   },
   "afterFlight": {
     "mode": "playing",
     "level": 1,
+    "worldWidth": 6000,
+    "camera": {
+      "x": 306.7599897309816,
+      "y": 512.4953126172538
+    },
     "ship": {
-      "x": 303.69080185491157,
-      "y": 489.0683248126585,
-      "vx": -16.1796406817096,
-      "vy": -21.738113707648196,
-      "a": 0.9974999999999998,
+      "x": 295.8570053532012,
+      "y": 493.939007862217,
+      "vx": -11.763135308933085,
+      "vy": -24.027948621169415,
+      "a": 1.2599999999999998,
       "fuel": 100,
       "hull": 100,
       "cargo": 0,
-      "invuln": 0.7166666666666665,
-      "shotTime": -8.133333333333317,
+      "invuln": 0.7499999999999999,
+      "shotTime": -8.04999999999998,
       "shield": 0
     },
     "delivered": 1,
     "pads": [
       {
+        "id": 1,
         "x": 540,
         "occupied": false
       },
       {
+        "id": 2,
         "x": 1040,
+        "occupied": true
+      },
+      {
+        "id": 3,
+        "x": 2200,
+        "occupied": true
+      },
+      {
+        "id": 4,
+        "x": 3650,
+        "occupied": true
+      },
+      {
+        "id": 5,
+        "x": 5200,
         "occupied": true
       }
     ],
     "turrets": [
       {
-        "x": 1330,
+        "x": 1700,
+        "hp": 2
+      },
+      {
+        "x": 3050,
+        "hp": 2
+      },
+      {
+        "x": 5650,
         "hp": 2
       }
     ],
+    "entities": {
+      "particles": 42,
+      "bullets": 0,
+      "enemyBullets": 0
+    },
     "score": 1029,
     "objective": {
-      "x": 1040,
-      "y": 824.7652883935694,
-      "label": "CREW"
+      "x": 1039.999999999999,
+      "y": 790.2013260774437,
+      "label": "CREW",
+      "padId": 2
     },
-    "time": 8.133333333333317
+    "time": 8.04999999999998
   },
   "trace": [
     {
-      "t": "4.3",
+      "t": "4.2",
       "x": 540,
-      "y": 825,
+      "y": 848,
       "vx": 0,
-      "vy": -17,
+      "vy": -29,
       "a": "0.00",
       "fuel": 100,
       "cargo": 1,
@@ -136,36 +243,36 @@
       "mode": "playing"
     },
     {
-      "t": "5.3",
-      "x": 503,
-      "y": 771,
-      "vx": -78,
-      "vy": -96,
-      "a": "-0.63",
-      "fuel": 97,
+      "t": "5.2",
+      "x": 499,
+      "y": 783,
+      "vx": -83,
+      "vy": -103,
+      "a": "-0.37",
+      "fuel": 96,
       "cargo": 1,
       "delivered": 0,
       "mode": "playing"
     },
     {
-      "t": "6.4",
-      "x": 408,
-      "y": 644,
-      "vx": -101,
-      "vy": -120,
-      "a": "-0.00",
+      "t": "6.3",
+      "x": 398,
+      "y": 652,
+      "vx": -98,
+      "vy": -111,
+      "a": "-0.05",
       "fuel": 94,
       "cargo": 1,
       "delivered": 0,
       "mode": "playing"
     },
     {
-      "t": "7.4",
-      "x": 330,
-      "y": 534,
-      "vx": -60,
-      "vy": -84,
-      "a": "1.68",
+      "t": "7.3",
+      "x": 325,
+      "y": 543,
+      "vx": -48,
+      "vy": -87,
+      "a": "1.57",
       "fuel": 93,
       "cargo": 1,
       "delivered": 0,

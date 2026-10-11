@@ -17,12 +17,12 @@
   },
   "shielded": {
     "hull": 100,
-    "fuel": 71.83333333333493,
+    "fuel": 71.66666666666828,
     "errors": []
   },
   "emptyPadFuel": {
     "before": 0,
-    "after": 35,
+    "after": 75,
     "padOccupied": false,
     "firstPickupFuel": 75
   },
@@ -35,6 +35,9 @@
     "mode": "playing",
     "hull": 100,
     "pads": [
+      true,
+      true,
+      true,
       true,
       true
     ]

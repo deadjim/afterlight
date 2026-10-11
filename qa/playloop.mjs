@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -15,6 +16,8 @@ const snap = () => page.evaluate(() => window.__afterlightDebug.snapshot());
 const initial = await snap();
 await page.waitForTimeout(4200);
 const afterPassiveLanding = await snap();
+assert.equal(afterPassiveLanding.ship.cargo,1,'first survivor collected by physical landing');
+assert.equal(afterPassiveLanding.pads[0].occupied,false);
 const trace = [];
 let current = { left: false, right: false, thrust: false };
 async function press(next) {
@@ -31,7 +34,7 @@ for (let i=0; i<340; i++) {
   const s=await snap();
   if (i%10===0) trace.push({ t: s.time.toFixed(1), x: Math.round(s.ship.x), y: Math.round(s.ship.y), vx: Math.round(s.ship.vx), vy: Math.round(s.ship.vy), a: s.ship.a.toFixed(2), fuel: Math.round(s.ship.fuel), cargo: s.ship.cargo, delivered: s.delivered, mode: s.mode });
   if (s.delivered>0 || s.mode!=='playing') break;
-  const targetX=260, targetY=425;
+  const targetX=s.objective.x, targetY=s.objective.y;
   const desiredVx=clamp((targetX-s.ship.x)*.6,-112,112);
   const desiredVy=clamp((targetY-s.ship.y)*.6,-125,125);
   let ax=(desiredVx-s.ship.vx)*2.0, ay=(desiredVy-s.ship.vy)*2.0-31;
@@ -43,6 +46,10 @@ for (let i=0; i<340; i++) {
 }
 await press({ left:false,right:false,thrust:false });
 const afterFlight=await snap();
+assert.equal(afterFlight.delivered,1,'keyboard flight delivered first survivor');
+assert.equal(afterFlight.ship.cargo,0);
+assert.equal(afterFlight.ship.fuel,100,'carrier refilled fuel');
+assert.deepEqual(errors,[],'no page exceptions');
 await page.screenshot({ path: path.join(out,'playloop-after-real-flight.png') });
 const report={ initial, afterPassiveLanding, afterFlight, trace, errors };
 await fs.writeFile(path.join(out,'playloop-report.json'),JSON.stringify(report,null,2));

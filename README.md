@@ -26,7 +26,7 @@ npx playwright install chromium
 npm run qa
 ```
 
-To run an individual check, use `npm run qa:smoke`, `npm run qa:playloop`, `npm run qa:campaign`, `npm run qa:combat`, or `npm run qa:edges`. Set `CHROME_PATH` to a local Chrome or Chromium executable to use it instead of Playwright's bundled Chromium. The smoke check accepts an optional base URL as its first argument.
+To run an individual check, use `npm run qa:smoke`, `npm run qa:playloop`, `npm run qa:campaign`, `npm run qa:combat`, `npm run qa:edges`, `npm run qa:wrap`, or `npm run qa:audio`. Set `CHROME_PATH` to a local Chrome or Chromium executable to use it instead of Playwright's bundled Chromium. The smoke check accepts an optional base URL as its first argument.
 
 ## Flight controls
 
@@ -39,12 +39,14 @@ To run an individual check, use `npm run qa:smoke`, `npm run qa:playloop`, `npm 
 | Pause | P or Escape |
 | Restart current sortie | R |
 
-Mobile provides simultaneous touch buttons. Fly toward amber rescue pads and land gently, then carry the crew back to the extraction ship. Read the mission briefing and the changing objective for guidance.
+Mobile provides simultaneous touch buttons. Fly in either direction through a continuous, wrapping landscape. Follow amber rescue beacons, land gently, then carry the crew back to the blue extraction ship. A sector clears only when every stranded person is safely delivered. Rescue pads provide a fuel top-up, and the carrier refuels and repairs your ship.
+
+Each sector is a large circular world: keep flying left or right and you eventually return to familiar terrain. The terrain repeats seamlessly, while each survivor and sentry keeps its state. The renderer draws only the visible landscape and nearby objects, and temporary effects have fixed limits, so completing more laps does not accumulate world data.
 
 ## Source
 
 - `dist/game.js`: flight simulation, missions, vector renderer, input and game interface.
-- `dist/audio.js`: procedural Web Audio sound effects.
+- `dist/audio.js`: procedural Web Audio effects, including layered bass exhaust with smooth ignition and release.
 - `dist/index.html`, `dist/style.css`: responsive interface.
 - `dist/fonts.css`, `dist/fonts/`: bundled Barlow Condensed and DM Sans, with their SIL Open Font License notices.
 - `qa/`: browser verification scripts, selected screenshots, and reports.

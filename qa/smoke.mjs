@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -23,15 +24,15 @@ for (const config of cases) {
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
   await page.goto(base, { waitUntil: 'networkidle' });
-  await page.screenshot({ path: path.join(root, `${config.name}-title.png`), fullPage: true });
+  await page.screenshot({ path: path.join(root, `smoke-${config.name}-title.png`), fullPage: true });
   const titleState = await inspect(page);
   await page.locator('#startButton').click();
   await page.waitForTimeout(100);
   const briefingState = await inspect(page);
-  await page.screenshot({ path: path.join(root, `${config.name}-briefing.png`), fullPage: true });
+  await page.screenshot({ path: path.join(root, `smoke-${config.name}-briefing.png`), fullPage: true });
   await page.locator('#briefingButton').click();
   await page.waitForTimeout(700);
-  await page.screenshot({ path: path.join(root, `${config.name}-flight.png`), fullPage: true });
+  await page.screenshot({ path: path.join(root, `smoke-${config.name}-flight.png`), fullPage: true });
   const flightState = await inspect(page);
   if (config.mobile) {
     const left = await center(page, '[data-control="left"]');
@@ -52,10 +53,19 @@ for (const config of cases) {
   await page.locator('#pauseButton').click();
   await page.waitForTimeout(100);
   const pausedState = await inspect(page);
-  await page.screenshot({ path: path.join(root, `${config.name}-pause.png`), fullPage: true });
+  await page.screenshot({ path: path.join(root, `smoke-${config.name}-pause.png`), fullPage: true });
   await page.locator('#resumeButton').click();
   await page.waitForTimeout(100);
   const resumedState = await inspect(page);
+  assert.equal(flightState.snapshot.mode,'playing',`${config.name} flight starts`);
+  assert.ok(Math.abs(afterControlState.snapshot.ship.x-flightState.snapshot.ship.x)>5,`${config.name} input moves ship`);
+  assert.ok(Math.abs(afterControlState.snapshot.ship.a-flightState.snapshot.ship.a)>.5,`${config.name} input rotates ship`);
+  assert.ok(afterControlState.snapshot.ship.fuel<flightState.snapshot.ship.fuel,`${config.name} thrust burns fuel`);
+  assert.equal(flightState.elements.touchControls.visible,config.mobile,`${config.name} touch controls visibility`);
+  assert.equal(pausedState.snapshot.mode,'paused');
+  assert.equal(resumedState.snapshot.mode,'playing');
+  assert.deepEqual(flightState.document,flightState.viewport,`${config.name} no viewport overflow`);
+  assert.deepEqual(errors,[],`${config.name} browser errors`);
   report.push({ config, titleState, briefingState, flightState, afterControlState, pausedState, resumedState, errors });
   await context.close();
 }

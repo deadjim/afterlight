@@ -1,0 +1,157 @@
+{
+  "before": {
+    "contexts": 0,
+    "state": null,
+    "nodes": {
+      "gains": 0,
+      "oscillators": 0,
+      "buffers": 0,
+      "filters": 0
+    },
+    "masterGain": null,
+    "engineGain": null,
+    "muted": false,
+    "mode": "title"
+  },
+  "started": {
+    "contexts": 1,
+    "state": "running",
+    "nodes": {
+      "gains": 8,
+      "oscillators": 3,
+      "buffers": 1,
+      "filters": 5
+    },
+    "masterGain": 0.41999998688697815,
+    "engineGain": 0,
+    "muted": false,
+    "mode": "playing"
+  },
+  "engineOn": {
+    "contexts": 1,
+    "state": "running",
+    "nodes": {
+      "gains": 8,
+      "oscillators": 3,
+      "buffers": 1,
+      "filters": 5
+    },
+    "masterGain": 0.41999998688697815,
+    "engineGain": 0.9396454095840454,
+    "muted": false,
+    "mode": "playing"
+  },
+  "engineOff": {
+    "contexts": 1,
+    "state": "running",
+    "nodes": {
+      "gains": 8,
+      "oscillators": 3,
+      "buffers": 1,
+      "filters": 5
+    },
+    "masterGain": 0.41999998688697815,
+    "engineGain": 0.0012835582019761205,
+    "muted": false,
+    "mode": "playing"
+  },
+  "paused": {
+    "contexts": 1,
+    "state": "running",
+    "nodes": {
+      "gains": 8,
+      "oscillators": 3,
+      "buffers": 1,
+      "filters": 5
+    },
+    "masterGain": 0.41999998688697815,
+    "engineGain": 0,
+    "muted": false,
+    "mode": "playing"
+  },
+  "muted": {
+    "contexts": 1,
+    "state": "running",
+    "nodes": {
+      "gains": 8,
+      "oscillators": 3,
+      "buffers": 1,
+      "filters": 5
+    },
+    "masterGain": 0.00029752773116342723,
+    "engineGain": 0,
+    "muted": true,
+    "mode": "playing"
+  },
+  "unmuted": {
+    "contexts": 1,
+    "state": "running",
+    "nodes": {
+      "gains": 8,
+      "oscillators": 3,
+      "buffers": 1,
+      "filters": 5
+    },
+    "masterGain": 0.4168923497200012,
+    "engineGain": 0.9354575276374817,
+    "muted": false,
+    "mode": "playing"
+  },
+  "suspended": {
+    "contexts": 1,
+    "state": "suspended",
+    "nodes": {
+      "gains": 8,
+      "oscillators": 3,
+      "buffers": 1,
+      "filters": 5
+    },
+    "masterGain": 0.4168923497200012,
+    "engineGain": 0.9354575276374817,
+    "muted": false,
+    "mode": "playing"
+  },
+  "resumed": {
+    "contexts": 1,
+    "state": "running",
+    "nodes": {
+      "gains": 9,
+      "oscillators": 4,
+      "buffers": 1,
+      "filters": 5
+    },
+    "masterGain": 0.41913583874702454,
+    "engineGain": 0.2734372913837433,
+    "muted": false,
+    "mode": "playing"
+  },
+  "blurred": {
+    "contexts": 1,
+    "state": "running",
+    "nodes": {
+      "gains": 9,
+      "oscillators": 4,
+      "buffers": 1,
+      "filters": 5
+    },
+    "masterGain": 0.41999998688697815,
+    "engineGain": 0.0004733579989988357,
+    "muted": false,
+    "mode": "paused"
+  },
+  "hidden": {
+    "contexts": 1,
+    "state": "running",
+    "nodes": {
+      "gains": 9,
+      "oscillators": 4,
+      "buffers": 1,
+      "filters": 5
+    },
+    "masterGain": 0.41999998688697815,
+    "engineGain": 0.0013103554956614971,
+    "muted": false,
+    "mode": "paused"
+  },
+  "errors": []
+}

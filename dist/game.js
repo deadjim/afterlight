@@ -7,20 +7,21 @@
   const $ = id => document.getElementById(id);
   const audio = window.AfterlightAudio || {};
   const M = [
-    { name: '01 / FIRST LIGHT', subtitle: 'The lost signal', crew: [540, 1040], turrets: [1330], tint: '#20ffd0', briefing: 'Two survivors are waiting on amber landing pads. Ease down to collect them, then fly back to the blue carrier. A soft landing needs a gentle approach and an upright ship.' },
-    { name: '02 / DEEP SIGNAL', subtitle: 'Through the fire', crew: [500, 1120, 1790], turrets: [850, 1510], tint: '#38dfff', briefing: 'Three crew remain beyond active defenses. Shoot the red sentries or fly around their slow, visible fire. Your carrier refills fuel and repairs your hull.' },
-    { name: '03 / LAST TRANSMISSION', subtitle: 'Bring them home', crew: [470, 960, 1530, 2060], turrets: [740, 1250, 1830], tint: '#a78cff', briefing: 'Four survivors. One final run. Watch your momentum near the ground; the carrier will accept a close, controlled approach.' },
+    { name: '01 / FIRST LIGHT', width: 6000, subtitle: 'The lost signal', crew: [540, 1040, 2200, 3650, 5200], turrets: [1700, 3050, 5650], tint: '#20ffd0', briefing: 'Five survivors are scattered around the entire moon. Fly left or right: the horizon loops seamlessly. Land gently on amber pads, then return to the blue carrier. Every unique survivor must make it home to clear the sector.' },
+    { name: '02 / DEEP SIGNAL', width: 7800, subtitle: 'Through the fire', crew: [500, 1430, 2540, 3790, 5180, 7100], turrets: [1020, 2070, 3260, 4640, 6310, 7430], tint: '#38dfff', briefing: 'Six crew remain across a wider orbital ring. Choose either direction and follow the nearest beacon. Shoot the red sentries or fly around their slow fire. Landing pads and the carrier replenish fuel.' },
+    { name: '03 / LAST TRANSMISSION', width: 9600, subtitle: 'Bring them home', crew: [470, 1260, 2410, 3580, 4740, 5900, 7240, 8900], turrets: [900, 1920, 3070, 4220, 5410, 6610, 8130, 9220], tint: '#a78cff', briefing: 'Eight survivors around one final world. The terrain wraps in both directions; there is no edge. Watch your momentum near each pad and bring everyone to the carrier to complete the campaign.' },
   ];
-  const WORLD_W = 2460, WORLD_H = 1130;
+  const WORLD_H = 1130;
   const CARRIER = { x: 260, y: 425 };
   const keys = Object.create(null), touches = Object.create(null);
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const mix = (a, b, t) => a + (b - a) * t;
-  const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+  const wrap = (x, w) => ((x % w) + w) % w;
+  const deltaX = (target, origin, w=game?.width||M[0].width) => wrap(target-origin+w*.5,w)-w*.5;
+  const nearX = (x, reference, w=game?.width||M[0].width) => reference+deltaX(x,reference,w);
+  const wrappedDistance = (a,b,w=game?.width||M[0].width) => Math.hypot(deltaX(a.x,b.x,w),a.y-b.y);
   const rand = (n) => { const x = Math.sin(n * 127.1 + 31.7) * 43758.5453; return x - Math.floor(x); };
   const TAU = Math.PI * 2;
-  const starfield = Array.from({length: 180}, (_, i) => ({ x: rand(i + 2) * WORLD_W, y: rand(i + 638) * 850, r: .35 + rand(i + 1183) * 1.45, p: rand(i + 2222) * TAU }));
-  const mountain = Array.from({length: 43}, (_,i) => ({x:i*61, y:655 + rand(i+111)*160}));
   const text = (id, value) => { const e=$(id); if(e) e.textContent=value; };
   const show = (id, yes) => { const e=$(id); if(e) e.classList.toggle('is-hidden', !yes); };
   const sound = (name,...args) => { if (typeof audio[name] === 'function') { try { audio[name](...args); } catch {} } };
@@ -31,29 +32,50 @@
 
   function makeLevel(index) {
     const spec=M[index];
-    const pads=spec.crew.map((x,i)=>({x, width: i===0&&index===0?154:132, occupied:true, blink:rand(i*16+index)}));
+    const pads=spec.crew.map((x,i)=>({id:i+1,x, width: i===0&&index===0?154:132, occupied:true, blink:rand(i*16+index)}));
     const turrets=spec.turrets.map((x,i)=>({x, hp:index===0?2:3, cooldown:2.2 + i*.6, flash:0}));
     const s={
-      level:index, pads, turrets, bullets:[], enemyBullets:[], particles:[], decals:[],
+      level:index, width:spec.width, pads, turrets, bullets:[], enemyBullets:[], particles:[], decals:[],
       ship:{x:index===0?540:390, y:index===0?690:480, vx:0, vy:0, a:0, fuel:100, hull:100, cargo:0, invuln:1.5, shotTime:0, shield:0},
       delivered:0, score:0, time:0, deaths:0, status:'', statusUntil:0, landingHint:'', objectiveX:pads[0].x,
       camera:{x:index===0?435:390,y:530}, ended:false, shake:0, pulse:0,
     };
     return s;
   }
+  function groundBase(x,w) {
+    const a=TAU*wrap(x,w)/w;
+    return 863+44*Math.sin(a*3+.8)+36*Math.sin(a*8+2.1)+20*Math.sin(a*19-.5)+9*Math.sin(a*41+1.7);
+  }
   function ground(x, g=game) {
-    let y=871 + 37*Math.sin(x*.0059 + .7) + 27*Math.sin(x*.0141 + 2.1) + 10*Math.sin(x*.041);
+    const w=g?.width||M[0].width;
+    let y=groundBase(x,w);
     if (!g) return y;
     for (const pad of g.pads) {
-      const d=Math.abs(x-pad.x), half=pad.width*.5;
-      if (d<half) return 854 + 15*Math.sin(pad.x*.0031);
+      const d=Math.abs(deltaX(x,pad.x,w)), half=pad.width*.5;
+      const flat=groundBase(pad.x,w);
+      if (d<half) return flat;
       if (d<half+56) {
-        const flat=854 + 15*Math.sin(pad.x*.0031);
         const t=(d-half)/56; const smooth=t*t*(3-2*t);
         y=mix(flat,y,smooth);
       }
     }
     return y;
+  }
+  function ridge(x,w) {
+    const a=TAU*wrap(x,w)/w;
+    return 740+62*Math.sin(a*2+.4)+45*Math.sin(a*9+2.1)+28*Math.sin(a*23-.7);
+  }
+  function forVisibleCopies(x,margin,draw) {
+    const w=game.width,first=Math.floor((cam.x-vw*.5-margin-x)/w),last=Math.ceil((cam.x+vw*.5+margin-x)/w);
+    for(let lap=first;lap<=last;lap++) {const image=x+lap*w;if(image>=cam.x-vw*.5-margin&&image<=cam.x+vw*.5+margin)draw(image);}
+  }
+  function rebase() {
+    const w=game.width,s=game.ship;
+    let shift=0;
+    if(s.x>w*1.5)shift=w; else if(s.x< -w*.5)shift=-w;
+    if(!shift)return;
+    s.x-=shift;cam.x-=shift;
+    for(const list of [game.bullets,game.enemyBullets,game.particles])for(const item of list)item.x-=shift;
   }
   function resize() {
     const r=canvas.getBoundingClientRect();
@@ -113,20 +135,21 @@
     if(s.hull<=0 || game.deaths>=4) { end(false); return; }
     s.x=levelIndex===0?540:360; s.y=levelIndex===0?660:470;
     s.vx=s.vy=0; s.a=0; s.fuel=Math.max(55,s.fuel); s.invuln=2.8;
+    cam.x=s.x;cam.y=s.y+(cw>ch*1.7&&ch<600?80:0);
     toast('SHIP RECOVERED • APPROACH SLOWLY',3.5);
   }
   function pickPad(pad) {
     const s=game.ship;
     pad.occupied=false; s.cargo++;
     s.vx*=.25; s.vy=-38; s.y=ground(pad.x)-29; s.fuel=Math.max(s.fuel,75);
-    game.score+=250; burst(pad.x,ground(pad.x)-18,'#ffcc82',30,110); sound('rescue');
+    game.score+=250; burst(nearX(pad.x,s.x),ground(pad.x)-18,'#ffcc82',30,110); sound('rescue');
     toast(s.cargo===1?'CREW ABOARD • RETURN TO BLUE CARRIER':`${s.cargo} CREW ABOARD • RETURN TO CARRIER`,4);
   }
   function dock() {
     const s=game.ship;
     if(s.cargo>0) {
       const n=s.cargo; s.cargo=0; game.delivered+=n; game.score+=n*500+Math.round(s.fuel*3);
-      burst(CARRIER.x,CARRIER.y,'#8ffcff',38,100); sound('dock'); game.pulse=1.2;
+      burst(nearX(CARRIER.x,s.x),CARRIER.y,'#8ffcff',38,100); sound('dock'); game.pulse=1.2;
       if(game.delivered>=game.pads.length) { end(true,levelIndex===M.length-1); return; }
       toast(`${n} CREW SAFE • ${game.pads.length-game.delivered} TO RESCUE`,4);
     } else toast('CARRIER REFUELED • FOLLOW AMBER BEACONS',2.5);
@@ -161,28 +184,28 @@
     const drag=Math.pow(.996,dt*60); s.vx*=drag; s.vy*=drag;
     const speed=Math.hypot(s.vx,s.vy); if(speed>310) {s.vx*=310/speed;s.vy*=310/speed;}
     s.x+=s.vx*dt; s.y+=s.vy*dt;
-    if(s.x<25){s.x=25;s.vx=Math.abs(s.vx)*.3;} if(s.x>WORLD_W-25){s.x=WORLD_W-25;s.vx=-Math.abs(s.vx)*.3;}
+    rebase();
     if(s.y<35){s.y=35;s.vy=Math.abs(s.vy)*.25;}
     const below=ground(s.x), bottom=s.y+14;
     if(bottom>=below) {
-      const pad=g.pads.find(p=>Math.abs(s.x-p.x)<p.width*.5-8);
+      const pad=g.pads.find(p=>Math.abs(deltaX(s.x,p.x,g.width))<p.width*.5-8);
       const safe=Math.abs(s.vx)<115&&s.vy<132&&Math.abs(s.a)<.9;
       if(pad&&safe) {
         s.y=below-16; s.vy=Math.min(-13,-Math.abs(s.vy)*.22); s.vx*=.63;
         if(pad.occupied) pickPad(pad);
-        else {s.fuel=Math.max(s.fuel,35);if(g.time>2 && g.statusUntil<g.time) toast('PAD STABLE • FUEL TOPPED UP',1.2);}
+        else {s.fuel=Math.max(s.fuel,75);if(g.time>2 && g.statusUntil<g.time) toast('PAD STABLE • FUEL TOPPED UP',1.2);}
       } else if(s.invuln>0) { s.y=below-17; s.vy=-Math.abs(s.vy)*.58; s.vx*=.78; }
       else crash();
     }
     if(mode!=='playing') return;
-    if(dist(s,CARRIER)<80&&Math.hypot(s.vx,s.vy)<190&&g.time>1) {
+    if(wrappedDistance(s,CARRIER,g.width)<80&&Math.hypot(s.vx,s.vy)<190&&g.time>1) {
       if(!g.dockLatch) {g.dockLatch=true;dock();}
     } else g.dockLatch=false;
     updateBullets(dt);
     updateTurrets(dt);
     g.particles=g.particles.filter(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.985;p.vy*=.985;p.life-=dt;return p.life>0;});
     if(g.particles.length>360)g.particles.splice(0,g.particles.length-360);
-    const targetX=clamp(s.x, vw*.38, WORLD_W-vw*.38), targetY=clamp(s.y+(cw>ch*1.7&&ch<600?80:0), 370, 850);
+    const targetX=s.x, targetY=clamp(s.y+(cw>ch*1.7&&ch<600?80:0), 370, 850);
     cam.x=mix(cam.x,targetX,1-Math.pow(.04,dt)); cam.y=mix(cam.y,targetY,1-Math.pow(.04,dt));
     if(Math.floor(g.time*10)!==Math.floor((g.time-dt)*10)) updateHud();
   }
@@ -190,8 +213,8 @@
     const g=game,s=g.ship;
     g.bullets=g.bullets.filter(b=>{
       b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;
-      if(b.life<=0||b.x<0||b.x>WORLD_W||b.y>ground(b.x))return false;
-      for(const t of g.turrets) if(t.hp>0&&Math.hypot(b.x-t.x,b.y-(ground(t.x)-30))<31) {
+      if(b.life<=0||b.y>ground(b.x))return false;
+      for(const t of g.turrets) if(t.hp>0&&Math.hypot(deltaX(b.x,t.x,g.width),b.y-(ground(t.x)-30))<31) {
         t.hp--;t.flash=.15;burst(b.x,b.y,t.hp?'#ff8d69':'#ff6a58',t.hp?8:35,t.hp?75:160);
         if(t.hp===0){g.score+=150;sound('explosion');toast('SENTRY DISABLED +150',2.1);}
         return false;
@@ -200,8 +223,8 @@
     });
     g.enemyBullets=g.enemyBullets.filter(b=>{
       b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;
-      if(b.life<=0||b.y>ground(b.x)||b.x<0||b.x>WORLD_W)return false;
-      if(dist(b,s)<20&&s.invuln<=0) {
+      if(b.life<=0||b.y>ground(b.x))return false;
+      if(wrappedDistance(b,s,g.width)<20&&s.invuln<=0) {
         burst(b.x,b.y,s.shield>0?'#81f8e6':'#ff7770',12,80);
         if(s.shield<=0){s.hull-=12;s.invuln=.65;game.shake=4;if(s.hull<=0)crash();} else sound('shot');
         return false;
@@ -214,13 +237,13 @@
     for(const t of g.turrets) {
       if(t.hp<=0)continue;
       t.flash=Math.max(0,t.flash-dt);
-      const d=Math.hypot(s.x-t.x,s.y-(ground(t.x)-32));
+      const dx=deltaX(s.x,t.x,g.width),d=Math.hypot(dx,s.y-(ground(t.x)-32));
       if(d<520&&d>95) {
         t.cooldown-=dt;
         if(t.cooldown<=0) {
-          const a=Math.atan2(s.y-(ground(t.x)-32),s.x-t.x);
+          const a=Math.atan2(s.y-(ground(t.x)-32),dx);
           const vx=Math.cos(a)*126,vy=Math.sin(a)*126;
-          g.enemyBullets.push({x:t.x+Math.cos(a)*22,y:ground(t.x)-32+Math.sin(a)*22,vx,vy,life:4});
+          g.enemyBullets.push({x:nearX(t.x,s.x,g.width)+Math.cos(a)*22,y:ground(t.x)-32+Math.sin(a)*22,vx,vy,life:4});
           t.cooldown=2.6+rand(g.time+t.x)*.55;t.flash=.27;
         }
       } else t.cooldown=Math.min(t.cooldown,1.7);
@@ -228,12 +251,12 @@
   }
   function nextObjective() {
     if(!game) return {x:540,y:ground(540)-15,label:'RESCUE'};
-    if(game.ship.cargo>0) return {x:CARRIER.x,y:CARRIER.y,label:'CARRIER'};
+    if(game.ship.cargo>0) return {x:nearX(CARRIER.x,game.ship.x),y:CARRIER.y,label:'CARRIER'};
     const s=game.ship;
     const pads=game.pads.filter(p=>p.occupied);
-    if(!pads.length)return {x:CARRIER.x,y:CARRIER.y,label:'CARRIER'};
-    const p=pads.sort((a,b)=>Math.abs(a.x-s.x)-Math.abs(b.x-s.x))[0];
-    return {x:p.x,y:ground(p.x)-28,label:'CREW'};
+    if(!pads.length)return {x:nearX(CARRIER.x,s.x),y:CARRIER.y,label:'CARRIER'};
+    const p=pads.sort((a,b)=>Math.abs(deltaX(a.x,s.x,game.width))-Math.abs(deltaX(b.x,s.x,game.width)))[0];
+    return {x:nearX(p.x,s.x),y:ground(p.x)-28,label:'CREW',padId:p.id};
   }
   function updateHud() {
     if(!game)return;
@@ -274,14 +297,23 @@
   function drawBackground() {
     ctx.setTransform(dpr,0,0,dpr,0,0);
     const gradient=ctx.createLinearGradient(0,0,0,ch);gradient.addColorStop(0,'#050814');gradient.addColorStop(.62,'#090e1b');gradient.addColorStop(1,'#0b1120');ctx.fillStyle=gradient;ctx.fillRect(0,0,cw,ch);
-    ctx.save();ctx.translate(cw*.83-(cam.x-530)*scale*.055,ch*.25-(cam.y-530)*scale*.025);
+    const planetPhase=TAU*wrap(cam.x,game?.width||M[0].width)/(game?.width||M[0].width);
+    ctx.save();ctx.translate(cw*.79+Math.sin(planetPhase+.35)*Math.min(cw*.11,125),ch*.25-(cam.y-530)*scale*.025);
     const R=Math.max(75,Math.min(cw,ch)*.19), pg=ctx.createRadialGradient(-R*.3,-R*.28,R*.1,0,0,R*1.35);pg.addColorStop(0,'rgba(80,110,158,.30)');pg.addColorStop(.55,'rgba(36,56,99,.22)');pg.addColorStop(1,'rgba(24,43,74,0)');ctx.fillStyle=pg;ctx.beginPath();ctx.arc(0,0,R*1.5,0,TAU);ctx.fill();
     ctx.beginPath();ctx.arc(0,0,R,0,TAU);ctx.fillStyle='#0e1a2d';ctx.fill();ctx.strokeStyle='rgba(95,220,227,.45)';ctx.lineWidth=1;ctx.stroke();
     ctx.save();ctx.beginPath();ctx.arc(0,0,R,0,TAU);ctx.clip();
     for(let i=0;i<6;i++){const yy=(-.72+i*.29)*R,span=Math.sqrt(Math.max(.02,1-(yy/R)**2))*R;ctx.beginPath();ctx.ellipse(0,yy,span,12+i*1.5,-.11,0,Math.PI);ctx.strokeStyle=`rgba(91,192,207,${.10+i*.012})`;ctx.lineWidth=1;ctx.stroke();}
     for(let i=0;i<12;i++){const yy=-R+i*R*.18,xx=Math.sin(i*1.4)*R*.4;line([[xx-R,yy],[xx+R,yy+R*.08]],`rgba(103,142,188,${.022+i*.004})`,1);}ctx.restore();
     ctx.save();ctx.rotate(-.29);ctx.scale(1,.28);circle(0,0,R*1.62,'rgba(108,169,197,.42)',2,15);circle(0,0,R*1.45,'rgba(118,181,213,.22)',1);ctx.restore();ctx.restore();
-    for(const st of starfield){const x=(st.x-cam.x*.16)*scale+cw*.5,y=(st.y-cam.y*.14)*scale+ch*.5;if(x<0||x>cw||y<0||y>ch)continue;const alpha=.24+.35*(.5+.5*Math.sin(renderClock*1.7+st.p));ctx.fillStyle=`rgba(160,211,235,${alpha})`;ctx.fillRect(x,y,st.r,st.r);}
+    const w=game?.width||M[0].width,cell=60,cellCount=w/cell,parallax=.35;
+    const first=Math.floor((cam.x-vw/(2*parallax)-80)/cell),last=Math.ceil((cam.x+vw/(2*parallax)+80)/cell);
+    for(let i=first;i<=last;i++){
+      const id=wrap(i,cellCount),x=(i*cell+rand(id+2)*cell-cam.x)*scale*parallax+cw*.5;
+      const y=(rand(id+638)*850-cam.y*.14)*scale+ch*.5;
+      if(x<0||x>cw||y<0||y>ch)continue;
+      const r=.35+rand(id+1183)*1.45,alpha=.24+.35*(.5+.5*Math.sin(renderClock*1.7+rand(id+2222)*TAU));
+      ctx.fillStyle=`rgba(160,211,235,${alpha})`;ctx.fillRect(x,y,r,r);
+    }
     ctx.strokeStyle='rgba(110,155,175,.025)';ctx.lineWidth=1;for(let y=(renderClock*4)%6;y<ch;y+=6){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cw,y);ctx.stroke();}
   }
   function worldTransform() {
@@ -289,39 +321,39 @@
     ctx.setTransform(dpr*scale,0,0,dpr*scale,dpr*(cw*.5-cam.x*scale+(rand(renderClock*40)-.5)*shake),dpr*(ch*.5-cam.y*scale+(rand(renderClock*50)-.5)*shake));
   }
   function drawRidge() {
-    const g=game;
-    ctx.beginPath();ctx.moveTo(-100,WORLD_H+300);for(const v of mountain)ctx.lineTo(v.x,v.y+130);ctx.lineTo(WORLD_W+100,WORLD_H+300);ctx.closePath();ctx.fillStyle='#0c1727';ctx.fill();
-    const points=[];for(let x=0;x<=WORLD_W;x+=24)points.push([x,ground(x,g)]);
-    ctx.beginPath();ctx.moveTo(-80,WORLD_H+300);for(const [x,y] of points)ctx.lineTo(x,y);ctx.lineTo(WORLD_W+80,WORLD_H+300);ctx.closePath();ctx.fillStyle='#0c1722';ctx.fill();
-    for(let x=0;x<WORLD_W;x+=95) {
-      const y=ground(x,g), y2=ground(x+95,g), y3=ground(x+47,g)+95+rand(x)*65;
-      line([[x,y],[x+47,y3],[x+95,y2]],'rgba(76,150,160,.14)',1);
-      if(x%190===0)line([[x+47,y3],[x+42,y3+140]],'rgba(76,150,160,.085)',1);
+    const g=game,left=cam.x-vw*.5-120,right=cam.x+vw*.5+120;
+    ctx.beginPath();ctx.moveTo(left,WORLD_H+300);for(let x=Math.floor(left/60)*60;x<=right+60;x+=60)ctx.lineTo(x,ridge(x,g.width)+130);ctx.lineTo(right,WORLD_H+300);ctx.closePath();ctx.fillStyle='#0c1727';ctx.fill();
+    const points=[];for(let x=Math.floor(left/24)*24;x<=right+24;x+=24)points.push([x,ground(x,g)]);
+    ctx.beginPath();ctx.moveTo(points[0][0],WORLD_H+300);for(const [x,y] of points)ctx.lineTo(x,y);ctx.lineTo(points.at(-1)[0],WORLD_H+300);ctx.closePath();ctx.fillStyle='#0c1722';ctx.fill();
+    for(let x=Math.floor(left/100)*100;x<=right+100;x+=100) {
+      const y=ground(x,g), y2=ground(x+100,g), y3=ground(x+50,g)+110+25*Math.sin(TAU*wrap(x,g.width)*13/g.width);
+      line([[x,y],[x+50,y3],[x+100,y2]],'rgba(76,150,160,.14)',1);
+      if(Math.round(x/100)%2===0)line([[x+50,y3],[x+45,y3+140]],'rgba(76,150,160,.085)',1);
     }
     line(points,M[g.level].tint,2.15,16);
     line(points,'rgba(181,255,240,.25)',.65,0);
-    for(let x=0;x<=WORLD_W;x+=42){const y=ground(x,g);circle(x,y,1.1,'rgba(126,255,230,.7)',1,0,true);}
-    for(const pad of g.pads) drawPad(pad);
-    for(const t of g.turrets) drawTurret(t);
+    for(let x=Math.floor(left/40)*40;x<=right+40;x+=40){const y=ground(x,g);circle(x,y,1.1,'rgba(126,255,230,.7)',1,0,true);}
+    for(const pad of g.pads)forVisibleCopies(pad.x,pad.width*.5+100,x=>drawPad(pad,x));
+    for(const t of g.turrets)forVisibleCopies(t.x,95,x=>drawTurret(t,x));
   }
-  function drawPad(p) {
-    const y=ground(p.x),w=p.width*.5,live=p.occupied;
-    ctx.fillStyle='rgba(232,153,69,.065)';ctx.fillRect(p.x-w,y-32,p.width,32);
-    line([[p.x-w,y],[p.x+w,y]],live?'#ffbc60':'#778f9c',3.3,live?21:5);
-    line([[p.x-w,y-10],[p.x-w,y+8],[p.x-w+16,y+8]],live?'#eeb97a':'#7c9ba2',1.7,live?8:0);
-    line([[p.x+w,y-10],[p.x+w,y+8],[p.x+w-16,y+8]],live?'#eeb97a':'#7c9ba2',1.7,live?8:0);
-    for(const dx of [-w+8,w-8]){circle(p.x+dx,y-10,2.4,live?'#ffd393':'#749cb1',1,live?9:0,true);}
-    line([[p.x-w+19,y-5],[p.x+w-19,y-5]],'rgba(255,217,159,.3)',1);
+  function drawPad(p,x=p.x) {
+    const y=ground(x),w=p.width*.5,live=p.occupied;
+    ctx.fillStyle='rgba(232,153,69,.065)';ctx.fillRect(x-w,y-32,p.width,32);
+    line([[x-w,y],[x+w,y]],live?'#ffbc60':'#778f9c',3.3,live?21:5);
+    line([[x-w,y-10],[x-w,y+8],[x-w+16,y+8]],live?'#eeb97a':'#7c9ba2',1.7,live?8:0);
+    line([[x+w,y-10],[x+w,y+8],[x+w-16,y+8]],live?'#eeb97a':'#7c9ba2',1.7,live?8:0);
+    for(const dx of [-w+8,w-8]){circle(x+dx,y-10,2.4,live?'#ffd393':'#749cb1',1,live?9:0,true);}
+    line([[x-w+19,y-5],[x+w-19,y-5]],'rgba(255,217,159,.3)',1);
     if(live) {
       const pulse=.5+.5*Math.sin(renderClock*3+p.blink*TAU);
-      circle(p.x,y-40,8+pulse*8,`rgba(255,200,112,${.27+pulse*.23})`,1,8);
-      line([[p.x,y-54-pulse*9],[p.x,y-72-pulse*9]],'rgba(255,208,142,.65)',1,6);
-      label('SURVIVOR',p.x,y-82-pulse*9,10,'#e6b87e');
-      const x=p.x,head=y-22;circle(x,head,3.3,'#ffd498',1.4,6);line([[x,head+4],[x,head+14],[x-4,head+21]],'#ffd498',1.2,5);line([[x,head+14],[x+4,head+21]],'#ffd498',1.2,5);line([[x-5,head+9],[x+5,head+9]],'#ffd498',1.1,4);
+      circle(x,y-40,8+pulse*8,`rgba(255,200,112,${.27+pulse*.23})`,1,8);
+      line([[x,y-54-pulse*9],[x,y-72-pulse*9]],'rgba(255,208,142,.65)',1,6);
+      label('SURVIVOR',x,y-82-pulse*9,10,'#e6b87e');
+      const head=y-22;circle(x,head,3.3,'#ffd498',1.4,6);line([[x,head+4],[x,head+14],[x-4,head+21]],'#ffd498',1.2,5);line([[x,head+14],[x+4,head+21]],'#ffd498',1.2,5);line([[x-5,head+9],[x+5,head+9]],'#ffd498',1.1,4);
     }
   }
-  function drawCarrier() {
-    const {x,y}=CARRIER, pulse=game?.pulse||0;
+  function drawCarrier(x=CARRIER.x) {
+    const {y}=CARRIER, pulse=game?.pulse||0;
     ctx.save();ctx.translate(x,y);const a=renderClock;
     circle(0,0,62+pulse*16,`rgba(36,223,247,${.35+pulse*.4})`,1.5,19);
     circle(0,0,79+Math.sin(a*2)*3,'rgba(116,215,236,.16)',1,8);
@@ -334,17 +366,17 @@
     for(const sign of [-1,1]){line([[sign*44,-25],[sign*47,-39],[sign*55,-39]],'#78b8c7',1.2,3);line([[sign*44,25],[sign*47,39],[sign*55,39]],'#78b8c7',1.2,3);}
     ctx.restore();label('CARRIER / EXTRACTION',x,y-106,10,'#9fe9ee');
   }
-  function drawTurret(t) {
-    const y=ground(t.x)-25;
-    if(t.hp<=0){line([[t.x-19,y+25],[t.x-8,y+11],[t.x+9,y+17],[t.x+22,y+25]],'#a05d59',1.5,3);return;}
+  function drawTurret(t,x=t.x) {
+    const y=ground(x)-25;
+    if(t.hp<=0){line([[x-19,y+25],[x-8,y+11],[x+9,y+17],[x+22,y+25]],'#a05d59',1.5,3);return;}
     const flash=t.flash>0;
-    ctx.save();ctx.translate(t.x,y);
+    ctx.save();ctx.translate(x,y);
     line([[-21,25],[-15,4],[-7,-5],[7,-5],[15,4],[21,25]],flash?'#ffd2a7':'#ff826c',1.7,flash?17:9);
     line([[-15,7],[15,7]],'#ff8b75',1.2,8);line([[-8,-5],[-5,-18],[5,-18],[8,-5]],'#ff9277',1.4,8);
     circle(0,-2,5,flash?'#fff1d3':'#ff715f',1.3,12,true);
     for(const sx of [-1,1])line([[sx*18,14],[sx*28,21],[sx*28,25]],'#924e53',1);
     ctx.restore();
-    if(dist(game.ship,{x:t.x,y})<500&&mode==='playing')label('SENTRY',t.x,y-45,9,'#bc7270');
+    if(wrappedDistance(game.ship,{x:t.x,y})<500&&mode==='playing')label('SENTRY',x,y-45,9,'#bc7270');
   }
   function drawShip(s) {
     ctx.save();ctx.translate(s.x,s.y);ctx.rotate(s.a);
@@ -359,9 +391,9 @@
   }
   function drawParticles() {
     const g=game;if(!g)return;
-    for(const p of g.particles){ctx.globalAlpha=clamp(p.life/(p.max||.6),0,1);circle(p.x,p.y,p.size,p.color,1,p.size*4,true);}ctx.globalAlpha=1;
-    for(const b of g.bullets){line([[b.x-b.vx*.035,b.y-b.vy*.035],[b.x,b.y]],'#f8efc4',2,12);circle(b.x,b.y,2,'#fff8df',1,9,true);}
-    for(const b of g.enemyBullets){circle(b.x,b.y,5,'#ff705e',1.5,13);circle(b.x,b.y,2,'#ffd2ae',1,6,true);}
+    for(const p of g.particles)forVisibleCopies(p.x,30,x=>{ctx.globalAlpha=clamp(p.life/(p.max||.6),0,1);circle(x,p.y,p.size,p.color,1,p.size*4,true);});ctx.globalAlpha=1;
+    for(const b of g.bullets)forVisibleCopies(b.x,50,x=>{line([[x-b.vx*.035,b.y-b.vy*.035],[x,b.y]],'#f8efc4',2,12);circle(x,b.y,2,'#fff8df',1,9,true);});
+    for(const b of g.enemyBullets)forVisibleCopies(b.x,30,x=>{circle(x,b.y,5,'#ff705e',1.5,13);circle(x,b.y,2,'#ffd2ae',1,6,true);});
   }
   function drawDirection() {
     if(mode!=='playing'||!game)return;
@@ -395,7 +427,7 @@
   }
   function render() {
     drawBackground();worldTransform();
-    drawRidge();drawCarrier();drawParticles();
+    drawRidge();forVisibleCopies(CARRIER.x,120,drawCarrier);drawParticles();
     if(game) { if(mode==='title'||mode==='briefing')drawTitleScene();else drawShip(game.ship); }
     drawDirection();
     ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -440,6 +472,6 @@
   addEventListener('resize',resize);bindTouch();resize();
   game=makeLevel(0);cam={x:580,y:520};show('titleScreen',true);show('briefingScreen',false);show('pauseScreen',false);show('resultScreen',false);updateHud();
   if($('muteButton')){$('muteButton').classList.toggle('is-muted',!!audio.muted);$('muteButton').setAttribute('aria-label',audio.muted?'Unmute audio':'Mute audio');}
-  window.__afterlightDebug={snapshot:()=>({mode,level:levelIndex+1,ship:{...game.ship},delivered:game.delivered,pads:game.pads.map(p=>({x:p.x,occupied:p.occupied})),turrets:game.turrets.map(t=>({x:t.x,hp:t.hp})),score:totalScore(),objective:nextObjective(),time:game.time}),start:(level=1)=>{campaignScore=0;startLevel(clamp(level-1,0,2),false);},setShip:(x,y,vx=0,vy=0,a=0)=>{Object.assign(game.ship,{x,y,vx,vy,a});},setMode:(value)=>{if(value==='playing')enterPlay();else if(value==='paused')setPause(true);}};
+  window.__afterlightDebug={snapshot:()=>({mode,level:levelIndex+1,worldWidth:game.width,camera:{...cam},ship:{...game.ship},delivered:game.delivered,pads:game.pads.map(p=>({id:p.id,x:p.x,occupied:p.occupied})),turrets:game.turrets.map(t=>({x:t.x,hp:t.hp})),entities:{particles:game.particles.length,bullets:game.bullets.length,enemyBullets:game.enemyBullets.length},score:totalScore(),objective:nextObjective(),time:game.time}),ground:(x)=>ground(x),wrappedDx:(target,origin)=>deltaX(target,origin,game.width),start:(level=1)=>{campaignScore=0;startLevel(clamp(level-1,0,2),false);},setShip:(x,y,vx=0,vy=0,a=0)=>{Object.assign(game.ship,{x,y,vx,vy,a});cam.x=x;cam.y=clamp(y+(cw>ch*1.7&&ch<600?80:0),370,850);},setMode:(value)=>{if(value==='playing')enterPlay();else if(value==='paused')setPause(true);}};
   requestAnimationFrame(frame);
 })();

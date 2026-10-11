@@ -8,40 +8,107 @@
     "levels": [
       {
         "level": 1,
-        "beforePads": 2,
+        "worldWidth": 6000,
+        "pads": 5,
         "pickups": [
-          1,
-          2
+          {
+            "id": 1,
+            "cargo": 1
+          },
+          {
+            "id": 2,
+            "cargo": 2
+          },
+          {
+            "id": 3,
+            "cargo": 3
+          },
+          {
+            "id": 4,
+            "cargo": 4
+          },
+          {
+            "id": 5,
+            "cargo": 5
+          }
         ],
-        "winMode": "result",
-        "delivered": 2,
+        "delivered": 5,
         "resultTitle": "SECTOR CLEAR",
         "resultAction": "NEXT SECTOR"
       },
       {
         "level": 2,
-        "beforePads": 3,
+        "worldWidth": 7800,
+        "pads": 6,
         "pickups": [
-          1,
-          2,
-          3
+          {
+            "id": 1,
+            "cargo": 1
+          },
+          {
+            "id": 2,
+            "cargo": 2
+          },
+          {
+            "id": 3,
+            "cargo": 3
+          },
+          {
+            "id": 4,
+            "cargo": 4
+          },
+          {
+            "id": 5,
+            "cargo": 5
+          },
+          {
+            "id": 6,
+            "cargo": 6
+          }
         ],
-        "winMode": "result",
-        "delivered": 3,
+        "delivered": 6,
         "resultTitle": "SECTOR CLEAR",
         "resultAction": "NEXT SECTOR"
       },
       {
         "level": 3,
-        "beforePads": 4,
+        "worldWidth": 9600,
+        "pads": 8,
         "pickups": [
-          1,
-          2,
-          3,
-          4
+          {
+            "id": 1,
+            "cargo": 1
+          },
+          {
+            "id": 2,
+            "cargo": 2
+          },
+          {
+            "id": 3,
+            "cargo": 3
+          },
+          {
+            "id": 4,
+            "cargo": 4
+          },
+          {
+            "id": 5,
+            "cargo": 5
+          },
+          {
+            "id": 6,
+            "cargo": 6
+          },
+          {
+            "id": 7,
+            "cargo": 7
+          },
+          {
+            "id": 8,
+            "cargo": 8
+          }
         ],
-        "winMode": "result",
-        "delivered": 4,
+        "delivered": 8,
         "resultTitle": "ALL SIGNALS FOUND",
         "resultAction": "PLAY AGAIN"
       }
@@ -57,40 +124,107 @@
     "levels": [
       {
         "level": 1,
-        "beforePads": 2,
+        "worldWidth": 6000,
+        "pads": 5,
         "pickups": [
-          1,
-          2
+          {
+            "id": 1,
+            "cargo": 1
+          },
+          {
+            "id": 2,
+            "cargo": 2
+          },
+          {
+            "id": 3,
+            "cargo": 3
+          },
+          {
+            "id": 4,
+            "cargo": 4
+          },
+          {
+            "id": 5,
+            "cargo": 5
+          }
         ],
-        "winMode": "result",
-        "delivered": 2,
+        "delivered": 5,
         "resultTitle": "SECTOR CLEAR",
         "resultAction": "NEXT SECTOR"
       },
       {
         "level": 2,
-        "beforePads": 3,
+        "worldWidth": 7800,
+        "pads": 6,
         "pickups": [
-          1,
-          2,
-          3
+          {
+            "id": 1,
+            "cargo": 1
+          },
+          {
+            "id": 2,
+            "cargo": 2
+          },
+          {
+            "id": 3,
+            "cargo": 3
+          },
+          {
+            "id": 4,
+            "cargo": 4
+          },
+          {
+            "id": 5,
+            "cargo": 5
+          },
+          {
+            "id": 6,
+            "cargo": 6
+          }
         ],
-        "winMode": "result",
-        "delivered": 3,
+        "delivered": 6,
         "resultTitle": "SECTOR CLEAR",
         "resultAction": "NEXT SECTOR"
       },
       {
         "level": 3,
-        "beforePads": 4,
+        "worldWidth": 9600,
+        "pads": 8,
         "pickups": [
-          1,
-          2,
-          3,
-          4
+          {
+            "id": 1,
+            "cargo": 1
+          },
+          {
+            "id": 2,
+            "cargo": 2
+          },
+          {
+            "id": 3,
+            "cargo": 3
+          },
+          {
+            "id": 4,
+            "cargo": 4
+          },
+          {
+            "id": 5,
+            "cargo": 5
+          },
+          {
+            "id": 6,
+            "cargo": 6
+          },
+          {
+            "id": 7,
+            "cargo": 7
+          },
+          {
+            "id": 8,
+            "cargo": 8
+          }
         ],
-        "winMode": "result",
-        "delivered": 4,
+        "delivered": 8,
         "resultTitle": "ALL SIGNALS FOUND",
         "resultAction": "PLAY AGAIN"
       }

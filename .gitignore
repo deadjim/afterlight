@@ -12,6 +12,8 @@ qa/*.png
 !qa/campaign-report.json
 !qa/edges-report.json
 !qa/combat-report.json
+!qa/wrap-report.json
+!qa/audio-report.json
 !qa/desktop-title.png
 !qa/desktop-flight.png
 !qa/portrait-flight.png

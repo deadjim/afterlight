@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -17,20 +18,21 @@ async function makePage() {
   await page.locator('#startButton').click();await page.locator('#briefingButton').click();
   return {context,page,errors,snap:()=>page.evaluate(()=>window.__afterlightDebug.snapshot())};
 }
-const flat=x=>854+15*Math.sin(x*.0031);
 {
   const {context,page,errors,snap}=await makePage();
-  const x=1330,y=871+37*Math.sin(x*.0059+.7)+27*Math.sin(x*.0141+2.1)+10*Math.sin(x*.041);
+  const x=(await snap()).turrets[0].x,y=await page.evaluate(x=>window.__afterlightDebug.ground(x),x);
   await page.evaluate(([x,y])=>window.__afterlightDebug.setShip(x,y-205,0,0,Math.PI),[x,y]);
   const before=await snap();
   await page.keyboard.down('Space');await page.waitForTimeout(1200);await page.keyboard.up('Space');
   const after=await snap();
   report.fire={before:{hp:before.turrets[0].hp,score:before.score},after:{hp:after.turrets[0].hp,score:after.score},errors};
+  assert.equal(after.turrets[0].hp,0,'actual Fire key destroys sentry');
+  assert.ok(after.score>=before.score+150,'sentry awards score');
   await context.close();
 }
 async function hitScenario(shield) {
   const {context,page,errors,snap}=await makePage();
-  const x=1330,y=871+37*Math.sin(x*.0059+.7)+27*Math.sin(x*.0141+2.1)+10*Math.sin(x*.041)-25-130;
+  const x=(await snap()).turrets[0].x,y=(await page.evaluate(x=>window.__afterlightDebug.ground(x),x))-25-130;
   if(shield) await page.keyboard.down('ShiftLeft');
   for(let i=0;i<55;i++) {
     await page.evaluate(([x,y])=>window.__afterlightDebug.setShip(x,y,0,0,0),[x,y]);
@@ -43,26 +45,35 @@ async function hitScenario(shield) {
 }
 report.unshielded=await hitScenario(false);
 report.shielded=await hitScenario(true);
+assert.ok(report.unshielded.hull<100,'unshielded ship takes sentry damage');
+assert.equal(report.shielded.hull,100,'shield blocks sentry damage');
 {
   const {context,page,errors,snap}=await makePage();
   await page.evaluate(()=>window.__afterlightDebug.setFuel(0));
-  const x=540;
-  await page.evaluate(([x,y])=>window.__afterlightDebug.setShip(x,y,0,5,0),[x,flat(x)-14]);
+  const x=(await snap()).pads[0].x;
+  await page.evaluate(x=>window.__afterlightDebug.setShip(x,window.__afterlightDebug.ground(x)-14,0,5,0),x);
   await page.waitForTimeout(150);
   const collected=await snap();
   await page.evaluate(()=>window.__afterlightDebug.setFuel(0));
-  await page.evaluate(([x,y])=>window.__afterlightDebug.setShip(x,y,0,5,0),[x,flat(x)-14]);
+  await page.evaluate(x=>window.__afterlightDebug.setShip(x,window.__afterlightDebug.ground(x)-14,0,5,0),x);
   await page.waitForTimeout(160);
   report.emptyPadFuel={before:0,after:(await snap()).ship.fuel,padOccupied:(await snap()).pads[0].occupied,firstPickupFuel:collected.ship.fuel};
+  assert.equal(report.emptyPadFuel.after,75,'empty pad refills fuel');
+  assert.equal(report.emptyPadFuel.padOccupied,false);
   await page.evaluate(()=>window.__afterlightDebug.setHull(20));
   await page.evaluate(()=>window.__afterlightDebug.setInvuln(0));
-  await page.evaluate(()=>window.__afterlightDebug.setShip(800,1000,0,120,0));
+  await page.evaluate(()=>window.__afterlightDebug.setShip(800,window.__afterlightDebug.ground(800)+50,0,120,0));
   await page.waitForTimeout(180);
   const lost=await snap();
   report.lost={mode:lost.mode,resultTitle:await page.locator('#resultTitle').innerText(),resultAction:await page.locator('#resultButton').innerText()};
+  assert.equal(report.lost.mode,'result');
+  assert.equal(report.lost.resultTitle,'SIGNAL LOST');
   await page.locator('#resultButton').click();
   const retried=await snap();
   report.retry={mode:retried.mode,hull:retried.ship.hull,pads:retried.pads.map(p=>p.occupied)};
+  assert.equal(report.retry.mode,'playing');
+  assert.equal(report.retry.hull,100);
+  assert.ok(report.retry.pads.every(Boolean));
   report.endErrors=errors;
   await context.close();
 }
@@ -70,6 +81,7 @@ report.shielded=await hitScenario(true);
   const {context,page,errors,snap}=await makePage();
   await page.evaluate(()=>{Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));});
   report.syntheticVisibility={mode:(await snap()).mode,errors};
+  assert.equal(report.syntheticVisibility.mode,'paused');
   await context.close();
 }
 await browser.close();

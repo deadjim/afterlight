@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 import { chromium } from 'playwright';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -15,21 +16,32 @@ await page.locator('#briefingButton').click();
 const snap = () => page.evaluate(()=>window.__afterlightDebug.snapshot());
 await page.waitForTimeout(4200);
 report.pickedFirst = await snap();
+assert.equal(report.pickedFirst.ship.cargo,1,'first pad pickup');
 // State-assisted crash: move the actual ship onto bare terrain, then let game collision handle it.
-await page.evaluate(()=>window.__afterlightDebug.setShip(800,1000,0,120,0));
+await page.evaluate(()=>window.__afterlightDebug.setShip(800,window.__afterlightDebug.ground(800)+50,0,120,0));
 await page.waitForTimeout(180);
 report.afterCrash = await snap();
+assert.equal(report.afterCrash.ship.cargo,1,'recoverable crash keeps cargo');
+assert.ok(report.afterCrash.ship.hull<report.pickedFirst.ship.hull);
 // State-assisted second pickup and dock use real simulation triggers, not direct score/cargo mutation.
-await page.evaluate(()=>window.__afterlightDebug.setShip(1040,825,0,0,0));
-await page.waitForTimeout(1650);
+await page.evaluate(()=>window.__afterlightDebug.setShip(1040,window.__afterlightDebug.ground(1040)-14,0,5,0));
+await page.waitForFunction(()=>window.__afterlightDebug.snapshot().ship.cargo===2,null,{timeout:2000});
 report.pickedSecond = await snap();
+assert.equal(report.pickedSecond.pads[1].occupied,false);
+for(const pad of report.pickedSecond.pads.filter(p=>p.occupied)) {
+  await page.evaluate(x=>window.__afterlightDebug.setShip(x,window.__afterlightDebug.ground(x)-14,0,5,0),pad.x);
+  await page.waitForFunction(id=>!window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied,pad.id,{timeout:2000});
+}
 await page.evaluate(()=>window.__afterlightDebug.setShip(260,425,0,0,0));
-await page.waitForTimeout(200);
+await page.waitForFunction(()=>window.__afterlightDebug.snapshot().mode==='result',null,{timeout:2000});
 report.win = await snap();
+assert.equal(report.win.delivered,5,'all stage-one crew delivered');
 report.result = await page.locator('#resultScreen').innerText();
-await page.screenshot({ path: path.join(out,'desktop-sector-clear.png') });
+await page.screenshot({ path: path.join(out,'edges-desktop-sector-clear.png') });
 await page.locator('#resultButton').click();
 report.nextSector = await snap();
+assert.equal(report.nextSector.level,2);
+assert.equal(report.nextSector.mode,'briefing');
 report.nextBriefing = await page.locator('#briefingScreen').innerText();
 report.errors = errors;
 await context.close();

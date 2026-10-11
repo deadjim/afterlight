@@ -2,6 +2,8 @@
 
 An original browser game about gravity flight and rescuing stranded crews. Inspired by the rescue mechanics of Oids and the color-vector arcade tradition. All geometry and sound are generated in the browser.
 
+[Play AFTERLIGHT](https://afterlight.45-77-127-32.nip.io)
+
 ![AFTERLIGHT gameplay](qa/desktop-flight.png)
 
 ## Run locally
@@ -48,6 +50,27 @@ Mobile provides simultaneous touch buttons. Fly toward amber rescue pads and lan
 - `qa/`: browser verification scripts, selected screenshots, and reports.
 
 The game stores score and sound preference in browser-local storage when available. It does not require accounts, a game server, analytics, or remote assets.
+
+## Vultr hosting
+
+The public game runs on the existing Vultr host, with HTTPS provided by Caddy. `deploy/server.py` serves only `dist` on loopback; it needs Python 3.9 or newer and no third-party packages. To try that server locally:
+
+```sh
+python3 deploy/server.py --port 4173
+python3 -m unittest discover -s deploy -p 'test_*.py'
+```
+
+The configuration in `deploy/vultr/` matches this host's managed deployment contract. It uses a dedicated app user, a reserved port, hardened service settings, and Caddy's own site file. Credentials and SSH keys are not part of this repository.
+
+On the configured host, stage a clean, committed repository export under your own `/srv/_staging/<agent>/afterlight/`, then run:
+
+```sh
+sudo deploy afterlight --smoke /srv/_staging/<agent>/afterlight
+sudo deploy afterlight --from /srv/_staging/<agent>/afterlight
+sudo deploy afterlight --status
+```
+
+Each deploy creates an immutable release, switches it atomically, checks `/healthz`, and reverts to the previous release if the check fails. An intentional rollback uses `sudo deploy afterlight --rollback`. Caddy configuration changes go through `sudoedit /etc/caddy/sites.d/afterlight.caddy` and `sudo caddy-apply`; leave other sites' files alone. New game releases do not require a Caddy change.
 
 ## Team workflow
 

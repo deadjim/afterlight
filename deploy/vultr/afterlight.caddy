@@ -1,0 +1,4 @@
+afterlight.45-77-127-32.nip.io {
+    encode zstd gzip
+    reverse_proxy 127.0.0.1:8306
+}

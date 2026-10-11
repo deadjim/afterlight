@@ -1,0 +1,23 @@
+[Unit]
+Description=AFTERLIGHT vector rescue game
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=app-afterlight
+Group=app-afterlight
+WorkingDirectory=/srv/afterlight/current
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 /srv/afterlight/current/deploy/server.py --port 8306
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+MemoryMax=256M
+TasksMax=128
+
+[Install]
+WantedBy=multi-user.target

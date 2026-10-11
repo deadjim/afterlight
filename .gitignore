@@ -3,6 +3,7 @@ node_modules/
 .openai/
 .DS_Store
 *.tar.gz
+__pycache__/
 
 # QA scripts generate these locally; the selected review artifacts are tracked.
 qa/*.json

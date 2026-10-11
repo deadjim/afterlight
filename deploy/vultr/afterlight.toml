@@ -1,0 +1,10 @@
+name = "afterlight"
+domain = "afterlight.45-77-127-32.nip.io"
+port = 8306
+unit = "afterlight.service"
+unit_scope = "system"
+health_path = "/healthz"
+dir = "/srv/afterlight"
+owner = "app-afterlight"
+status = "managed"
+notes = "Public AFTERLIGHT color-vector gravity rescue game. Source: https://github.com/deadjim/afterlight."

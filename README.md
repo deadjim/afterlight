@@ -26,7 +26,7 @@ npx playwright install chromium
 npm run qa
 ```
 
-To run an individual check, use `npm run qa:smoke`, `npm run qa:playloop`, `npm run qa:campaign`, `npm run qa:combat`, `npm run qa:edges`, `npm run qa:wrap`, or `npm run qa:audio`. Set `CHROME_PATH` to a local Chrome or Chromium executable to use it instead of Playwright's bundled Chromium. The smoke check accepts an optional base URL as its first argument.
+To run an individual check, use `npm run qa:smoke`, `npm run qa:playloop`, `npm run qa:campaign`, `npm run qa:combat`, `npm run qa:edges`, `npm run qa:wrap`, `npm run qa:audio`, or `npm run qa:balance`. Set `CHROME_PATH` to a local Chrome or Chromium executable to use it instead of Playwright's bundled Chromium. The smoke check accepts an optional base URL as its first argument.
 
 ## Flight controls
 
@@ -40,6 +40,12 @@ To run an individual check, use `npm run qa:smoke`, `npm run qa:playloop`, `npm 
 | Restart current sortie | R |
 
 Mobile provides simultaneous touch buttons. Fly in either direction through a continuous, wrapping landscape. Follow amber rescue beacons, land gently, then carry the crew back to the blue extraction ship. A sector clears only when every stranded person is safely delivered. Rescue pads provide a fuel top-up, and the carrier refuels and repairs your ship.
+
+Holding thrust builds progressively stronger afterburner stages: 1.5× power after one second, 1.75× after two, and up to 6.25× after ten. Longer exhaust trails and a rising engine roar show the escalation. Higher power uses more fuel; releasing thrust preserves momentum, so turn and thrust against your velocity to brake. The shield has a separate two-second reserve and recharges over fourteen seconds after a short delay. Release the shield button to begin recharging and rearm it. Use it for a brief escape through enemy fire. Red ground sentries and flying interceptors can both be destroyed. Hard landings damage the hull; slow down before touching a rescue pad.
+
+Climb for an extended burn of just over ten seconds to reach space at roughly 5.5 km and see the planet below. An approach warning gives you time to release thrust and coast into orbit. Spaceflight consumes fuel at ten times the current throttle rate. The cockpit warns when fuel falls below 20%. Motion trails in the starfield help judge your direction and speed. Releasing thrust conserves fuel while you coast; turn back toward the surface to return.
+
+![The planet below during orbital flight](qa/landscape-orbit.png)
 
 Each sector is a large circular world: keep flying left or right and you eventually return to familiar terrain. The terrain repeats seamlessly, while each survivor and sentry keeps its state. The renderer draws only the visible landscape and nearby objects, and temporary effects have fixed limits, so completing more laps does not accumulate world data.
 

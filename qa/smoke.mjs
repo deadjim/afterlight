@@ -15,6 +15,9 @@ const cases = [
   { name: 'desktop', width: 1440, height: 900, mobile: false },
   { name: 'portrait', width: 390, height: 844, mobile: true },
   { name: 'landscape', width: 844, height: 390, mobile: true },
+  { name: 'small-portrait', width: 320, height: 568, mobile: true },
+  { name: 'compact-portrait', width: 375, height: 667, mobile: true },
+  { name: 'small-landscape', width: 568, height: 320, mobile: true },
 ];
 const report = [];
 for (const config of cases) {
@@ -34,6 +37,11 @@ for (const config of cases) {
   await page.waitForTimeout(700);
   await page.screenshot({ path: path.join(root, `smoke-${config.name}-flight.png`), fullPage: true });
   const flightState = await inspect(page);
+  const mobileLayout = config.mobile ? await inspectMobileLayout(page) : null;
+  if(mobileLayout){
+    assert.deepEqual(mobileLayout.outOfBounds,[],`${config.name} touch buttons fully inside viewport`);
+    assert.deepEqual(mobileLayout.overlaps,[],`${config.name} HUD readouts clear touch buttons`);
+  }
   if (config.mobile) {
     const left = await center(page, '[data-control="left"]');
     const thrust = await center(page, '[data-control="thrust"]');
@@ -66,7 +74,7 @@ for (const config of cases) {
   assert.equal(resumedState.snapshot.mode,'playing');
   assert.deepEqual(flightState.document,flightState.viewport,`${config.name} no viewport overflow`);
   assert.deepEqual(errors,[],`${config.name} browser errors`);
-  report.push({ config, titleState, briefingState, flightState, afterControlState, pausedState, resumedState, errors });
+  report.push({ config, titleState, briefingState, flightState, mobileLayout, afterControlState, pausedState, resumedState, errors });
   await context.close();
 }
 await browser.close();
@@ -95,5 +103,21 @@ async function inspect(page) {
       elements,
       snapshot: window.__afterlightDebug?.snapshot?.() ?? null,
     };
+  });
+}
+
+async function inspectMobileLayout(page){
+  return page.evaluate(()=>{
+    const rect=el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,w:r.width,h:r.height}};
+    const controls=[...document.querySelectorAll('.touch-controls [data-control]')].map(el=>({id:el.dataset.control,...rect(el)}));
+    const ids=['hudCrew','hudFuel','hudHull','hudShield','hudBoost','hudAltitude','hudScore','hudObjective'];
+    const hud=ids.map(id=>({id,...rect(document.getElementById(id))})).filter(r=>r.w>0&&r.h>0);
+    const outOfBounds=controls.filter(r=>r.x<-.5||r.y<-.5||r.right>innerWidth+.5||r.bottom>innerHeight+.5).map(r=>r.id);
+    const overlaps=[];
+    for(const a of controls)for(const b of hud){
+      const w=Math.min(a.right,b.right)-Math.max(a.x,b.x),h=Math.min(a.bottom,b.bottom)-Math.max(a.y,b.y);
+      if(w>1&&h>1)overlaps.push({control:a.id,hud:b.id,w,h});
+    }
+    return {controls,hud,outOfBounds,overlaps};
   });
 }

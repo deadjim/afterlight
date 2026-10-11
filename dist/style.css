@@ -47,6 +47,18 @@ svg { display: block; }
 .mini-label { display: block; color: #779195; font-size: 9px; font-weight: 700; letter-spacing: .19em; line-height: 1.1; }
 .mission-chip strong { display: block; margin-top: 7px; font: 600 20px/.9 var(--display); letter-spacing: .08em; color: var(--bone); }
 .mission-chip .mission-name { color: var(--cyan); }
+.flight-telemetry { position: absolute; top: calc(max(27px, env(safe-area-inset-top)) + 51px); right: max(31px, env(safe-area-inset-right)); display: flex; align-items: start; gap: 17px; text-align: right; }
+#game:has(#titleScreen:not(.is-hidden):not([hidden])) .flight-telemetry { display: none; }
+.telemetry-item { min-width: 80px; padding-top: 6px; border-top: 1px solid rgba(167, 224, 214, .2); }
+.telemetry-item .mini-label { font-size: 8px; letter-spacing: .14em; }
+.telemetry-item strong { display: block; margin-top: 4px; font: 600 19px/.95 var(--display); letter-spacing: .04em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.telemetry-boost strong { color: var(--amber); }
+.telemetry-boost:has(#hudBoost[data-tier="4"]) strong, .telemetry-boost:has(#hudBoost[data-tier="5"]) strong, .telemetry-boost:has(#hudBoost[data-tier="6"]) strong, .telemetry-boost:has(#hudBoost[data-tier="7"]) strong { color: #ffd39b; text-shadow: 0 0 12px rgba(243,189,119,.28); }
+.telemetry-boost:has(#hudBoost[data-tier="8"]) strong, .telemetry-boost:has(#hudBoost[data-tier="9"]) strong, .telemetry-boost:has(#hudBoost[data-tier="10"]) strong { color: #fff0bf; text-shadow: 0 0 17px rgba(243,189,119,.55); }
+.telemetry-altitude strong { color: var(--cyan); }
+.telemetry-altitude strong.is-space { color: var(--cyan-bright); text-shadow: 0 0 14px rgba(133,217,211,.53); }
+.space-burn { display: none; margin-top: 5px; color: var(--coral); font-size: 7px; font-weight: 700; letter-spacing: .12em; white-space: nowrap; }
+.telemetry-altitude:has(#hudAltitude.is-space) .space-burn { display: block; }
 .hud-actions { justify-self: end; display: flex; gap: 5px; }
 .icon-button { display: grid; place-items: center; width: 39px; height: 39px; border: 1px solid rgba(130, 201, 196, .18); background: rgba(6, 17, 22, .54); color: #a1c7c4; transition: background .2s, color .2s, border-color .2s, transform .2s; }
 .icon-button:hover { color: var(--bone); border-color: rgba(180, 234, 225, .55); background: rgba(20, 54, 57, .85); }
@@ -61,8 +73,12 @@ svg { display: block; }
 .readout-crew strong { color: var(--amber); }
 .readout-fuel strong { color: var(--cyan); }
 .readout-hull strong { color: #d7ddd1; }
+.readout-shield strong { color: #afd9d3; }
 .readout .unit { font-size: .55em; margin-left: 2px; color: var(--quiet); }
 .readout strong.is-low { color: var(--coral); text-shadow: 0 0 11px rgba(220, 121, 107, .28); }
+.readout-fuel:has(#hudFuel.is-low) .mini-label { color: var(--coral); }
+.readout-fuel #hudFuel.is-low { animation: low-fuel-pulse 1.25s ease-in-out infinite; }
+@keyframes low-fuel-pulse { 50% { opacity: .56; } }
 .objective-strip { display: flex; align-items: center; gap: 11px; max-width: 40%; min-height: 32px; padding: 6px 0 6px 14px; border-left: 1px solid rgba(243, 189, 119, .35); color: var(--amber); font-size: 9px; font-weight: 700; letter-spacing: .17em; line-height: 1.5; text-align: right; text-transform: uppercase; }
 .objective-sigil { font: 24px/1 var(--display); }
 
@@ -135,6 +151,10 @@ kbd { display: inline-flex; align-items: center; justify-content: center; min-wi
 .touch-thrust:active, .touch-thrust.active, .touch-thrust.is-active, .touch-thrust.is-pressed { background: rgba(243, 189, 119, .28); border-color: var(--amber); }
 .touch-utility { width: 57px; height: 57px; }
 .touch-utility svg { width: 24px; height: 24px; }
+.touch-utility::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; pointer-events: none; background: conic-gradient(from -90deg, var(--cyan) var(--shield-charge, 100%), rgba(133,217,211,.1) 0); -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px)); mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px)); }
+.touch-utility.is-depleted { color: #947f7c; border-color: rgba(220, 121, 107, .42); }
+.touch-utility.is-depleted::before { background: conic-gradient(from -90deg, var(--coral) var(--shield-charge, 0%), rgba(220,121,107,.1) 0); }
+.touch-utility.is-active { box-shadow: 0 0 20px rgba(133,217,211,.2); }
 
 @media (pointer: coarse) { .touch-controls { display: flex; } .hud-bottom { bottom: 100px; } .overlay:not(.is-hidden):not([hidden]) ~ .touch-controls { display: none; } }
 @media (pointer: fine) { .control-guide p { display: none; } }
@@ -154,15 +174,20 @@ kbd { display: inline-flex; align-items: center; justify-content: center; min-wi
   .mission-chip { position: absolute; top: calc(max(17px, env(safe-area-inset-top)) + 48px); left: 18px; min-width: 0; text-align: left; }
   .mission-chip .mini-label { font-size: 7px; }
   .mission-chip strong { font-size: 17px; margin-top: 4px; }
+  .flight-telemetry { top: calc(max(17px, env(safe-area-inset-top)) + 48px); right: max(18px, env(safe-area-inset-right)); gap: 10px; }
+  .telemetry-item { min-width: 66px; padding-top: 4px; }
+  .telemetry-item .mini-label { font-size: 7px; letter-spacing: .1em; }
+  .telemetry-item strong { font-size: 15px; }
+  .space-burn { font-size: 6px; letter-spacing: .06em; }
   .hud-actions { gap: 4px; }
   .icon-button { width: 34px; height: 34px; }
   .icon-button svg { width: 16px; height: 16px; }
   .hud-bottom { padding: 0 18px max(18px, env(safe-area-inset-bottom)); }
-  .ship-readouts { gap: 16px; }
+  .ship-readouts { width: 100%; justify-content: space-between; gap: 9px; }
   .readout { min-width: 45px; }
   .readout strong { font-size: 22px; }
   .readout .mini-label { font-size: 7px; }
-  .objective-strip { max-width: 46%; font-size: 8px; letter-spacing: .08em; }
+  .objective-strip { display: none; }
   .title-content { width: 100%; padding: 0 24px 28px; }
   .title-content h1 { font-size: clamp(95px, 21.4vw, 150px); margin-top: 24px; }
   .title-description { width: min(355px, 92%); margin-top: 30px; font-size: 13px; }
@@ -191,7 +216,6 @@ kbd { display: inline-flex; align-items: center; justify-content: center; min-wi
   .title-description { font-size: 12px; line-height: 1.62; }
   .control-guide { margin-top: 34px; }
   .guide-lines { gap: 8px 12px; font-size: 8px; }
-  .guide-lines span:last-child { display: none; }
   .info-panel { padding: 28px; }
   .info-panel h2 { font-size: 66px; }
   #briefingTitle { font-size: 55px; }
@@ -206,6 +230,7 @@ kbd { display: inline-flex; align-items: center; justify-content: center; min-wi
 }
 @media (max-height: 600px) and (min-width: 651px) {
   .hud-top { padding-top: max(13px, env(safe-area-inset-top)); }
+  .flight-telemetry { top: max(64px, calc(env(safe-area-inset-top) + 47px)); }
   .hud-bottom { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
   .title-content { padding-top: 8px; }
   .title-content h1 { font-size: clamp(82px, 15vh, 120px); margin-top: 14px; margin-bottom: 12px; }
@@ -232,7 +257,7 @@ kbd { display: inline-flex; align-items: center; justify-content: center; min-wi
 @media (max-height: 450px) and (pointer: coarse) {
   .touch-controls { padding-bottom: max(8px, env(safe-area-inset-bottom)); }
   .hud-bottom { left: 50%; right: auto; bottom: max(11px, env(safe-area-inset-bottom)); width: auto; padding: 0; transform: translateX(-50%); }
-  .ship-readouts { gap: 19px; padding: 5px 13px 3px; background: rgba(3, 12, 16, .72); border: 1px solid rgba(133, 217, 211, .13); }
+  .ship-readouts { width: auto; gap: 15px; padding: 5px 13px 3px; background: rgba(3, 12, 16, .72); border: 1px solid rgba(133, 217, 211, .13); }
   .readout { min-width: 55px; border-top: 0; padding-top: 0; }
   .readout strong { margin-top: 4px; font-size: 20px; }
   .objective-strip { display: none; }
@@ -243,5 +268,23 @@ kbd { display: inline-flex; align-items: center; justify-content: center; min-wi
   .title-content h1 { font-size: clamp(76px, 16vh, 95px); }
   .title-description { max-width: 390px; }
   .control-guide { display: none; }
+}
+@media (max-width: 650px) and (max-height: 450px) and (pointer: coarse) {
+  .hud-bottom { left: 44%; }
+  .ship-readouts { gap: 7px; padding: 4px 7px 3px; }
+  .readout { min-width: 45px; }
+  .readout strong { font-size: 17px; }
+  .readout .mini-label { font-size: 6px; letter-spacing: .05em; white-space: nowrap; }
+  .readout-crew .mini-label { font-size: 0; }
+  .readout-crew .mini-label::after { content: 'CREW'; font-size: 6px; }
+}
+@media (max-width: 350px) and (pointer: coarse) {
+  .ship-readouts { gap: 6px; }
+  .readout { min-width: 42px; }
+  .readout strong { font-size: 19px; }
+  .readout .mini-label { letter-spacing: .07em; }
+  .touch-button { width: 48px; height: 48px; }
+  .touch-utility { width: 44px; height: 44px; }
+  .touch-thrust { width: 60px; height: 60px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }

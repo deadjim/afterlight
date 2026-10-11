@@ -7,6 +7,7 @@ __pycache__/
 
 # QA scripts generate these locally; the selected review artifacts are tracked.
 qa/*.json
+qa/*.log
 qa/*.png
 !qa/playloop-report.json
 !qa/campaign-report.json
@@ -14,10 +15,12 @@ qa/*.png
 !qa/combat-report.json
 !qa/wrap-report.json
 !qa/audio-report.json
+!qa/balance-report.json
 !qa/desktop-title.png
 !qa/desktop-flight.png
 !qa/portrait-flight.png
 !qa/landscape-flight.png
+!qa/landscape-orbit.png
 !qa/landscape-sector3-briefing.png
 !qa/portrait-final-result.png
 !qa/landscape-final-result.png

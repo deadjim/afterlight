@@ -19,7 +19,7 @@
     "nodes": {
       "gains": 8,
       "oscillators": 3,
-      "buffers": 1,
+      "buffers": 2,
       "filters": 5
     },
     "masterGain": 0.41999998688697815,
@@ -33,11 +33,25 @@
     "nodes": {
       "gains": 8,
       "oscillators": 3,
-      "buffers": 1,
+      "buffers": 2,
       "filters": 5
     },
     "masterGain": 0.41999998688697815,
-    "engineGain": 0.9396454095840454,
+    "engineGain": 0.789439857006073,
+    "muted": false,
+    "mode": "playing"
+  },
+  "highBoost": {
+    "contexts": 1,
+    "state": "running",
+    "nodes": {
+      "gains": 8,
+      "oscillators": 3,
+      "buffers": 2,
+      "filters": 5
+    },
+    "masterGain": 0.41999998688697815,
+    "engineGain": 0.789439857006073,
     "muted": false,
     "mode": "playing"
   },
@@ -47,11 +61,11 @@
     "nodes": {
       "gains": 8,
       "oscillators": 3,
-      "buffers": 1,
+      "buffers": 2,
       "filters": 5
     },
     "masterGain": 0.41999998688697815,
-    "engineGain": 0.0012835582019761205,
+    "engineGain": 0.002021223772317171,
     "muted": false,
     "mode": "playing"
   },
@@ -61,7 +75,7 @@
     "nodes": {
       "gains": 8,
       "oscillators": 3,
-      "buffers": 1,
+      "buffers": 2,
       "filters": 5
     },
     "masterGain": 0.41999998688697815,
@@ -75,7 +89,7 @@
     "nodes": {
       "gains": 8,
       "oscillators": 3,
-      "buffers": 1,
+      "buffers": 2,
       "filters": 5
     },
     "masterGain": 0.00029752773116342723,
@@ -89,11 +103,11 @@
     "nodes": {
       "gains": 8,
       "oscillators": 3,
-      "buffers": 1,
+      "buffers": 2,
       "filters": 5
     },
-    "masterGain": 0.4168923497200012,
-    "engineGain": 0.9354575276374817,
+    "masterGain": 0.41689279675483704,
+    "engineGain": 0.7841514945030212,
     "muted": false,
     "mode": "playing"
   },
@@ -103,11 +117,11 @@
     "nodes": {
       "gains": 8,
       "oscillators": 3,
-      "buffers": 1,
+      "buffers": 2,
       "filters": 5
     },
-    "masterGain": 0.4168923497200012,
-    "engineGain": 0.9354575276374817,
+    "masterGain": 0.41689279675483704,
+    "engineGain": 0.7841514945030212,
     "muted": false,
     "mode": "playing"
   },
@@ -117,11 +131,11 @@
     "nodes": {
       "gains": 9,
       "oscillators": 4,
-      "buffers": 1,
+      "buffers": 2,
       "filters": 5
     },
-    "masterGain": 0.41913583874702454,
-    "engineGain": 0.2734372913837433,
+    "masterGain": 0.4191359877586365,
+    "engineGain": 0.22921042144298553,
     "muted": false,
     "mode": "playing"
   },
@@ -131,11 +145,11 @@
     "nodes": {
       "gains": 9,
       "oscillators": 4,
-      "buffers": 1,
+      "buffers": 2,
       "filters": 5
     },
     "masterGain": 0.41999998688697815,
-    "engineGain": 0.0004733579989988357,
+    "engineGain": 0.0003967955126427114,
     "muted": false,
     "mode": "paused"
   },
@@ -145,11 +159,11 @@
     "nodes": {
       "gains": 9,
       "oscillators": 4,
-      "buffers": 1,
+      "buffers": 2,
       "filters": 5
     },
     "masterGain": 0.41999998688697815,
-    "engineGain": 0.0013103554956614971,
+    "engineGain": 0.0010955044999718666,
     "muted": false,
     "mode": "paused"
   },

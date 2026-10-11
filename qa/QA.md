@@ -1,26 +1,25 @@
 # AFTERLIGHT browser QA
 
-Verified with Playwright and headless Chrome at 1440×900 desktop, 390×844 mobile portrait, and 844×390 mobile landscape. The checks assert expected behavior and fail when it regresses. All required checks passed without browser errors.
+Playwright checks pass in headless Chrome with no page or console errors. Flight was checked at 1280×720 desktop, 390×844 portrait, and 844×390 landscape; smoke and touch layout also cover 320×568, 375×667, and 568×320. All six viewports fit without scrolling, with touch buttons wholly inside the screen and clear of visible HUD readouts. Selected screenshots are tracked here; the checks generate additional title, briefing, pause, ground, and orbit captures locally.
 
-## Flight and wrapping
+## Flight balance
 
-- Actual keyboard flight collected and delivered the first survivor and refilled fuel at the carrier. Simultaneous mobile touch turned and accelerated the craft; touch cancellation released thrust. Pause, resume, and retry worked without viewport overflow.
-- Left and right seam crossings preserved velocity and smooth camera movement in all three viewports. Periodic terrain matched across the boundary.
-- Numeric coordinate rebasing shifted the ship and camera together, with a maximum observed screen step of 4.85 pixels. Wrapped pickup and docking worked, and revisiting the same survivor on another lap did not duplicate cargo.
-- Firing destroyed a sentry through its wrapped image, and sentries acquired and fired at wrapped ship positions.
+- Holding the real Up key upright reaches the 5500 m orbital boundary in 10.10–10.12 seconds with 45.67% fuel remaining in all three main viewports. The 1, 2, and 3 second afterburner tiers advance; release resets power while retaining more than 95% of measured speed over the next 450 ms. The ship remains onscreen during the climb.
+- The pre-orbit cue appears at 4706 m. Releasing thrust there lets the craft coast into orbit with the same 52.93% fuel; the 10× orbital fuel-rate check measures 38%/s against 3.8%/s at tier zero. Fuel stays stable while coasting, and crossing 20% triggers one audio warning plus the HUD warning state.
+- Shield charge drains in about two seconds, stays depleted while held, recharges after release, and works again. Its empty cue fires once. A hard landing reduced hull to 83%; a subsequent gentle landing collected the survivor. Actual Fire input destroyed an interceptor through its wrapped image for 200 points, while another interceptor aimed and fired across the seam. Three initial stage-one interceptors fell to two after the kill.
 
-See [wrap-report.json](wrap-report.json), [playloop-report.json](playloop-report.json), and [edges-report.json](edges-report.json).
+See [balance-report.json](balance-report.json) and [landscape-orbit.png](landscape-orbit.png).
 
-## Progression and recovery
+## Flight, wrapping, and campaign
 
-The three sectors span 6000, 7800, and 9600 world units, with 5, 6, and 8 unique survivors. Assisted ship positioning exercised physical pickup/docking triggers and cleared every sector in both mobile orientations. A recoverable crash retained cargo; loss and retry restored a playable mission. Shielding prevented the damage seen without a shield. Empty pads restored fuel to 75%, and unavailable local storage did not prevent play.
+Actual keyboard flight collected and delivered the first survivor; simultaneous touch turned and accelerated the craft. Carrier docking refilled fuel to at least 99% after one remaining held-thrust frame. Touch cancellation released thrust; pause, resume, retry, visibility pause, and unavailable local storage worked. Left and right seam crossings retained velocity and camera continuity at all three main sizes. Coordinate rebasing shifted ship and camera together. Wrapped pickup and docking did not duplicate survivors on repeat laps; real firing destroyed a sentry and enemies acquired wrapped targets.
 
-See [campaign-report.json](campaign-report.json) and [combat-report.json](combat-report.json).
+The 6000, 7800, and 9600 unit sectors contain 5, 6, and 8 unique survivors. Assisted ship placement used real collision/pickup/dock triggers to clear all three sectors in both mobile orientations. Recoverable crashes retained cargo. A timed, finite shield blocked the incoming hits that damaged the unshielded craft. A sufficiently hard impact caused loss; retry restored a playable mission. Empty pads restored fuel to 75%.
 
-## Sound and resource limits
+See [playloop-report.json](playloop-report.json), [wrap-report.json](wrap-report.json), [campaign-report.json](campaign-report.json), [combat-report.json](combat-report.json), [edges-report.json](edges-report.json), and [smoke.mjs](smoke.mjs).
 
-Audio started only after a gesture and reused one context and a fixed engine graph. Repeated thrust calls did not allocate new nodes. Release, pause, mute, blur, and hiding the page faded thrust to silence. Suspending the real audio context and using Pause → Resume restored its running state without creating another context. See [audio-report.json](audio-report.json).
+## Audio and resource bounds
 
-Seventeen assisted laps under active thrust and fire reached at most 36 particles and 6 player bullets, with a post-stress p95 frame interval of 16.8 ms. Transient effects and projectiles remain bounded; terrain is generated only for the visible region.
+Audio began after a gesture and reused one context and persistent engine graph. Repeated full-boost orbital engine calls created no nodes. Release, pause, mute, blur, and hiding the page faded thrust; a suspended context resumed through the UI. [audio-report.json](audio-report.json) records node counts and state.
 
-Mobile checks use Chrome emulation, not physical phones. Extended campaign and stress checks use assisted positions; they do not represent a fully manual nineteen-survivor campaign. Frame timings describe the test browser, not a device guarantee.
+Seventeen assisted laps under active thrust and fire reached 46 particles and 6 player bullets, within the 360-particle cap. The post-stress p95 frame interval was 16.7 ms in the test browser. Mobile checks use Chrome emulation, not physical devices; the assisted campaign and combat setups are distinct from the actual keyboard/touch input checks. Frame timing is not a physical mobile performance guarantee.

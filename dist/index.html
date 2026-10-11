@@ -30,6 +30,10 @@
           <span class="mini-label">CURRENT SORTIE</span>
           <strong id="hudMission">01 <span class="mission-name">/ THE DRIFT</span></strong>
         </div>
+        <div class="flight-telemetry" aria-label="Flight performance">
+          <div class="telemetry-item telemetry-boost"><span class="mini-label">AFTERBURNER</span><strong id="hudBoost">1.0×</strong></div>
+          <div class="telemetry-item telemetry-altitude"><span class="mini-label">ALTITUDE</span><strong id="hudAltitude">0.0 KM</strong><span class="space-burn">THRUST COST ×10</span></div>
+        </div>
         <div class="hud-actions">
           <button class="icon-button" id="muteButton" type="button" aria-label="Toggle sound" title="Toggle sound">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Z"/><path class="sound-wave" d="M17 9a4 4 0 0 1 0 6M19.5 6.5a7.5 7.5 0 0 1 0 11"/></svg>
@@ -48,6 +52,7 @@
           <div class="readout readout-crew"><span class="mini-label">SOULS ABOARD</span><strong id="hudCrew">00</strong></div>
           <div class="readout readout-fuel"><span class="mini-label">FUEL</span><strong id="hudFuel">100<span class="unit">%</span></strong></div>
           <div class="readout readout-hull"><span class="mini-label">HULL</span><strong id="hudHull">100<span class="unit">%</span></strong></div>
+          <div class="readout readout-shield"><span class="mini-label">SHIELD</span><strong id="hudShield">100<span class="unit">%</span></strong></div>
           <div class="readout readout-score"><span class="mini-label">SCORE</span><strong id="hudScore">000000</strong></div>
         </div>
         <div class="objective-strip"><span class="objective-sigil" aria-hidden="true">✳</span><span id="hudObjective">AWAITING TRANSMISSION</span></div>
@@ -87,15 +92,15 @@
         <div class="title-content">
           <p class="eyebrow"><span class="eyebrow-line"></span> NO ONE LEFT IN THE DARK <span class="eyebrow-index">/ 001</span></p>
           <h1 id="gameTitle"><span>AFTER</span><span class="light-word">LIGHT<span class="title-period">.</span></span></h1>
-          <p class="title-description">The colonies are falling silent. Pilot a rescue craft through broken orbital fields, bring every stranded soul aboard, and find your way home.</p>
+          <p class="title-description">The colonies are falling silent. Rescue every stranded soul, ride a rising afterburner into orbit, and bring them home.</p>
           <div class="title-actions">
             <button class="primary-button" id="startButton" type="button"><span>BEGIN SORTIE</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button>
             <span class="edition">01 / RESCUE PROTOCOL</span>
           </div>
           <div class="control-guide" aria-label="Controls">
             <span class="guide-title">FLIGHT MANUAL <b>—</b> 01</span>
-            <div class="guide-lines"><span><kbd>←</kbd><kbd>→</kbd> TURN</span><span><kbd>↑</kbd> THRUST</span><span><kbd>SPACE</kbd> FIRE</span><span><kbd>SHIFT</kbd> SHIELD</span></div>
-            <p>Touch controls appear automatically on mobile.</p>
+            <div class="guide-lines"><span><kbd>←</kbd><kbd>→</kbd> TURN</span><span><kbd>↑</kbd> HOLD TO BOOST</span><span><kbd>SPACE</kbd> FIRE</span><span><kbd>SHIFT</kbd> SHIELD</span></div>
+            <p>Shield reserve recharges when released. Touch controls appear on mobile.</p>
           </div>
         </div>
         <div class="title-footer"><span>AFTERLIGHT / FLIGHT SYSTEMS</span><span>PERSONAL BEST <b id="bestScore">000000</b></span><span>EST. 2086</span></div>
@@ -107,9 +112,9 @@
           <p class="eyebrow"><span class="eyebrow-line"></span> INCOMING TRANSMISSION</p>
           <span class="panel-sequence">MISSION BRIEF / <span>INCOMING</span></span>
           <h2 id="briefingTitle">THE DRIFT</h2>
-          <p id="briefingBody">Recover the stranded colonists. Mind the gravity wells. Return them to the landing pad.</p>
+          <p id="briefingBody">Land gently to collect survivors. Hold thrust to build afterburner; climb into orbit for fast travel. Shield reserve recharges when released.</p>
           <button class="primary-button" id="briefingButton" type="button"><span>LAUNCH CRAFT</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button>
-          <p class="panel-note">ROTATE · THRUST · RESCUE · RETURN</p>
+          <p class="panel-note">ROTATE · BOOST · RESCUE · RETURN</p>
         </div>
       </section>
 
@@ -119,7 +124,7 @@
           <p class="eyebrow"><span class="eyebrow-line"></span> FLIGHT STATUS</p>
           <span class="panel-sequence">VESSEL HOLD / <span>STANDBY</span></span>
           <h2 id="pauseTitle">PAUSED<span class="title-period">.</span></h2>
-          <p>Take your bearings. Thrust costs fuel; momentum and gravity carry you the rest of the way.</p>
+          <p>Hold thrust to build afterburner. Orbit burns fuel fast; shield recharges when released.</p>
           <div class="panel-actions"><button class="primary-button" id="resumeButton" type="button"><span>RESUME FLIGHT</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button><button class="secondary-button" id="retryButton" type="button">RESTART SORTIE</button></div>
           <div class="panel-controls"><span><kbd>←</kbd><kbd>→</kbd> TURN</span><span><kbd>↑</kbd> THRUST</span><span><kbd>SPACE</kbd> FIRE</span><span><kbd>SHIFT</kbd> SHIELD</span><span><kbd>R</kbd> RESTART</span></div>
         </div>
@@ -142,7 +147,7 @@
           <button type="button" data-control="right" class="touch-button rotate-right" aria-label="Rotate right"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 13a12 12 0 1 1-3 14M12 13h9m-9 0V4"/></svg><span>RIGHT</span></button>
         </div>
         <div class="touch-group touch-actions">
-          <button type="button" data-control="shield" class="touch-button touch-utility" aria-label="Activate shield"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5 32 10v10c0 8-6 13-12 16C14 33 8 28 8 20V10L20 5Z"/><path d="M20 12v17M13 20h14"/></svg><span>SHIELD</span></button>
+          <button type="button" data-control="shield" class="touch-button touch-utility" style="--shield-charge: 100%" aria-label="Activate shield" aria-pressed="false"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5 32 10v10c0 8-6 13-12 16C14 33 8 28 8 20V10L20 5Z"/><path d="M20 12v17M13 20h14"/></svg><span>SHIELD</span></button>
           <button type="button" data-control="fire" class="touch-button touch-fire" aria-label="Fire"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4v32M4 20h32"/><circle cx="20" cy="20" r="10"/></svg><span>FIRE</span></button>
           <button type="button" data-control="thrust" class="touch-button touch-thrust" aria-label="Thrust"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="m20 5 12 22-12-6-12 6L20 5Z"/><path d="m14 29-3 7m15-7 3 7"/></svg><span>THRUST</span></button>
         </div>

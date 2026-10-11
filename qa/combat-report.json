@@ -11,13 +11,549 @@
     "errors": []
   },
   "unshielded": {
-    "hull": 88,
+    "hull": 76,
     "fuel": 100,
+    "trace": [
+      {
+        "time": 0.08333333333333333,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.19999999999999998,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.3,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.39999999999999997,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.5166666666666666,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.6166666666666669,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.7166666666666672,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.8333333333333343,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.9333333333333346,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.0333333333333345,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.1333333333333342,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.2500000000000004,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.35,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.4499999999999997,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.566666666666666,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.6666666666666656,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.7666666666666653,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.866666666666665,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.9833333333333312,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 2.083333333333331,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 2.1833333333333305,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 2.2999999999999967,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 2.3999999999999964,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 2.499999999999996,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 2.5999999999999956,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 2.716666666666662,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 2
+      },
+      {
+        "time": 2.8166666666666615,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 2
+      },
+      {
+        "time": 2.916666666666661,
+        "hull": 88,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 3.016666666666661,
+        "hull": 88,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 3.133333333333327,
+        "hull": 88,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 3.2333333333333267,
+        "hull": 88,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 3.3333333333333264,
+        "hull": 88,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 3.4499999999999926,
+        "hull": 88,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 3.5499999999999923,
+        "hull": 88,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 3.649999999999992,
+        "hull": 88,
+        "shield": false,
+        "charge": 100,
+        "bullets": 1
+      },
+      {
+        "time": 3.7499999999999916,
+        "hull": 76,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 3.866666666666658,
+        "hull": 76,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 3.9666666666666575,
+        "hull": 76,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      }
+    ],
     "errors": []
   },
   "shielded": {
     "hull": 100,
-    "fuel": 71.66666666666828,
+    "fuel": 100,
+    "trace": [
+      {
+        "time": 0.08333333333333333,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.21666666666666665,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.31666666666666665,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.39999999999999997,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.49999999999999994,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.6166666666666669,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.7166666666666672,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.8166666666666675,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 0.9333333333333346,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.0333333333333345,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.1333333333333342,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.2500000000000004,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.35,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.4499999999999997,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.5499999999999994,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.6666666666666656,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.7666666666666653,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.866666666666665,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 1.9666666666666646,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 2.083333333333331,
+        "hull": 100,
+        "shield": false,
+        "charge": 100,
+        "bullets": 0
+      },
+      {
+        "time": 2.1833333333333305,
+        "hull": 100,
+        "shield": true,
+        "charge": 95.00000000000003,
+        "bullets": 0
+      },
+      {
+        "time": 2.28333333333333,
+        "hull": 100,
+        "shield": true,
+        "charge": 90.00000000000006,
+        "bullets": 1
+      },
+      {
+        "time": 2.3999999999999964,
+        "hull": 100,
+        "shield": true,
+        "charge": 84.16666666666676,
+        "bullets": 1
+      },
+      {
+        "time": 2.499999999999996,
+        "hull": 100,
+        "shield": true,
+        "charge": 79.16666666666679,
+        "bullets": 1
+      },
+      {
+        "time": 2.5999999999999956,
+        "hull": 100,
+        "shield": true,
+        "charge": 74.16666666666681,
+        "bullets": 1
+      },
+      {
+        "time": 2.6999999999999953,
+        "hull": 100,
+        "shield": true,
+        "charge": 69.16666666666684,
+        "bullets": 2
+      },
+      {
+        "time": 2.8166666666666615,
+        "hull": 100,
+        "shield": true,
+        "charge": 63.333333333333535,
+        "bullets": 2
+      },
+      {
+        "time": 2.916666666666661,
+        "hull": 100,
+        "shield": true,
+        "charge": 58.33333333333352,
+        "bullets": 1
+      },
+      {
+        "time": 3.016666666666661,
+        "hull": 100,
+        "shield": true,
+        "charge": 53.333333333333506,
+        "bullets": 1
+      },
+      {
+        "time": 3.133333333333327,
+        "hull": 100,
+        "shield": true,
+        "charge": 47.500000000000156,
+        "bullets": 1
+      },
+      {
+        "time": 3.2333333333333267,
+        "hull": 100,
+        "shield": true,
+        "charge": 42.50000000000014,
+        "bullets": 1
+      },
+      {
+        "time": 3.3333333333333264,
+        "hull": 100,
+        "shield": true,
+        "charge": 37.50000000000013,
+        "bullets": 1
+      },
+      {
+        "time": 3.433333333333326,
+        "hull": 100,
+        "shield": true,
+        "charge": 32.500000000000114,
+        "bullets": 1
+      },
+      {
+        "time": 3.5499999999999923,
+        "hull": 100,
+        "shield": true,
+        "charge": 26.66666666666679,
+        "bullets": 1
+      },
+      {
+        "time": 3.649999999999992,
+        "hull": 100,
+        "shield": true,
+        "charge": 21.666666666666796,
+        "bullets": 1
+      },
+      {
+        "time": 3.7499999999999916,
+        "hull": 100,
+        "shield": true,
+        "charge": 16.666666666666803,
+        "bullets": 0
+      },
+      {
+        "time": 3.866666666666658,
+        "hull": 100,
+        "shield": true,
+        "charge": 10.833333333333465,
+        "bullets": 0
+      },
+      {
+        "time": 3.9666666666666575,
+        "hull": 100,
+        "shield": true,
+        "charge": 5.8333333333334645,
+        "bullets": 0
+      }
+    ],
     "errors": []
   },
   "emptyPadFuel": {

@@ -7,6 +7,10 @@
       "x": 540,
       "y": 690
     },
+    "orbit": {
+      "enter": 5500,
+      "exit": 5250
+    },
     "ship": {
       "x": 540,
       "y": 690,
@@ -18,7 +22,22 @@
       "cargo": 0,
       "invuln": 1.5,
       "shotTime": 0,
-      "shield": 0
+      "shield": 0,
+      "shieldCharge": 100,
+      "shieldActive": false,
+      "shieldArmed": true,
+      "shieldDelay": 0,
+      "thrustHold": 0,
+      "boostTier": 0,
+      "boostFlash": 0,
+      "power": 1,
+      "speedLimit": 400,
+      "altitude": 0,
+      "inSpace": false,
+      "preOrbitWarned": false,
+      "orbitEntryTime": null,
+      "orbitEntryFuel": null,
+      "fuelWarned": false
     },
     "delivered": 0,
     "pads": [
@@ -62,10 +81,37 @@
         "hp": 2
       }
     ],
+    "flyingEnemies": [
+      {
+        "id": 1,
+        "x": 1400,
+        "y": 630,
+        "hp": 2,
+        "shotCount": 0,
+        "cooldown": 2.6
+      },
+      {
+        "id": 2,
+        "x": 2800,
+        "y": 630,
+        "hp": 2,
+        "shotCount": 0,
+        "cooldown": 3.0300000000000002
+      },
+      {
+        "id": 3,
+        "x": 4700,
+        "y": 630,
+        "hp": 2,
+        "shotCount": 0,
+        "cooldown": 3.46
+      }
+    ],
     "entities": {
       "particles": 0,
       "bullets": 0,
-      "enemyBullets": 0
+      "enemyBullets": 0,
+      "flyingEnemies": 3
     },
     "score": 0,
     "objective": {
@@ -82,20 +128,41 @@
     "worldWidth": 6000,
     "camera": {
       "x": 540,
-      "y": 845.4420083687975
+      "y": 841.8883380202359
+    },
+    "orbit": {
+      "enter": 5500,
+      "exit": 5250
     },
     "ship": {
       "x": 540,
-      "y": 847.9438583855446,
+      "y": 838.077492718404,
       "vx": 0,
-      "vy": -28.906402487062422,
+      "vy": -16.793756035285437,
       "a": 0,
       "fuel": 100,
       "hull": 100,
       "cargo": 1,
       "invuln": 0,
       "shotTime": -4.183333333333324,
-      "shield": 0
+      "shield": 0,
+      "shieldCharge": 100,
+      "shieldActive": false,
+      "shieldArmed": true,
+      "shieldDelay": 0,
+      "thrustHold": 0,
+      "boostTier": 0,
+      "boostFlash": 0,
+      "power": 1,
+      "speedLimit": 400,
+      "altitude": 46.58646201249826,
+      "inSpace": false,
+      "preOrbitWarned": false,
+      "orbitEntryTime": null,
+      "orbitEntryFuel": null,
+      "fuelWarned": false,
+      "prevX": 540,
+      "prevY": 838.3573886523254
     },
     "delivered": 0,
     "pads": [
@@ -139,10 +206,37 @@
         "hp": 2
       }
     ],
+    "flyingEnemies": [
+      {
+        "id": 1,
+        "x": 1326.4918232579885,
+        "y": 614.4797636886136,
+        "hp": 2,
+        "shotCount": 0,
+        "cooldown": 2.1
+      },
+      {
+        "id": 2,
+        "x": 2675.2650176304523,
+        "y": 652.930196288275,
+        "hp": 2,
+        "shotCount": 0,
+        "cooldown": 2.1
+      },
+      {
+        "id": 3,
+        "x": 4551.737763853836,
+        "y": 632.8469781623613,
+        "hp": 2,
+        "shotCount": 0,
+        "cooldown": 2.1
+      }
+    ],
     "entities": {
-      "particles": 30,
+      "particles": 15,
       "bullets": 0,
-      "enemyBullets": 0
+      "enemyBullets": 0,
+      "flyingEnemies": 3
     },
     "score": 250,
     "objective": {
@@ -157,21 +251,42 @@
     "level": 1,
     "worldWidth": 6000,
     "camera": {
-      "x": 306.7599897309816,
-      "y": 512.4953126172538
+      "x": 321.45377399576836,
+      "y": 514.809786176809
+    },
+    "orbit": {
+      "enter": 5500,
+      "exit": 5250
     },
     "ship": {
-      "x": 295.8570053532012,
-      "y": 493.939007862217,
-      "vx": -11.763135308933085,
-      "vy": -24.027948621169415,
-      "a": 1.2599999999999998,
-      "fuel": 100,
+      "x": 303.51531437171275,
+      "y": 488.20551801839736,
+      "vx": -10.557460218133256,
+      "vy": -21.95809143341632,
+      "a": 2.2931853071795785,
+      "fuel": 99.68333333333334,
       "hull": 100,
       "cargo": 0,
-      "invuln": 0.7499999999999999,
-      "shotTime": -8.04999999999998,
-      "shield": 0
+      "invuln": 0.7166666666666665,
+      "shotTime": -7.333333333333313,
+      "shield": 0,
+      "shieldCharge": 100,
+      "shieldActive": false,
+      "shieldArmed": true,
+      "shieldDelay": 0,
+      "thrustHold": 0.5333333333333333,
+      "boostTier": 0,
+      "boostFlash": 0,
+      "power": 1,
+      "speedLimit": 400,
+      "altitude": 376.0582943070614,
+      "inSpace": false,
+      "preOrbitWarned": false,
+      "orbitEntryTime": null,
+      "orbitEntryFuel": null,
+      "fuelWarned": false,
+      "prevX": 303.691272042015,
+      "prevY": 488.5714862089543
     },
     "delivered": 1,
     "pads": [
@@ -215,27 +330,54 @@
         "hp": 2
       }
     ],
+    "flyingEnemies": [
+      {
+        "id": 1,
+        "x": 1311.0502733888607,
+        "y": 578.7398922751947,
+        "hp": 2,
+        "shotCount": 0,
+        "cooldown": 2.1
+      },
+      {
+        "id": 2,
+        "x": 2956.7566999137816,
+        "y": 586.8352381212105,
+        "hp": 2,
+        "shotCount": 0,
+        "cooldown": 2.1
+      },
+      {
+        "id": 3,
+        "x": 4838.307580206245,
+        "y": 555.1355708013658,
+        "hp": 2,
+        "shotCount": 0,
+        "cooldown": 2.1
+      }
+    ],
     "entities": {
-      "particles": 42,
+      "particles": 64,
       "bullets": 0,
-      "enemyBullets": 0
+      "enemyBullets": 0,
+      "flyingEnemies": 3
     },
     "score": 1029,
     "objective": {
-      "x": 1039.999999999999,
+      "x": 1040.0000000000002,
       "y": 790.2013260774437,
       "label": "CREW",
       "padId": 2
     },
-    "time": 8.04999999999998
+    "time": 7.333333333333313
   },
   "trace": [
     {
       "t": "4.2",
       "x": 540,
-      "y": 848,
+      "y": 838,
       "vx": 0,
-      "vy": -29,
+      "vy": -17,
       "a": "0.00",
       "fuel": 100,
       "cargo": 1,
@@ -244,10 +386,10 @@
     },
     {
       "t": "5.2",
-      "x": 499,
-      "y": 783,
-      "vx": -83,
-      "vy": -103,
+      "x": 497,
+      "y": 781,
+      "vx": -86,
+      "vy": -106,
       "a": "-0.37",
       "fuel": 96,
       "cargo": 1,
@@ -256,26 +398,26 @@
     },
     {
       "t": "6.3",
-      "x": 398,
-      "y": 652,
-      "vx": -98,
-      "vy": -111,
-      "a": "-0.05",
-      "fuel": 94,
+      "x": 389,
+      "y": 613,
+      "vx": -103,
+      "vy": -158,
+      "a": "-2.05",
+      "fuel": 95,
       "cargo": 1,
       "delivered": 0,
       "mode": "playing"
     },
     {
       "t": "7.3",
-      "x": 325,
-      "y": 543,
-      "vx": -48,
-      "vy": -87,
-      "a": "1.57",
-      "fuel": 93,
-      "cargo": 1,
-      "delivered": 0,
+      "x": 304,
+      "y": 488,
+      "vx": -11,
+      "vy": -22,
+      "a": "2.29",
+      "fuel": 100,
+      "cargo": 0,
+      "delivered": 1,
       "mode": "playing"
     }
   ],

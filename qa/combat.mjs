@@ -33,15 +33,19 @@ async function makePage() {
 async function hitScenario(shield) {
   const {context,page,errors,snap}=await makePage();
   const x=(await snap()).turrets[0].x,y=(await page.evaluate(x=>window.__afterlightDebug.ground(x),x))-25-130;
-  if(shield) await page.keyboard.down('ShiftLeft');
-  for(let i=0;i<55;i++) {
+  const trace=[];
+  for(let i=0;i<38;i++) {
+    // The sentry launches at ~2.2 s; use the finite shield around impact,
+    // rather than exhausting it by holding from mission start.
+    if(shield&&i===20)await page.keyboard.down('ShiftLeft');
     await page.evaluate(([x,y])=>window.__afterlightDebug.setShip(x,y,0,0,0),[x,y]);
     await page.waitForTimeout(100);
+    const s=await snap();trace.push({time:s.time,hull:s.ship.hull,shield:s.ship.shieldActive,charge:s.ship.shieldCharge,bullets:s.entities.enemyBullets});
   }
   if(shield) await page.keyboard.up('ShiftLeft');
   const state=await snap();
   await context.close();
-  return {hull:state.ship.hull,fuel:state.ship.fuel,errors};
+  return {hull:state.ship.hull,fuel:state.ship.fuel,trace,errors};
 }
 report.unshielded=await hitScenario(false);
 report.shielded=await hitScenario(true);
@@ -62,7 +66,7 @@ assert.equal(report.shielded.hull,100,'shield blocks sentry damage');
   assert.equal(report.emptyPadFuel.padOccupied,false);
   await page.evaluate(()=>window.__afterlightDebug.setHull(20));
   await page.evaluate(()=>window.__afterlightDebug.setInvuln(0));
-  await page.evaluate(()=>window.__afterlightDebug.setShip(800,window.__afterlightDebug.ground(800)+50,0,120,0));
+  await page.evaluate(()=>window.__afterlightDebug.setShip(800,window.__afterlightDebug.ground(800)+50,0,350,0));
   await page.waitForTimeout(180);
   const lost=await snap();
   report.lost={mode:lost.mode,resultTitle:await page.locator('#resultTitle').innerText(),resultAction:await page.locator('#resultButton').innerText()};

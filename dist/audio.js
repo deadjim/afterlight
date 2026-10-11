@@ -1,9 +1,11 @@
 /* AFTERLIGHT — original Web Audio effects; no external sound files. */
 (() => {
   'use strict';
-  let context, master, engineBus, engineNoise, engineBass, engineUpper;
-  let whiteBuffer, pinkBuffer;
-  let muted = false, paused = false, lastEngine = 0;
+  let context, master, engineBus, engineNoise, engineRumble, engineBass, engineUpper;
+  let whiteBuffer, pinkBuffer, brownBuffer;
+  let rumbleLow, rumbleLevel, presence, presenceLevel, airLevel, bassLevel, upperLevel;
+  let muted = false, paused = false, lastEngine = 0, lastPower = 1, lastSpace = false, lastBoostTier = 0;
+  let lastWarningTime = -100, lastShieldEmptyTime = -100;
   const MASTER_LEVEL = 0.42;
   try { muted = localStorage.getItem('afterlight-muted') === 'true'; } catch (_) {}
 
@@ -29,6 +31,19 @@
     }
     return buffer;
   }
+  function makeBrownBuffer(seconds) {
+    const buffer = context.createBuffer(1, Math.ceil(context.sampleRate * seconds), context.sampleRate);
+    const data = buffer.getChannelData(0);
+    let state = 0;
+    for (let i = 0; i < data.length; i++) {
+      state = state * .996 + (Math.random() * 2 - 1) * .035;
+      data[i] = state;
+    }
+    // Close the loop without a discontinuity; the high-pass stage removes this drift.
+    const first = data[0], delta = data[data.length - 1] - first;
+    for (let i = 0; i < data.length; i++) data[i] -= first + delta * i / (data.length - 1);
+    return buffer;
+  }
   function filter(type, frequency, q = .7) {
     const node = context.createBiquadFilter();
     node.type = type;
@@ -43,25 +58,28 @@
     engineNoise = context.createBufferSource();
     engineNoise.buffer = pinkBuffer;
     engineNoise.loop = true;
-    const rumbleHigh = filter('highpass', 35, .5);
-    const rumbleLow = filter('lowpass', 300, .6);
-    const rumbleLevel = context.createGain();
-    rumbleLevel.gain.value = .69;
-    engineNoise.connect(rumbleHigh);
+    engineRumble = context.createBufferSource();
+    engineRumble.buffer = brownBuffer;
+    engineRumble.loop = true;
+    const rumbleHigh = filter('highpass', 24, .5);
+    rumbleLow = filter('lowpass', 245, .6);
+    rumbleLevel = context.createGain();
+    rumbleLevel.gain.value = .94;
+    engineRumble.connect(rumbleHigh);
     rumbleHigh.connect(rumbleLow);
     rumbleLow.connect(rumbleLevel);
     rumbleLevel.connect(engineBus);
     // This middle band carries the rocket on phone speakers without a tonal buzz.
-    const presence = filter('bandpass', 540, .58);
-    const presenceLevel = context.createGain();
-    presenceLevel.gain.value = .38;
+    presence = filter('bandpass', 510, .55);
+    presenceLevel = context.createGain();
+    presenceLevel.gain.value = .53;
     engineNoise.connect(presence);
     presence.connect(presenceLevel);
     presenceLevel.connect(engineBus);
     const airHigh = filter('highpass', 1500, .5);
     const airLow = filter('lowpass', 3400, .5);
-    const airLevel = context.createGain();
-    airLevel.gain.value = .07;
+    airLevel = context.createGain();
+    airLevel.gain.value = .055;
     engineNoise.connect(airHigh);
     airHigh.connect(airLow);
     airLow.connect(airLevel);
@@ -69,19 +87,20 @@
     // Quiet harmonic sine body adds weight without sawtooth or pulse modulation.
     engineBass = context.createOscillator();
     engineBass.type = 'sine';
-    engineBass.frequency.value = 68;
-    const bassLevel = context.createGain();
-    bassLevel.gain.value = .105;
+    engineBass.frequency.value = 61;
+    bassLevel = context.createGain();
+    bassLevel.gain.value = .145;
     engineBass.connect(bassLevel);
     bassLevel.connect(engineBus);
     engineUpper = context.createOscillator();
     engineUpper.type = 'sine';
-    engineUpper.frequency.value = 136;
-    const upperLevel = context.createGain();
-    upperLevel.gain.value = .035;
+    engineUpper.frequency.value = 122;
+    upperLevel = context.createGain();
+    upperLevel.gain.value = .038;
     engineUpper.connect(upperLevel);
     upperLevel.connect(engineBus);
     engineNoise.start();
+    engineRumble.start();
     engineBass.start();
     engineUpper.start();
   }
@@ -103,6 +122,7 @@
         limiter.connect(context.destination);
         whiteBuffer = makeBuffer(2);
         pinkBuffer = makeBuffer(4, true);
+        brownBuffer = makeBrownBuffer(8);
         makeEngine();
       }
       if (context.state === 'suspended' || context.state === 'interrupted') context.resume().catch(() => {});
@@ -153,6 +173,7 @@
   }
   function stopEngine() {
     lastEngine = 0;
+    lastBoostTier = 0;
     if (!context || !engineBus) return;
     const t = context.currentTime;
     engineBus.gain.cancelScheduledValues(t);
@@ -160,17 +181,66 @@
   }
   const api = {
     start,
-    engine(amount) {
+    engine(amount, power = 1, space = false) {
       if (!context || !engineBus) return;
       const level = paused || muted ? 0 : Math.max(0, Math.min(1, Number(amount) || 0));
-      if (Math.abs(level - lastEngine) < .025) return;
+      // Ignore boost values while coasting so per-frame calls do not schedule automation.
+      const p = level ? Math.max(1, Math.min(6.25, Number(power) || 1)) : lastPower;
+      const orbit = level ? !!space : lastSpace;
+      if (Math.abs(level - lastEngine) < .025 && Math.abs(p - lastPower) < .012 && orbit === lastSpace) return;
       lastEngine = level;
+      lastPower = p;
+      lastSpace = orbit;
+      if (!level) lastBoostTier = 0;
+      const boost = (p - 1) / 5.25;
       const t = context.currentTime;
       engineBus.gain.cancelScheduledValues(t);
-      engineBus.gain.setTargetAtTime(level * .94, t, level > 0 ? .023 : .038);
-      // Smooth color change with throttle; no pulse or periodic wobble.
-      engineBass.frequency.setTargetAtTime(68 + level * 6, t, .08);
-      engineUpper.frequency.setTargetAtTime(136 + level * 12, t, .08);
+      engineBus.gain.setTargetAtTime(level * (.79 + boost * .38 + (orbit ? .08 : 0)), t, level > 0 ? .025 : .042);
+      // Boost adds low rumble and phone-band presence; all changes are smooth, never pulsed.
+      rumbleLow.frequency.setTargetAtTime(245 + boost * 85 + (orbit ? 25 : 0), t, .11);
+      rumbleLevel.gain.setTargetAtTime(.94 + boost * .28 + (orbit ? .08 : 0), t, .11);
+      presence.frequency.setTargetAtTime(510 + boost * 250 + (orbit ? 75 : 0), t, .11);
+      presenceLevel.gain.setTargetAtTime(.53 + boost * .1 + (orbit ? .04 : 0), t, .11);
+      airLevel.gain.setTargetAtTime(.055 + boost * .025, t, .11);
+      const bassHz = 61 - boost * 10;
+      engineBass.frequency.setTargetAtTime(bassHz, t, .13);
+      engineUpper.frequency.setTargetAtTime(bassHz * 2, t, .13);
+      bassLevel.gain.setTargetAtTime(.145 + boost * .045, t, .11);
+      upperLevel.gain.setTargetAtTime(.038 + boost * .009, t, .11);
+    },
+    boost(tier) {
+      const n = Math.max(0, Math.min(10, Math.round(Number(tier) || 0)));
+      if (!n) { lastBoostTier = 0; return; }
+      if (n <= lastBoostTier) return;
+      lastBoostTier = n;
+      if (!ready()) return;
+      const intensity = n / 10;
+      burst(.11 + intensity * .05, .06 + intensity * .035, 'lowpass', 670 + intensity * 260, 0, 200);
+      if (n === 1 || n === 4 || n === 7 || n === 10) tone(88 - intensity * 24, 57 - intensity * 10, .16, .045 + intensity * .018);
+    },
+    orbit() {
+      if (!ready()) return;
+      burst(.36, .13, 'bandpass', 740, 0, 220);
+      tone(190, 280, .31, .12);
+      tone(380, 475, .32, .065, .12);
+    },
+    shieldEmpty() {
+      if (!ready() || context.currentTime - lastShieldEmptyTime < .8) return;
+      lastShieldEmptyTime = context.currentTime;
+      tone(570, 330, .15, .11);
+      tone(340, 210, .19, .095, .1);
+    },
+    warning() {
+      if (!ready() || context.currentTime - lastWarningTime < 2) return;
+      lastWarningTime = context.currentTime;
+      // Two short upper-mid pips stay legible over the bass-heavy max-thrust bed.
+      tone(850, 720, .13, .18);
+      tone(740, 610, .15, .16, .18);
+    },
+    impact(strength = 1) {
+      const force = Math.max(0, Math.min(1, Number(strength) || 0));
+      burst(.12 + force * .18, .11 + force * .29, 'lowpass', 850 + force * 300, 0, 160);
+      tone(100, 43, .18 + force * .12, .10 + force * .21);
     },
     shot() {
       tone(690, 230, .12, .22);

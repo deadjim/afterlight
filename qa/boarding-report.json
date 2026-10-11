@@ -1,0 +1,24 @@
+{
+  "pass": true,
+  "actualPassiveLanding": {
+    "start": 1.8499999999999983,
+    "mid": 2.366666666666663,
+    "progress": 0.5333333333333333,
+    "completion": 3.4499999999999926,
+    "hud": "1"
+  },
+  "pause": {
+    "progress": 0.7500000000000007,
+    "frozen": 0.7500000000000007
+  },
+  "realThrustAbort": {
+    "cargo": 0,
+    "padOccupied": true
+  },
+  "assistedRelanding": {
+    "cargo": 1,
+    "padOccupied": false,
+    "duplicateCargo": 1
+  },
+  "errors": []
+}

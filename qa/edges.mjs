@@ -14,7 +14,7 @@ await page.goto('http://127.0.0.1:4173', { waitUntil: 'networkidle' });
 await page.locator('#startButton').click();
 await page.locator('#briefingButton').click();
 const snap = () => page.evaluate(()=>window.__afterlightDebug.snapshot());
-await page.waitForTimeout(4200);
+await page.waitForFunction(()=>window.__afterlightDebug.snapshot().ship.cargo===1,null,{timeout:7000});
 report.pickedFirst = await snap();
 assert.equal(report.pickedFirst.ship.cargo,1,'first pad pickup');
 // State-assisted crash: move the actual ship onto bare terrain, then let game collision handle it.
@@ -25,12 +25,12 @@ assert.equal(report.afterCrash.ship.cargo,1,'recoverable crash keeps cargo');
 assert.ok(report.afterCrash.ship.hull<report.pickedFirst.ship.hull);
 // State-assisted second pickup and dock use real simulation triggers, not direct score/cargo mutation.
 await page.evaluate(()=>window.__afterlightDebug.setShip(1040,window.__afterlightDebug.ground(1040)-14,0,5,0));
-await page.waitForFunction(()=>window.__afterlightDebug.snapshot().ship.cargo===2,null,{timeout:2000});
+await page.waitForFunction(()=>window.__afterlightDebug.snapshot().ship.cargo===2,null,{timeout:4000});
 report.pickedSecond = await snap();
 assert.equal(report.pickedSecond.pads[1].occupied,false);
 for(const pad of report.pickedSecond.pads.filter(p=>p.occupied)) {
   await page.evaluate(x=>window.__afterlightDebug.setShip(x,window.__afterlightDebug.ground(x)-14,0,5,0),pad.x);
-  await page.waitForFunction(id=>!window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied,pad.id,{timeout:2000});
+  await page.waitForFunction(id=>!window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied,pad.id,{timeout:4000});
 }
 await page.evaluate(()=>window.__afterlightDebug.setShip(260,425,0,0,0));
 await page.waitForFunction(()=>window.__afterlightDebug.snapshot().mode==='result',null,{timeout:2000});

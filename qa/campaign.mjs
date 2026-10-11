@@ -27,7 +27,7 @@ for(const config of [{name:'landscape',width:844,height:390},{name:'portrait',wi
     for(const pad of before.pads) {
       const ground=await page.evaluate(x=>window.__afterlightDebug.ground(x),pad.x);
       await page.evaluate(([x,y])=>window.__afterlightDebug.setShip(x,y,0,5,0),[pad.x,ground-14]);
-      await page.waitForFunction(id=>window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied===false,pad.id,{timeout:2000});
+      await page.waitForFunction(id=>window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied===false,pad.id,{timeout:4000});
       const state=await snap();
       assert.equal(state.ship.cargo,pickups.length+1,`sector ${level} pad ${pad.id} increments cargo`);
       pickups.push({id:pad.id,cargo:state.ship.cargo});

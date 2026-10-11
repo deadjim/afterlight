@@ -169,7 +169,7 @@ for(const c of viewports) {
   assert.ok(hard.ship.hull<100,'hard impact costs hull');
   assert.equal(hard.pads.find(p=>p.id===pad.id).occupied,true,'hard impact does not collect crew');
   await place(page,pad.x,y-14,0,5,0);
-  await page.waitForFunction(id=>!window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied,pad.id,{timeout:2000});
+  await page.waitForFunction(id=>!window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied,pad.id,{timeout:4000});
   const gentle=await snap();
   assert.equal(gentle.ship.cargo,1,'gentle follow-up landing collects crew');
   report.impact={padId:pad.id,hardHull:hard.ship.hull,gentleCargo:gentle.ship.cargo};

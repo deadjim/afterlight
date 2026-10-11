@@ -83,7 +83,7 @@ for(const c of config) {
   const s0=await snap(),w=s0.worldWidth,pad=s0.pads.at(-1);
   const gy=await page.evaluate(x=>window.__afterlightDebug.ground(x),pad.x);
   await page.evaluate(([x,y])=>window.__afterlightDebug.setShip(x,y,0,5,0),[pad.x-w,gy-14]);
-  await page.waitForTimeout(120);
+  await page.waitForFunction(id=>window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied===false,pad.id,{timeout:4000});
   const picked=await snap();
   assert.equal(picked.ship.cargo,1,'cross-seam pad pickup');
   assert.equal(picked.pads.find(p=>p.id===pad.id).occupied,false,'unique pad marked used');
@@ -101,7 +101,7 @@ for(const c of config) {
   for(const remaining of docked.pads.filter(p=>p.occupied)) {
     const y=await page.evaluate(x=>window.__afterlightDebug.ground(x),remaining.x);
     await page.evaluate(([x,y])=>window.__afterlightDebug.setShip(x,y,0,5,0),[remaining.x,y-14]);
-    await page.waitForTimeout(100);
+    await page.waitForFunction(id=>window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied===false,remaining.id,{timeout:4000});
   }
   await page.evaluate(()=>window.__afterlightDebug.setShip(260,425,0,0,0));
   await page.waitForFunction(()=>window.__afterlightDebug.snapshot().mode==='result',null,{timeout:2500});

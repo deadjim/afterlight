@@ -37,7 +37,7 @@
       "filters": 5
     },
     "masterGain": 0.41999998688697815,
-    "engineGain": 0.7895475625991821,
+    "engineGain": 0.789439857006073,
     "muted": false,
     "mode": "playing"
   },
@@ -51,7 +51,7 @@
       "filters": 5
     },
     "masterGain": 0.41999998688697815,
-    "engineGain": 0.7895475625991821,
+    "engineGain": 0.8776096105575562,
     "muted": false,
     "mode": "playing"
   },
@@ -65,7 +65,7 @@
       "filters": 5
     },
     "masterGain": 0.41999998688697815,
-    "engineGain": 0.0017801885260269046,
+    "engineGain": 0.0022474441211670637,
     "muted": false,
     "mode": "playing"
   },
@@ -92,7 +92,7 @@
       "buffers": 2,
       "filters": 5
     },
-    "masterGain": 0.00024036872491706163,
+    "masterGain": 0.00029752773116342723,
     "engineGain": 0,
     "muted": true,
     "mode": "playing"
@@ -106,7 +106,7 @@
       "buffers": 2,
       "filters": 5
     },
-    "masterGain": 0.4168923497200012,
+    "masterGain": 0.41689279675483704,
     "engineGain": 0.7841514945030212,
     "muted": false,
     "mode": "playing"
@@ -120,8 +120,8 @@
       "buffers": 2,
       "filters": 5
     },
-    "masterGain": 0.4168923497200012,
-    "engineGain": 0.7841514945030212,
+    "masterGain": 0.4174897372722626,
+    "engineGain": 0.7852750420570374,
     "muted": false,
     "mode": "playing"
   },
@@ -134,8 +134,8 @@
       "buffers": 2,
       "filters": 5
     },
-    "masterGain": 0.41913583874702454,
-    "engineGain": 0.22921042144298553,
+    "masterGain": 0.4193021357059479,
+    "engineGain": 0.22953855991363525,
     "muted": false,
     "mode": "playing"
   },
@@ -149,7 +149,7 @@
       "filters": 5
     },
     "masterGain": 0.41999998688697815,
-    "engineGain": 0.00048713909927755594,
+    "engineGain": 0.0003973635903093964,
     "muted": false,
     "mode": "paused"
   },

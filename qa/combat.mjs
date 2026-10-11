@@ -56,7 +56,7 @@ assert.equal(report.shielded.hull,100,'shield blocks sentry damage');
   await page.evaluate(()=>window.__afterlightDebug.setFuel(0));
   const x=(await snap()).pads[0].x;
   await page.evaluate(x=>window.__afterlightDebug.setShip(x,window.__afterlightDebug.ground(x)-14,0,5,0),x);
-  await page.waitForTimeout(150);
+  await page.waitForFunction(()=>window.__afterlightDebug.snapshot().ship.cargo===1,null,{timeout:4000});
   const collected=await snap();
   await page.evaluate(()=>window.__afterlightDebug.setFuel(0));
   await page.evaluate(x=>window.__afterlightDebug.setShip(x,window.__afterlightDebug.ground(x)-14,0,5,0),x);

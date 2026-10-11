@@ -4,7 +4,12 @@
     "pad": {
       "id": 1,
       "x": 540,
-      "occupied": true
+      "width": 154,
+      "occupied": true,
+      "blink": 0.1274029857304413,
+      "childStartOffset": -52.36000000000001,
+      "childTargetOffset": 0,
+      "childT": 0
     }
   },
   "hard": {

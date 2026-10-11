@@ -93,7 +93,7 @@ for (const config of cases) {
     const pads=(await inspect(page)).snapshot.pads;
     for(const pad of pads){
       await page.evaluate(x=>window.__afterlightDebug.setShip(x,window.__afterlightDebug.ground(x)-14,0,5,0),pad.x);
-      await page.waitForFunction(id=>!window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied,pad.id,{timeout:1500});
+      await page.waitForFunction(id=>!window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied,pad.id,{timeout:4000});
     }
     await page.evaluate(()=>window.__afterlightDebug.setShip(260,425,0,0,0));
     await page.waitForFunction(()=>window.__afterlightDebug.snapshot().mode==='result',null,{timeout:2000});

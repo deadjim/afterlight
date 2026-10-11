@@ -1,0 +1,322 @@
+{
+  "pass": true,
+  "form": {
+    "changed": {
+      "gravity": 1.75,
+      "thrust": 1.5,
+      "fuel": 0.5,
+      "density": 2,
+      "controls": "traditional"
+    },
+    "stored": {
+      "gravity": 1.75,
+      "thrust": 1.5,
+      "fuel": 0.5,
+      "density": 2,
+      "controls": "traditional"
+    },
+    "resetApplied": {
+      "gravity": 1,
+      "thrust": 1,
+      "fuel": 1,
+      "density": 1,
+      "controls": "joystick"
+    }
+  },
+  "physics": {
+    "gravityLow": {
+      "dt": 0.633333333333334,
+      "dvy": 4.784980103594919,
+      "fuelUsed": 0
+    },
+    "gravityHigh": {
+      "dt": 0.6500000000000007,
+      "dvy": 39.26768265180007,
+      "fuelUsed": 0
+    },
+    "thrustLow": {
+      "dt": 0.6500000000000007,
+      "dvy": -32.932118912358725,
+      "fuelUsed": 2.4699999999999704
+    },
+    "thrustHigh": {
+      "dt": 0.6666666666666673,
+      "dvy": -195.40066137984076,
+      "fuelUsed": 2.533333333333303
+    },
+    "fuelLow": {
+      "dt": 0.6666666666666674,
+      "dvy": -85.00465216000867,
+      "fuelUsed": 0.6174999999999926
+    },
+    "fuelHigh": {
+      "dt": 0.6500000000000007,
+      "dvy": -85.4980791506175,
+      "fuelUsed": 4.939999999999941
+    }
+  },
+  "density": {
+    "before": {
+      "active": 1,
+      "turrets": 3,
+      "enemies": 7
+    },
+    "pending": {
+      "active": 1,
+      "saved": 2
+    },
+    "swarm": {
+      "active": 2,
+      "turrets": 6,
+      "enemies": 14
+    },
+    "peaceful": {
+      "active": 0,
+      "turrets": 0,
+      "enemies": 0
+    }
+  },
+  "mobile": {
+    "portrait": {
+      "fit": {
+        "rect": {
+          "x": 16,
+          "y": 16,
+          "right": 374,
+          "bottom": 828
+        },
+        "body": {
+          "x": 17,
+          "y": 77,
+          "right": 373,
+          "bottom": 756
+        },
+        "scrollHeight": 844,
+        "clientHeight": 679,
+        "touchAction": "pan-y",
+        "fontSize": 16,
+        "viewport": {
+          "w": 390,
+          "h": 844
+        }
+      },
+      "control": {
+        "stick": "none",
+        "traditional": "grid",
+        "buttons": {
+          "left": {
+            "x": 15.5,
+            "y": 774,
+            "right": 71.5,
+            "bottom": 830,
+            "width": 56,
+            "height": 56
+          },
+          "right": {
+            "x": 80.5,
+            "y": 774,
+            "right": 136.5,
+            "bottom": 830,
+            "width": 56,
+            "height": 56
+          },
+          "thrust": {
+            "x": 45,
+            "y": 706,
+            "right": 107,
+            "bottom": 768,
+            "width": 62,
+            "height": 62
+          },
+          "fire": {
+            "x": 294,
+            "y": 748,
+            "right": 376,
+            "bottom": 830,
+            "width": 82,
+            "height": 82
+          },
+          "shield": {
+            "x": 228,
+            "y": 772,
+            "right": 286,
+            "bottom": 830,
+            "width": 58,
+            "height": 58
+          }
+        }
+      },
+      "held": {
+        "angleDelta": 1.2075,
+        "fuelBurn": 1.4566666666666492,
+        "bullets": 2,
+        "shieldActive": true
+      },
+      "partial": {
+        "angleDelta": 0.10499999999999998,
+        "fuelBurn": 0.9499999999999886
+      }
+    },
+    "small-portrait": {
+      "fit": {
+        "rect": {
+          "x": 16,
+          "y": 16,
+          "right": 304,
+          "bottom": 552
+        },
+        "body": {
+          "x": 17,
+          "y": 77,
+          "right": 303,
+          "bottom": 480
+        },
+        "scrollHeight": 860,
+        "clientHeight": 403,
+        "touchAction": "pan-y",
+        "fontSize": 16,
+        "viewport": {
+          "w": 320,
+          "h": 568
+        }
+      },
+      "control": {
+        "stick": "none",
+        "traditional": "grid",
+        "buttons": {
+          "left": {
+            "x": 16,
+            "y": 504,
+            "right": 66,
+            "bottom": 554,
+            "width": 50,
+            "height": 50
+          },
+          "right": {
+            "x": 74,
+            "y": 504,
+            "right": 124,
+            "bottom": 554,
+            "width": 50,
+            "height": 50
+          },
+          "thrust": {
+            "x": 41,
+            "y": 442,
+            "right": 99,
+            "bottom": 500,
+            "width": 58,
+            "height": 58
+          },
+          "fire": {
+            "x": 230,
+            "y": 478,
+            "right": 306,
+            "bottom": 554,
+            "width": 76,
+            "height": 76
+          },
+          "shield": {
+            "x": 170,
+            "y": 502,
+            "right": 222,
+            "bottom": 554,
+            "width": 52,
+            "height": 52
+          }
+        }
+      },
+      "held": {
+        "angleDelta": 1.2075,
+        "fuelBurn": 1.4566666666666492,
+        "bullets": 2,
+        "shieldActive": true
+      },
+      "partial": {
+        "angleDelta": 0.05249999999999999,
+        "fuelBurn": 0.8866666666666561
+      }
+    },
+    "short-landscape": {
+      "fit": {
+        "rect": {
+          "x": 12,
+          "y": 8,
+          "right": 556,
+          "bottom": 272
+        },
+        "body": {
+          "x": 13,
+          "y": 69,
+          "right": 555,
+          "bottom": 212
+        },
+        "scrollHeight": 519,
+        "clientHeight": 143,
+        "touchAction": "pan-y",
+        "fontSize": 16,
+        "viewport": {
+          "w": 568,
+          "h": 280
+        }
+      },
+      "control": {
+        "stick": "none",
+        "traditional": "grid",
+        "buttons": {
+          "left": {
+            "x": 15,
+            "y": 218,
+            "right": 69,
+            "bottom": 272,
+            "width": 54,
+            "height": 54
+          },
+          "right": {
+            "x": 75,
+            "y": 218,
+            "right": 129,
+            "bottom": 272,
+            "width": 54,
+            "height": 54
+          },
+          "thrust": {
+            "x": 43,
+            "y": 156,
+            "right": 101,
+            "bottom": 214,
+            "width": 58,
+            "height": 58
+          },
+          "fire": {
+            "x": 474,
+            "y": 192,
+            "right": 554,
+            "bottom": 272,
+            "width": 80,
+            "height": 80
+          },
+          "shield": {
+            "x": 412,
+            "y": 218,
+            "right": 466,
+            "bottom": 272,
+            "width": 54,
+            "height": 54
+          }
+        }
+      },
+      "held": {
+        "angleDelta": 1.155,
+        "fuelBurn": 1.3933333333333167,
+        "bullets": 2,
+        "shieldActive": true
+      },
+      "partial": {
+        "angleDelta": 0.05249999999999999,
+        "fuelBurn": 0.9499999999999886
+      }
+    }
+  },
+  "errors": []
+}

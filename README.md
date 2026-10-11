@@ -26,7 +26,7 @@ npx playwright install chromium webkit
 npm run qa
 ```
 
-To run an individual check, use `npm run qa:smoke`, `npm run qa:aspect`, `npm run qa:zoom`, `npm run qa:gesture`, `npm run qa:joystick`, `npm run qa:playloop`, `npm run qa:campaign`, `npm run qa:combat`, `npm run qa:edges`, `npm run qa:wrap`, `npm run qa:audio`, `npm run qa:landing`, `npm run qa:balance`, `npm run qa:planet`, or `npm run qa:expedition`. Set `CHROME_PATH` to a local Chrome or Chromium executable to use it instead of Playwright's bundled Chromium. The aspect check requires Playwright's WebKit engine and tests composited circle proportions on initial screens, browser-size changes, rotation, and history return. The zoom check forces native Chromium page magnification and verifies the visible cockpit and real touch controls. The gesture check also uses WebKit when installed. The smoke check accepts an optional base URL as its first argument.
+To run an individual check, use `npm run qa:smoke`, `npm run qa:aspect`, `npm run qa:zoom`, `npm run qa:gesture`, `npm run qa:joystick`, `npm run qa:playloop`, `npm run qa:campaign`, `npm run qa:combat`, `npm run qa:edges`, `npm run qa:wrap`, `npm run qa:audio`, `npm run qa:landing`, `npm run qa:balance`, `npm run qa:planet`, `npm run qa:expedition`, `npm run qa:settings`, or `npm run qa:boarding`. Set `CHROME_PATH` to a local Chrome or Chromium executable to use it instead of Playwright's bundled Chromium. The aspect check requires Playwright's WebKit engine and tests composited circle proportions on initial screens, browser-size changes, rotation, and history return. The zoom check forces native Chromium page magnification and verifies the visible cockpit and real touch controls. The gesture check also uses WebKit when installed. The smoke check accepts an optional base URL as its first argument.
 
 ## Flight controls
 
@@ -39,7 +39,9 @@ To run an individual check, use `npm run qa:smoke`, `npm run qa:aspect`, `npm ru
 | Pause | P or Escape |
 | Restart current sortie | R |
 
-Mobile uses a left virtual joystick with FIRE and SHIELD buttons on the right. Drag up for thrust, sideways to steer, or diagonally to do both; use the other thumb to fire or hold the emergency shield. The ring around SHIELD shows its remaining charge. Release the stick to coast. Fly in either direction through a continuous, wrapping landscape. Follow amber rescue beacons, land gently, then carry the crew back to the blue extraction ship. A sector clears only when every stranded person is safely delivered. Rescue pads provide a fuel top-up, and the carrier refuels and repairs your ship.
+Mobile defaults to a left virtual joystick with FIRE and SHIELD buttons on the right. Open the gear button or **Tune flight** in the pause menu to choose traditional LEFT, RIGHT, and THRUST buttons instead. Drag up for thrust, sideways to steer, or diagonally to do both; use the other thumb to fire or hold the emergency shield. The ring around SHIELD shows its remaining charge. Release the stick to coast. Fly in either direction through a continuous, wrapping landscape. Follow amber rescue beacons and land gently on a pad. The ship settles on its landing gear while a tiny animated child walks aboard over 1.6 seconds. Wait for boarding to finish, then thrust to lift off and carry the children back to the blue extraction ship. Taking off early leaves the child on the pad. **Souls aboard** shows only the passengers currently in your ship, returning to zero when they disembark at the carrier. A sector clears only when every stranded person is safely delivered. Rescue pads provide a fuel top-up, and the carrier refuels and repairs your ship.
+
+Settings also let you adjust gravity, thrust power, and fuel use independently, with a live thrust/fuel efficiency readout. Flight tuning applies immediately; enemy density, from Peaceful to Swarm, applies on the next sortie or restart. Settings are saved on this device.
 
 Holding thrust builds progressively stronger afterburner stages: 1.5× power after one second, 1.75× after two, and up to 6.25× after ten. Longer exhaust trails and a rising engine roar show the escalation. Higher power uses more fuel; releasing thrust preserves momentum, so turn and thrust against your velocity to brake. The shield has a separate two-second reserve and recharges over fourteen seconds after a short delay. Release Shift or the mobile SHIELD button to begin recharging and rearm it. Use it for a brief escape through enemy fire. Red ground sentries and flying interceptors can both be destroyed. Hard or crooked landings damage the hull even with the shield active. Level the ship and slow its descent and sideways drift before touching a rescue pad.
 
@@ -61,7 +63,7 @@ Each sector is a large circular world: keep flying left or right and you eventua
 - `dist/fonts.css`, `dist/fonts/`: bundled Barlow Condensed and DM Sans, with their SIL Open Font License notices.
 - `qa/`: browser verification scripts, selected screenshots, and reports.
 
-The game stores score and sound preference in browser-local storage when available. It does not require accounts, a game server, analytics, or remote assets.
+The game stores score, sound preference, and flight/control settings in browser-local storage when available. It does not require accounts, a game server, analytics, or remote assets.
 
 ## Vultr hosting
 

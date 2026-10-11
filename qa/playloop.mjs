@@ -14,7 +14,7 @@ await page.locator('#startButton').click();
 await page.locator('#briefingButton').click();
 const snap = () => page.evaluate(() => window.__afterlightDebug.snapshot());
 const initial = await snap();
-await page.waitForTimeout(4200);
+await page.waitForFunction(()=>window.__afterlightDebug.snapshot().ship.cargo===1,null,{timeout:7000});
 const afterPassiveLanding = await snap();
 assert.equal(afterPassiveLanding.ship.cargo,1,'first survivor collected by physical landing');
 assert.equal(afterPassiveLanding.pads[0].occupied,false);
@@ -34,6 +34,12 @@ for (let i=0; i<340; i++) {
   const s=await snap();
   if (i%10===0) trace.push({ t: s.time.toFixed(1), x: Math.round(s.ship.x), y: Math.round(s.ship.y), vx: Math.round(s.ship.vx), vy: Math.round(s.ship.vy), a: s.ship.a.toFixed(2), fuel: Math.round(s.ship.fuel), cargo: s.ship.cargo, delivered: s.delivered, mode: s.mode });
   if (s.delivered>0 || s.mode!=='playing') break;
+  if (s.ship.landedPadId!==null) {
+    // A parked ship cannot rotate: use the actual Up key to lift off first.
+    await press({left:false,right:false,thrust:true});
+    await page.waitForTimeout(100);
+    continue;
+  }
   const targetX=s.objective.x, targetY=s.objective.y;
   const desiredVx=clamp((targetX-s.ship.x)*.6,-112,112);
   const desiredVy=clamp((targetY-s.ship.y)*.6,-125,125);

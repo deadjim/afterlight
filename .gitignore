@@ -33,3 +33,7 @@ qa/*.png
 !qa/aspect-report.json
 !qa/aspect-baseline-report.json
 !qa/zoom-report.json
+!qa/settings-report.json
+!qa/boarding-report.json
+!qa/settings-portrait.png
+!qa/boarding-walk.png

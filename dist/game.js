@@ -7,7 +7,7 @@
   const $ = id => document.getElementById(id);
   const audio = window.AfterlightAudio || {};
   const M = [
-    { name: '01 / FIRST LIGHT', width: 6000, subtitle: 'The lost signal', crew: [540, 1040, 2200, 3650, 5200], turrets: [1700, 3050, 5650], drones:[1400,2800,4700], tint: '#20ffd0', briefing: 'Five survivors circle the moon. Fly left or right; the horizon loops. Land gently on amber pads and return everyone to the blue carrier. Hold thrust to build afterburner; braking burns fuel. Beyond orbit, thrust costs 2× fuel; optional outposts offer salvage and repairs.' },
+    { name: '01 / FIRST LIGHT', width: 6000, subtitle: 'The lost signal', crew: [540, 1040, 2200, 3650, 5200], turrets: [1700, 3050, 5650], drones:[1400,2800,4700], tint: '#20ffd0', briefing: 'Five survivors circle the moon. Fly left or right; the horizon loops. Land on amber pads, wait for boarding, then return to the blue carrier. Hold thrust to build afterburner; braking burns fuel. Beyond orbit, thrust costs 2× fuel; optional outposts offer salvage and repairs.' },
     { name: '02 / DEEP SIGNAL', width: 7800, subtitle: 'Through the fire', crew: [500, 1430, 2540, 3790, 5180, 7100], turrets: [1020, 2070, 3260, 4640, 6310, 7430], drones:[1230,2320,4110,5680,6990], tint: '#38dfff', briefing: 'Six crew remain across a wider orbital ring. Choose either direction and follow the nearest beacon. Red sentries and flying interceptors patrol the sky. Their aim lines warn before they fire; evade the line or shoot back. Pads and the carrier replenish fuel.' },
     { name: '03 / LAST TRANSMISSION', width: 9600, subtitle: 'Bring them home', crew: [470, 1260, 2410, 3580, 4740, 5900, 7240, 8900], turrets: [900, 1920, 3070, 4220, 5410, 6610, 8130, 9220], drones:[1110,2260,3500,4800,6140,7570,8710], tint: '#a78cff', briefing: 'Eight survivors around one final world. The terrain wraps in both directions; there is no edge. Watch your momentum near each pad and bring everyone to the carrier to complete the campaign.' },
   ];
@@ -32,20 +32,39 @@
   let mode='title', levelIndex=0, game=null, clock=0, accumulator=0, last=performance.now(), renderClock=0;
   let best=0;
   try { best = Number(localStorage.getItem('afterlight-best') || 0) || 0; } catch {}
+  const DEFAULT_SETTINGS={gravity:1,thrust:1,fuel:1,density:1,controls:'joystick'};
+  const SETTINGS_KEY='afterlight-settings-v1';
+  function normalizeSettings(value={}) {
+    const number=(key,min,max)=>Number.isFinite(value[key])?clamp(Math.round(value[key]*4)/4,min,max):DEFAULT_SETTINGS[key];
+    return {gravity:number('gravity',.25,2),thrust:number('thrust',.5,2),fuel:number('fuel',.25,2),density:[0,.5,1,1.5,2].includes(value.density)?value.density:1,controls:value.controls==='traditional'?'traditional':'joystick'};
+  }
+  function loadSettings() {try{const value=JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}');return normalizeSettings(value&&typeof value==='object'?value:{});}catch{return {...DEFAULT_SETTINGS};}}
+  let settings=loadSettings(),settingsOpen=false,settingsOrigin=null,settingsFocus=null;
+  function enemyPositions(base,width,crew) {
+    const count=Math.round(base.length*settings.density),positions=[];
+    for(let i=0;i<count;i++){
+      let x=i<base.length?base[i]:wrap(base[i%base.length]+width/(base.length*2),width);
+      if(i>=base.length){for(let n=0;n<16&&crew.some(p=>Math.abs(deltaX(x,p,width))<180);n++)x=wrap(x+90,width);}
+      positions.push(x);
+    }
+    return positions;
+  }
 
   function makeLevel(index) {
     const spec=M[index];
-    const pads=spec.crew.map((x,i)=>({id:i+1,x, width: i===0&&index===0?154:132, occupied:true, blink:rand(i*16+index)}));
-    const turrets=spec.turrets.map((x,i)=>({x, hp:index===0?2:3, cooldown:2.2 + i*.6, flash:0}));
-    const drones=spec.drones.map((x,i)=>({id:i+1,home:x,x,y:630,hp:index===0?2:3,cooldown:2.6+i*.43,flash:0,phase:rand(i*13+index)*TAU,shotCount:0,space:false}));
+    const pads=spec.crew.map((x,i)=>({id:i+1,x, width: i===0&&index===0?154:132, occupied:true, blink:rand(i*16+index),childStartOffset:(i%2?1:-1)*(i===0&&index===0?154:132)*.34,childTargetOffset:0,childT:0}));
+    const turrets=enemyPositions(spec.turrets,spec.width,spec.crew).map((x,i)=>({x, hp:index===0?2:3, cooldown:2.2 + i*.6, flash:0}));
+    const drones=enemyPositions(spec.drones,spec.width,spec.crew).map((x,i)=>({id:i+1,home:x,x,y:630,hp:index===0?2:3,cooldown:2.6+i*.43,flash:0,phase:rand(i*13+index)*TAU,shotCount:0,space:false}));
     const spaceBodies=[{id:1,name:'EMBER RELAY',x:980,y:-7000,radius:91,claimed:false,docks:0},{id:2,name:'AZURE VAULT',x:2450,y:-13000,radius:112,claimed:false,docks:0}];
     for(const body of spaceBodies){body.dockX=body.x;body.dockY=body.y+body.radius+52;}
-    for(const [i,x,y] of [[0,spaceBodies[0].x-235,spaceBodies[0].y-100],[1,spaceBodies[0].x+305,spaceBodies[0].y+145],[2,spaceBodies[1].x-290,spaceBodies[1].y-120],[3,spaceBodies[1].x+320,spaceBodies[1].y+125]]){
+    const guardians=[[spaceBodies[0].x-235,spaceBodies[0].y-100],[spaceBodies[0].x+305,spaceBodies[0].y+145],[spaceBodies[1].x-290,spaceBodies[1].y-120],[spaceBodies[1].x+320,spaceBodies[1].y+125]];
+    for(let i=0;i<Math.round(guardians.length*settings.density);i++){
+      const [homeX,homeY]=guardians[i%guardians.length],x=homeX+(i>=4?120:0),y=homeY+(i>=4?180:0);
       drones.push({id:100+i,home:x,homeY:y,x,y,hp:4,cooldown:2.4+i*.45,flash:0,phase:rand(i*19+index+90)*TAU,shotCount:0,space:true});
     }
     const s={
-      level:index, width:spec.width, pads, turrets, drones, spaceBodies, salvageCount:0, bullets:[], enemyBullets:[], particles:[], decals:[],
-      ship:{x:index===0?540:390, y:index===0?690:480, vx:0, vy:0, a:0, fuel:100, hull:100, cargo:0, invuln:1.5, shotTime:0, shield:0,shieldCharge:100,shieldActive:false,shieldArmed:true,shieldDelay:0,thrustHold:0,boostTier:0,boostFlash:0,power:1,speedLimit:400,altitude:0,inSpace:false,preOrbitWarned:false,orbitEntryTime:null,orbitEntryFuel:null,fuelWarned:false},
+      level:index, activeDensity:settings.density, width:spec.width, pads, turrets, drones, spaceBodies, salvageCount:0, bullets:[], enemyBullets:[], particles:[], decals:[],
+      ship:{x:index===0?540:390, y:index===0?690:480, vx:0, vy:0, a:0, fuel:100, hull:100, cargo:0,landedPadId:null,boardingPadId:null,boardingProgress:0, invuln:1.5, shotTime:0, shield:0,shieldCharge:100,shieldActive:false,shieldArmed:true,shieldDelay:0,thrustHold:0,boostTier:0,boostFlash:0,power:1,speedLimit:400,altitude:0,inSpace:false,preOrbitWarned:false,orbitEntryTime:null,orbitEntryFuel:null,fuelWarned:false},
       delivered:0, score:0, time:0, deaths:0, status:'', statusUntil:0, landingHint:'', objectiveX:pads[0].x,
       camera:{x:index===0?435:390,y:530}, ended:false, shake:0, pulse:0, outpostLatch:null,outpostImpactUntil:0,
     };
@@ -169,8 +188,12 @@
   }
   let campaignScore=0;
   function totalScore() { return campaignScore+(game?.score||0); }
+  function clearLandingState(s) {
+    s.landedPadId=null;s.boardingPadId=null;s.boardingProgress=0;
+  }
   function crash() {
     const s=game.ship;
+    clearLandingState(s);
     burst(s.x,s.y,'#ff795b',46,180); sound('explosion'); game.shake=13;
     game.deaths++; s.hull-=31;
     if(s.hull<=0 || game.deaths>=4) { end(false); return; }
@@ -181,10 +204,35 @@
   }
   function pickPad(pad) {
     const s=game.ship;
-    pad.occupied=false; s.cargo++;
-    s.vx*=.25; s.vy=-38; s.y=ground(pad.x)-29; s.fuel=Math.max(s.fuel,75);
-    game.score+=250; burst(nearX(pad.x,s.x),ground(pad.x)-18,'#ffcc82',30,110); sound('rescue');
-    toast(s.cargo===1?'CREW ABOARD • RETURN TO BLUE CARRIER':`${s.cargo} CREW ABOARD • RETURN TO CARRIER`,4);
+    if(!pad.occupied||s.boardingPadId!==pad.id||s.landedPadId!==pad.id)return;
+    pad.occupied=false;s.cargo++;s.boardingPadId=null;s.boardingProgress=0;
+    game.score+=250;burst(s.x,ground(pad.x)-20,'#ffcc82',24,85);sound('rescue');
+    toast(s.cargo===1?'CHILD ABOARD • THRUST TO DEPART':`${s.cargo} CHILDREN ABOARD • THRUST TO DEPART`,4);
+  }
+  function landOnPad(pad,below) {
+    const s=game.ship;
+    s.y=below-16;s.vx=0;s.vy=0;s.a=0;s.landedPadId=pad.id;
+    s.boardingPadId=pad.occupied?pad.id:null;s.boardingProgress=0;
+    pad.childTargetOffset=deltaX(s.x,pad.x,game.width);
+    s.fuel=Math.max(s.fuel,75);
+    burst(s.x,below-5,pad.occupied?'#ffcc82':'#8de7d7',9,30);
+    toast(pad.occupied?'PAD LOCKED • WAIT FOR BOARDING':'PAD LOCKED • FUEL TOPPED UP',2.8);
+  }
+  function leavePad(s) {
+    if(s.landedPadId===null)return;
+    clearLandingState(s);
+    s.y-=16;s.vy=-40;
+  }
+  function updateBoarding(dt) {
+    const s=game.ship;
+    for(const pad of game.pads){
+      if(!pad.occupied)continue;
+      if(s.landedPadId===pad.id&&s.boardingPadId===pad.id){
+        s.boardingProgress=Math.min(1.6,s.boardingProgress+dt);
+        pad.childT=Math.max(pad.childT,s.boardingProgress/1.6);
+        if(s.boardingProgress>=1.6)pickPad(pad);
+      }else pad.childT=Math.max(0,pad.childT-dt*2.2);
+    }
   }
   function dock() {
     const s=game.ship;
@@ -241,18 +289,19 @@
     const left=down('left'),right=down('right'),fire=down('fire'),shield=down('shield');
     const thrust=down('thrust')?1:joystick.throttle;
     const turn=clamp((right?1:0)-(left?1:0)+joystick.turn,-1,1);
+    if(s.landedPadId!==null&&thrust>0&&s.fuel>0)leavePad(s);
     s.a+=turn*3.15*dt;
     if(s.a>Math.PI) s.a-=TAU; if(s.a< -Math.PI) s.a+=TAU;
-    s.vy+=(31-11*clamp((s.altitude-ORBIT_ENTER)/8500,0,1))*dt;
+    s.vy+=(31-11*clamp((s.altitude-ORBIT_ENTER)/8500,0,1))*settings.gravity*dt;
     if(thrust&&s.fuel>0) {
       s.thrustHold+=dt*thrust;
       const tier=Math.min(10,Math.floor(s.thrustHold));
       if(tier>s.boostTier){sound('boost',tier);s.boostFlash=.22;burst(s.x,s.y,tier>=5?'#72f4e5':'#ffbd84',7,36+tier*4);}
       s.boostTier=tier;s.power=BOOST[tier];
-      s.speedLimit=Math.max(s.speedLimit,300+s.power*100);
+      s.speedLimit=Math.max(s.speedLimit,300+s.power*100*settings.thrust);
       const ax=Math.sin(s.a), ay=-Math.cos(s.a);
-      s.vx+=ax*165*s.power*thrust*dt; s.vy+=ay*165*s.power*thrust*dt;
-      const fuelRate=3.8*(1+.22*(s.power-1))*(s.inSpace?2:1)*thrust;
+      s.vx+=ax*165*s.power*thrust*settings.thrust*dt; s.vy+=ay*165*s.power*thrust*settings.thrust*dt;
+      const fuelRate=3.8*(1+.22*(s.power-1))*(s.inSpace?2:1)*thrust*settings.fuel;
       s.fuel=Math.max(0,s.fuel-fuelRate*dt);
       if(rand(g.time*4321)>.18)g.particles.push({x:s.x-ax*15,y:s.y-ay*15,vx:s.vx-ax*(80+rand(g.time*600)*100)*Math.sqrt(s.power),vy:s.vy-ay*(80+rand(g.time*500)*100)*Math.sqrt(s.power),life:.28+rand(g.time*400)*.35,max:.63,color:rand(g.time*54)>.5?'#ffb36b':'#88f8eb',size:1.4+rand(g.time*63)*2.8});
     } else {s.thrustHold=0;s.boostTier=0;s.power=1;}
@@ -268,6 +317,11 @@
     }
     s.shotTime-=dt; s.invuln=Math.max(0,s.invuln-dt);
     const drag=Math.pow(.999,dt*60); s.vx*=drag; s.vy*=drag;
+    if(s.landedPadId!==null){
+      const pad=g.pads.find(p=>p.id===s.landedPadId);
+      if(!pad||Math.abs(deltaX(s.x,pad.x,g.width))>=pad.width*.5-8||Math.abs(s.y-(ground(pad.x)-16))>45)clearLandingState(s);
+      else{s.y=ground(s.x)-16;s.vx=0;s.vy=0;s.a=0;}
+    }
     const cap=s.speedLimit,speed=Math.hypot(s.vx,s.vy); if(speed>cap){s.vx*=cap/speed;s.vy*=cap/speed;}
     s.prevX=s.x;s.prevY=s.y;
     const steps=Math.min(16,Math.max(1,Math.ceil(Math.hypot(s.vx,s.vy)*dt/9)));
@@ -278,9 +332,8 @@
         const pad=g.pads.find(p=>Math.abs(deltaX(s.x,p.x,g.width))<p.width*.5-8);
         const safe=!!pad&&Math.abs(s.vx)<45&&s.vy>=-22&&s.vy<60&&Math.abs(s.a)<.24;
         if(safe){
-          s.y=below-16;s.vy=Math.min(-13,-Math.abs(s.vy)*.22);s.vx*=.63;
-          if(pad.occupied)pickPad(pad);
-          else{s.fuel=Math.max(s.fuel,75);if(g.time>2&&g.statusUntil<g.time)toast('PAD STABLE • FUEL TOPPED UP',1.2);}
+          if(s.landedPadId!==pad.id)landOnPad(pad,below);
+          else{s.y=below-16;s.vx=0;s.vy=0;s.a=0;}
         } else terrainImpact(pad,below);
       }
       for(const body of g.spaceBodies){
@@ -304,6 +357,7 @@
       }
       if(mode!=='playing')return;
     }
+    updateBoarding(dt);
     s.altitude=Math.max(0,ground(s.x)-s.y);
     if(!s.inSpace&&s.altitude>=4700&&!s.preOrbitWarned){s.preOrbitWarned=true;toast('ORBIT AHEAD • RELEASE THRUST TO COAST',3.2);}
     if(!s.inSpace&&s.altitude<4300)s.preOrbitWarned=false;
@@ -427,10 +481,12 @@
     text('hudShield',Math.round(s.shieldCharge)+'%');
     text('hudBoost',`${s.power}×`);
     text('hudAltitude',s.inSpace?'ORBIT':`${(s.altitude/1000).toFixed(1)} KM`);
-    text('hudCrew',`${game.delivered}/${game.pads.length}`);
+    text('hudCrew',String(s.cargo));
     const range=Math.round(Math.hypot(o.x-s.x,o.y-s.y)/10)*10;
     let objective='';
-    if(s.inSpace&&o.kind==='outpost') {
+    if(s.boardingPadId!==null&&s.boardingPadId!==undefined) objective='BOARDING · HOLD POSITION';
+    else if(s.landedPadId!==null&&s.landedPadId!==undefined) objective=s.cargo?'CREW ABOARD · THRUST TO LIFT OFF':'PAD LANDED · THRUST TO LIFT OFF';
+    else if(s.inSpace&&o.kind==='outpost') {
       const name=game.spaceBodies.find(b=>b.id===o.bodyId).name;
       objective=range<600?(Math.hypot(s.vx,s.vy)>=330?`${name} · BRAKE TO DOCK`:`${name} · ENTER DOCKING RING`):`${name} · ${range} M`;
     }
@@ -547,8 +603,19 @@
       const pulse=.5+.5*Math.sin(renderClock*3+p.blink*TAU);
       circle(x,y-40,8+pulse*8,`rgba(255,200,112,${.27+pulse*.23})`,1,8);
       line([[x,y-54-pulse*9],[x,y-72-pulse*9]],'rgba(255,208,142,.65)',1,6);
-      label('SURVIVOR',x,y-82-pulse*9,10,'#e6b87e');
-      const head=y-22;circle(x,head,3.3,'#ffd498',1.4,6);line([[x,head+4],[x,head+14],[x-4,head+21]],'#ffd498',1.2,5);line([[x,head+14],[x+4,head+21]],'#ffd498',1.2,5);line([[x-5,head+9],[x+5,head+9]],'#ffd498',1.1,4);
+      const boarding=game.ship.landedPadId===p.id&&game.ship.boardingPadId===p.id;
+      label(boarding?'BOARDING':'CHILD',x,y-82-pulse*9,10,'#e6b87e');
+      if(boarding){ctx.beginPath();ctx.arc(x,y-40,21,-Math.PI*.5,-Math.PI*.5+TAU*clamp(game.ship.boardingProgress/1.6,0,1));ctx.strokeStyle='#ffd08c';ctx.lineWidth=2;ctx.shadowBlur=10;ctx.shadowColor='#ffbb73';ctx.stroke();ctx.shadowBlur=0;}
+      const t=p.childT,cx=x+mix(p.childStartOffset,p.childTargetOffset,t),moving=t>.01&&t<.99;
+      const gait=moving?Math.sin(game.time*24+p.id*2.1):0,bob=moving?Math.abs(gait)*.9:0,head=y-17-bob;
+      ctx.save();ctx.globalAlpha=1-clamp((t-.88)/.12,0,1);
+      circle(cx,head,2.4,'#ffe0a5',1.2,6,true);
+      line([[cx,head+3],[cx,head+9]],'#ffd294',1.3,5);
+      line([[cx,head+5],[cx-3-gait*1.3,head+8]],'#ffd294',1,4);
+      line([[cx,head+5],[cx+3+gait*1.3,head+8]],'#ffd294',1,4);
+      line([[cx,head+9],[cx-2.7-gait*2,head+15]],'#ffd294',1.1,4);
+      line([[cx,head+9],[cx+2.7+gait*2,head+15]],'#ffd294',1.1,4);
+      ctx.restore();
     }
   }
   function drawCarrier(x=CARRIER.x) {
@@ -640,6 +707,11 @@
     line([[0,-14],[6,3],[0,7],[-6,3]],'#b8fcff',1.2,9,true);
     line([[-11,10],[-19,16],[-9,13]],'#8ad1d6',1.1,4);line([[11,10],[19,16],[9,13]],'#8ad1d6',1.1,4);
     line([[-4,13],[4,13]],'#ffa96d',2,8);
+    if(s.landedPadId!==null){
+      line([[-11,8],[-17,17],[-22,17]],'#b8f0e8',1.4,7);
+      line([[11,8],[17,17],[22,17]],'#b8f0e8',1.4,7);
+      if(s.boardingPadId!==null){circle(0,8,4.2+Math.sin(renderClock*7)*.7,'#ffd18e',1.3,9);line([[-6,12],[6,12]],'#ffcc88',1.2,7);}
+    }
     if((down('thrust')||joystick.throttle>0||mode==='title')&&s.fuel>0){
       const f=clamp((12+rand(renderClock*83)*17)*(1+(s.power-1)*.58)*(mode==='title'?1:down('thrust')?1:joystick.throttle),7,108);
       line([[-4,16],[0,16+f],[4,16]],s.boostTier>=4?'#ff7668':'#ffb978',2+s.boostTier*.08,13+s.boostTier);
@@ -711,6 +783,47 @@
     else if(mode==='title'||mode==='briefing') {cam.x=mix(cam.x,mode==='title'?580:(game?.ship.x||540),.012);cam.y=mix(cam.y,mode==='title'?520:(game?.ship.y||530),.012);}
     render();requestAnimationFrame(frame);
   }
+  function applyControlPreference() {
+    $('game').dataset.controlType=settings.controls;
+    clearJoystick();Object.keys(touches).forEach(k=>touches[k]=false);clearTouchVisuals();
+  }
+  function settingsReadouts() {
+    const gravity=Number($('settingGravity')?.value||1),thrust=Number($('settingThrust')?.value||1),fuel=Number($('settingFuel')?.value||1);
+    text('gravityValue',`${gravity.toFixed(2)}×`);text('thrustValue',`${thrust.toFixed(2)}×`);text('fuelValue',`${fuel.toFixed(2)}×`);
+    text('ratioValue',`${(thrust/fuel).toFixed(2)}×`);
+  }
+  function fillSettings(value) {
+    for(const [key,id] of Object.entries({gravity:'settingGravity',thrust:'settingThrust',fuel:'settingFuel',density:'settingDensity',controls:'settingControls'}))if($(id))$(id).value=String(value[key]);
+    settingsReadouts();
+  }
+  function openSettings() {
+    if(settingsOpen)return;
+    settingsOrigin=mode;settingsFocus=document.activeElement;
+    if(mode==='playing')setPause(true);
+    Object.keys(keys).forEach(k=>keys[k]=false);Object.keys(touches).forEach(k=>touches[k]=false);clearJoystick();clearTouchVisuals();
+    settingsOpen=true;fillSettings(settings);show('settingsScreen',true);$('settingGravity')?.focus({preventScroll:true});
+  }
+  function closeSettings(apply=false) {
+    if(!settingsOpen)return;
+    if(apply){
+      settings=normalizeSettings({gravity:Number($('settingGravity').value),thrust:Number($('settingThrust').value),fuel:Number($('settingFuel').value),density:Number($('settingDensity').value),controls:$('settingControls').value});
+      try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));}catch{}
+      applyControlPreference();updateHud();
+    }
+    show('settingsScreen',false);settingsOpen=false;
+    if(settingsOrigin==='playing')setPause(false);
+    settingsOrigin=null;
+    if(settingsFocus?.isConnected)settingsFocus.focus({preventScroll:true});settingsFocus=null;
+  }
+  function settingsKeyboard(e) {
+    if(!settingsOpen)return;
+    if(e.code==='Escape'){e.preventDefault();closeSettings(false);return;}
+    if(e.key!=='Tab')return;
+    const items=[...$('settingsScreen').querySelectorAll('button,input,select,[tabindex="0"]')].filter(el=>!el.disabled&&el.getClientRects().length);
+    const first=items[0],last=items[items.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}
+  }
   function bindButton(id,fn) {
     const b=$(id);if(!b)return;
     let touchPointer=null,lastTouchAction=-Infinity;
@@ -727,6 +840,7 @@
     b.addEventListener('click',e=>{e.preventDefault();if(e.detail>0&&performance.now()-lastTouchAction<750)return;act();});
   }
   function keyAction(e,pressed) {
+    if(settingsOpen||e.defaultPrevented)return;
     const k=e.code;
     const bind={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'thrust',KeyW:'thrust',Space:'fire',KeyJ:'fire',ShiftLeft:'shield',ShiftRight:'shield',KeyK:'shield'};
     if(bind[k]){if(mode==='playing'||!pressed)keys[bind[k]]=pressed;if(mode==='playing')e.preventDefault();return;}
@@ -785,6 +899,11 @@
   bindButton('muteButton',()=>{const value=!(audio.muted??false);sound('setMuted',value);const b=$('muteButton');if(b){b.setAttribute('aria-label',value?'Unmute audio':'Mute audio');b.classList.toggle('is-muted',value);}});
   bindButton('fullscreenButton',()=>{if(document.fullscreenElement)document.exitFullscreen?.();else document.documentElement.requestFullscreen?.().catch(()=>{});});
   bindButton('helpButton',()=>{if(mode==='playing')setPause(true);});
+  bindButton('settingsButton',openSettings);bindButton('pauseSettingsButton',openSettings);
+  bindButton('settingsApply',()=>closeSettings(true));bindButton('settingsCancel',()=>closeSettings(false));
+  bindButton('settingsReset',()=>fillSettings(DEFAULT_SETTINGS));
+  for(const id of ['settingGravity','settingThrust','settingFuel'])$(id)?.addEventListener('input',settingsReadouts);
+  addEventListener('keydown',settingsKeyboard);
   addEventListener('keydown',e=>keyAction(e,true));addEventListener('keyup',e=>keyAction(e,false));
   addEventListener('blur',()=>{Object.keys(keys).forEach(k=>keys[k]=false);Object.keys(touches).forEach(k=>touches[k]=false);clearJoystick();clearTouchVisuals();if(mode==='playing')setPause(true);});
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&mode==='playing')setPause(true);});
@@ -796,9 +915,9 @@
   // Dynamic browser chrome can resize the CSS box without a window resize.
   // Observe the rendered canvas, and keep its backing bitmap in the same ratio.
   if(typeof ResizeObserver!=='undefined')new ResizeObserver(resize).observe(canvas);
-  bindFlightGestures();bindTouch();bindJoystick();fitVisualViewport();resize();
+  applyControlPreference();bindFlightGestures();bindTouch();bindJoystick();fitVisualViewport();resize();
   game=makeLevel(0);cam={x:580,y:520};show('titleScreen',true);show('briefingScreen',false);show('pauseScreen',false);show('resultScreen',false);updateHud();
   if($('muteButton')){$('muteButton').classList.toggle('is-muted',!!audio.muted);$('muteButton').setAttribute('aria-label',audio.muted?'Unmute audio':'Mute audio');}
-  window.__afterlightDebug={snapshot:()=>({mode,level:levelIndex+1,worldWidth:game.width,camera:{...cam},orbit:{enter:ORBIT_ENTER,exit:ORBIT_EXIT,spaceFuelMultiplier:2},homePlanet:homePlanetVisual(game.ship.altitude),joystick:{...joystick},ship:{...game.ship},delivered:game.delivered,salvageCount:game.salvageCount,spaceBodies:game.spaceBodies.map(b=>({...b})),pads:game.pads.map(p=>({id:p.id,x:p.x,occupied:p.occupied})),turrets:game.turrets.map(t=>({x:t.x,hp:t.hp})),flyingEnemies:game.drones.map(e=>({id:e.id,x:e.x,y:e.y,hp:e.hp,space:e.space,shotCount:e.shotCount,cooldown:e.cooldown})),entities:{particles:game.particles.length,bullets:game.bullets.length,enemyBullets:game.enemyBullets.length,flyingEnemies:game.drones.filter(e=>e.hp>0).length},score:totalScore(),objective:nextObjective(),time:game.time}),ground:(x)=>ground(x),wrappedDx:(target,origin)=>deltaX(target,origin,game.width),start:(level=1)=>{campaignScore=0;startLevel(clamp(level-1,0,2),false);},setShip:(x,y,vx=0,vy=0,a=0)=>{Object.assign(game.ship,{x,y,vx,vy,a});cam.x=x;cam.y=y+(cw>ch*1.7&&ch<600?80:0);},setResources:({fuel,hull,shieldCharge}={})=>{const s=game.ship;if(Number.isFinite(fuel))s.fuel=clamp(fuel,0,100);if(Number.isFinite(hull))s.hull=clamp(hull,0,100);if(Number.isFinite(shieldCharge))s.shieldCharge=clamp(shieldCharge,0,100);updateHud();},setMode:(value)=>{if(value==='playing')enterPlay();else if(value==='paused')setPause(true);}};
+  window.__afterlightDebug={snapshot:()=>({mode,settings:{...settings},settingsOpen,activeDensity:game.activeDensity,level:levelIndex+1,worldWidth:game.width,camera:{...cam},orbit:{enter:ORBIT_ENTER,exit:ORBIT_EXIT,spaceFuelMultiplier:2},homePlanet:homePlanetVisual(game.ship.altitude),joystick:{...joystick},ship:{...game.ship},delivered:game.delivered,salvageCount:game.salvageCount,spaceBodies:game.spaceBodies.map(b=>({...b})),pads:game.pads.map(p=>({...p})),turrets:game.turrets.map(t=>({x:t.x,hp:t.hp})),flyingEnemies:game.drones.map(e=>({id:e.id,x:e.x,y:e.y,hp:e.hp,space:e.space,shotCount:e.shotCount,cooldown:e.cooldown})),entities:{particles:game.particles.length,bullets:game.bullets.length,enemyBullets:game.enemyBullets.length,flyingEnemies:game.drones.filter(e=>e.hp>0).length},score:totalScore(),objective:nextObjective(),time:game.time}),ground:(x)=>ground(x),wrappedDx:(target,origin)=>deltaX(target,origin,game.width),start:(level=1)=>{campaignScore=0;startLevel(clamp(level-1,0,2),false);},setShip:(x,y,vx=0,vy=0,a=0)=>{clearLandingState(game.ship);Object.assign(game.ship,{x,y,vx,vy,a});cam.x=x;cam.y=y+(cw>ch*1.7&&ch<600?80:0);},setResources:({fuel,hull,shieldCharge}={})=>{const s=game.ship;if(Number.isFinite(fuel))s.fuel=clamp(fuel,0,100);if(Number.isFinite(hull))s.hull=clamp(hull,0,100);if(Number.isFinite(shieldCharge))s.shieldCharge=clamp(shieldCharge,0,100);updateHud();},setMode:(value)=>{if(value==='playing')enterPlay();else if(value==='paused')setPause(true);}};
   requestAnimationFrame(frame);
 })();

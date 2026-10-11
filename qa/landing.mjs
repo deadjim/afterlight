@@ -32,7 +32,8 @@ assert.equal(crooked.pads[0].occupied,true,'crooked landing leaves crew waiting'
 assert.ok(crooked.ship.fuel<40,'crooked landing does not refuel');
 await page.evaluate(()=>window.__afterlightDebug.start(1));
 await resources(30);
-await position(0,5,0,13);await page.waitForTimeout(120);
+await position(0,5,0,13);
+await page.waitForFunction(()=>window.__afterlightDebug.snapshot().ship.cargo===1,null,{timeout:4000});
 const gentle=await snap();
 assert.equal(gentle.ship.cargo,1,'later gentle upright landing rescues same crew');
 assert.equal(gentle.pads[0].occupied,false,'gentle landing clears occupied pad');

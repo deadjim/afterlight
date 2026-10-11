@@ -1,6 +1,15 @@
 {
   "initial": {
     "mode": "playing",
+    "settings": {
+      "gravity": 1,
+      "thrust": 1,
+      "fuel": 1,
+      "density": 1,
+      "controls": "joystick"
+    },
+    "settingsOpen": false,
+    "activeDensity": 1,
     "level": 1,
     "worldWidth": 6000,
     "camera": {
@@ -35,6 +44,9 @@
       "fuel": 100,
       "hull": 100,
       "cargo": 0,
+      "landedPadId": null,
+      "boardingPadId": null,
+      "boardingProgress": 0,
       "invuln": 1.5,
       "shotTime": 0,
       "shield": 0,
@@ -84,27 +96,52 @@
       {
         "id": 1,
         "x": 540,
-        "occupied": true
+        "width": 154,
+        "occupied": true,
+        "blink": 0.1274029857304413,
+        "childStartOffset": -52.36000000000001,
+        "childTargetOffset": 0,
+        "childT": 0
       },
       {
         "id": 2,
         "x": 1040,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.4327811658149585,
+        "childStartOffset": 44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       },
       {
         "id": 3,
         "x": 2200,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.12102851604868192,
+        "childStartOffset": -44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       },
       {
         "id": 4,
         "x": 3650,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.3272423155267461,
+        "childStartOffset": 44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       },
       {
         "id": 5,
         "x": 5200,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.3102295167482225,
+        "childStartOffset": -44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       }
     ],
     "turrets": [
@@ -203,11 +240,20 @@
   },
   "afterPassiveLanding": {
     "mode": "playing",
+    "settings": {
+      "gravity": 1,
+      "thrust": 1,
+      "fuel": 1,
+      "density": 1,
+      "controls": "joystick"
+    },
+    "settingsOpen": false,
+    "activeDensity": 1,
     "level": 1,
     "worldWidth": 6000,
     "camera": {
       "x": 540,
-      "y": 845.5490302440754
+      "y": 849.9858109458543
     },
     "orbit": {
       "enter": 5500,
@@ -230,15 +276,18 @@
     },
     "ship": {
       "x": 540,
-      "y": 854.0731358427003,
+      "y": 868.6639547309022,
       "vx": 0,
-      "vy": 34.42887801130334,
+      "vy": 0,
       "a": 0,
       "fuel": 100,
       "hull": 100,
       "cargo": 1,
+      "landedPadId": 1,
+      "boardingPadId": null,
+      "boardingProgress": 0,
       "invuln": 0,
-      "shotTime": -4.183333333333324,
+      "shotTime": -3.4499999999999926,
       "shield": 0,
       "shieldCharge": 100,
       "shieldActive": false,
@@ -249,14 +298,14 @@
       "boostFlash": 0,
       "power": 1,
       "speedLimit": 400,
-      "altitude": 30.590818888201966,
+      "altitude": 16,
       "inSpace": false,
       "preOrbitWarned": false,
       "orbitEntryTime": null,
       "orbitEntryFuel": null,
       "fuelWarned": false,
       "prevX": 540,
-      "prevY": 853.4993212091786
+      "prevY": 868.6639547309022
     },
     "delivered": 0,
     "salvageCount": 0,
@@ -288,27 +337,52 @@
       {
         "id": 1,
         "x": 540,
-        "occupied": false
+        "width": 154,
+        "occupied": false,
+        "blink": 0.1274029857304413,
+        "childStartOffset": -52.36000000000001,
+        "childTargetOffset": 0,
+        "childT": 1
       },
       {
         "id": 2,
         "x": 1040,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.4327811658149585,
+        "childStartOffset": 44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       },
       {
         "id": 3,
         "x": 2200,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.12102851604868192,
+        "childStartOffset": -44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       },
       {
         "id": 4,
         "x": 3650,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.3272423155267461,
+        "childStartOffset": 44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       },
       {
         "id": 5,
         "x": 5200,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.3102295167482225,
+        "childStartOffset": -44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       }
     ],
     "turrets": [
@@ -328,8 +402,8 @@
     "flyingEnemies": [
       {
         "id": 1,
-        "x": 1326.4918232579885,
-        "y": 614.4797636886136,
+        "x": 1404.8826412368771,
+        "y": 576.2775670939434,
         "hp": 2,
         "space": false,
         "shotCount": 0,
@@ -337,8 +411,8 @@
       },
       {
         "id": 2,
-        "x": 2675.2650176304523,
-        "y": 652.930196288275,
+        "x": 2639.06121835916,
+        "y": 641.2198890359292,
         "hp": 2,
         "space": false,
         "shotCount": 0,
@@ -346,8 +420,8 @@
       },
       {
         "id": 3,
-        "x": 4551.737763853836,
-        "y": 632.8469781623613,
+        "x": 4535.113001997615,
+        "y": 610.6392893323101,
         "hp": 2,
         "space": false,
         "shotCount": 0,
@@ -355,8 +429,8 @@
       },
       {
         "id": 100,
-        "x": 774.6374283809764,
-        "y": -7047.733755375038,
+        "x": 754.9218180183179,
+        "y": -7032.248087189343,
         "hp": 4,
         "space": true,
         "shotCount": 0,
@@ -364,8 +438,8 @@
       },
       {
         "id": 101,
-        "x": 1213.3139880427161,
-        "y": -6830.835761829962,
+        "x": 1214.3309434278744,
+        "y": -6871.518322972625,
         "hp": 4,
         "space": true,
         "shotCount": 0,
@@ -373,8 +447,8 @@
       },
       {
         "id": 102,
-        "x": 2103.7450810280397,
-        "y": -13064.930398803164,
+        "x": 2093.3525072541324,
+        "y": -13097.629265196441,
         "hp": 4,
         "space": true,
         "shotCount": 0,
@@ -382,8 +456,8 @@
       },
       {
         "id": 103,
-        "x": 2722.450068914619,
-        "y": -12912.2402412972,
+        "x": 2739.634147856581,
+        "y": -12938.084014548613,
         "hp": 4,
         "space": true,
         "shotCount": 0,
@@ -391,7 +465,7 @@
       }
     ],
     "entities": {
-      "particles": 0,
+      "particles": 24,
       "bullets": 0,
       "enemyBullets": 0,
       "flyingEnemies": 7
@@ -402,15 +476,24 @@
       "y": 425,
       "label": "CARRIER"
     },
-    "time": 4.183333333333324
+    "time": 3.4499999999999926
   },
   "afterFlight": {
     "mode": "playing",
+    "settings": {
+      "gravity": 1,
+      "thrust": 1,
+      "fuel": 1,
+      "density": 1,
+      "controls": "joystick"
+    },
+    "settingsOpen": false,
+    "activeDensity": 1,
     "level": 1,
     "worldWidth": 6000,
     "camera": {
-      "x": 325.6288520965852,
-      "y": 531.9002704208131
+      "x": 320.0058780076222,
+      "y": 514.3636510611186
     },
     "orbit": {
       "enter": 5500,
@@ -432,34 +515,37 @@
       "throttle": 0
     },
     "ship": {
-      "x": 303.0964721806367,
-      "y": 488.173922104848,
-      "vx": -24.96848554402964,
-      "vy": -47.68772985362036,
-      "a": 2.4675000000000016,
-      "fuel": 99.87333333333333,
+      "x": 304.6792503221384,
+      "y": 490.9440137263894,
+      "vx": -17.708811657064427,
+      "vy": -28.181654011717647,
+      "a": 2.0831853071795776,
+      "fuel": 100,
       "hull": 100,
       "cargo": 0,
-      "invuln": 0.7666666666666666,
-      "shotTime": -7.333333333333313,
+      "landedPadId": null,
+      "boardingPadId": null,
+      "boardingProgress": 0,
+      "invuln": 0.8,
+      "shotTime": -6.883333333333314,
       "shield": 0,
       "shieldCharge": 100,
       "shieldActive": false,
       "shieldArmed": true,
       "shieldDelay": 0,
-      "thrustHold": 0.5166666666666666,
+      "thrustHold": 0,
       "boostTier": 0,
       "boostFlash": 0,
       "power": 1,
       "speedLimit": 400,
-      "altitude": 376.07666338606805,
+      "altitude": 373.3508287596247,
       "inSpace": false,
       "preOrbitWarned": false,
       "orbitEntryTime": null,
       "orbitEntryFuel": null,
       "fuelWarned": false,
-      "prevX": 303.5126136063705,
-      "prevY": 488.96871760240833
+      "prevX": 305.29413961578643,
+      "prevY": 491.92254337957405
     },
     "delivered": 1,
     "salvageCount": 0,
@@ -491,27 +577,52 @@
       {
         "id": 1,
         "x": 540,
-        "occupied": false
+        "width": 154,
+        "occupied": false,
+        "blink": 0.1274029857304413,
+        "childStartOffset": -52.36000000000001,
+        "childTargetOffset": 0,
+        "childT": 1
       },
       {
         "id": 2,
         "x": 1040,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.4327811658149585,
+        "childStartOffset": 44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       },
       {
         "id": 3,
         "x": 2200,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.12102851604868192,
+        "childStartOffset": -44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       },
       {
         "id": 4,
         "x": 3650,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.3272423155267461,
+        "childStartOffset": 44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       },
       {
         "id": 5,
         "x": 5200,
-        "occupied": true
+        "width": 132,
+        "occupied": true,
+        "blink": 0.3102295167482225,
+        "childStartOffset": -44.88,
+        "childTargetOffset": 0,
+        "childT": 0
       }
     ],
     "turrets": [
@@ -531,8 +642,8 @@
     "flyingEnemies": [
       {
         "id": 1,
-        "x": 1311.0502733888607,
-        "y": 578.7398922751947,
+        "x": 1273.7947594597135,
+        "y": 601.3244348782038,
         "hp": 2,
         "space": false,
         "shotCount": 0,
@@ -540,8 +651,8 @@
       },
       {
         "id": 2,
-        "x": 2956.7566999137816,
-        "y": 586.8352381212105,
+        "x": 2934.3924155829372,
+        "y": 565.7048246479744,
         "hp": 2,
         "space": false,
         "shotCount": 0,
@@ -549,8 +660,8 @@
       },
       {
         "id": 3,
-        "x": 4838.307580206245,
-        "y": 555.1355708013658,
+        "x": 4805.3496392783,
+        "y": 539.2974565840607,
         "hp": 2,
         "space": false,
         "shotCount": 0,
@@ -558,8 +669,8 @@
       },
       {
         "id": 100,
-        "x": 816.7583863653554,
-        "y": -7167.053742585853,
+        "x": 816.6851492137366,
+        "y": -7166.555595727841,
         "hp": 4,
         "space": true,
         "shotCount": 0,
@@ -567,8 +678,8 @@
       },
       {
         "id": 101,
-        "x": 1267.2656667013325,
-        "y": -6843.9115236701455,
+        "x": 1255.3541494112214,
+        "y": -6820.196513963519,
         "hp": 4,
         "space": true,
         "shotCount": 0,
@@ -576,8 +687,8 @@
       },
       {
         "id": 102,
-        "x": 2183.448543011862,
-        "y": -13147.528802563036,
+        "x": 2171.2024818447626,
+        "y": -13122.943394284357,
         "hp": 4,
         "space": true,
         "shotCount": 0,
@@ -585,8 +696,8 @@
       },
       {
         "id": 103,
-        "x": 2703.1114959042534,
-        "y": -12814.194234449136,
+        "x": 2699.4868080113847,
+        "y": -12807.279200646426,
         "hp": 4,
         "space": true,
         "shotCount": 0,
@@ -594,27 +705,27 @@
       }
     ],
     "entities": {
-      "particles": 63,
+      "particles": 48,
       "bullets": 0,
       "enemyBullets": 0,
       "flyingEnemies": 7
     },
-    "score": 1023,
+    "score": 1031,
     "objective": {
-      "x": 1039.999999999999,
+      "x": 1039.9999999999998,
       "y": 790.2013260774437,
       "label": "CREW",
       "padId": 2
     },
-    "time": 7.333333333333313
+    "time": 6.883333333333314
   },
   "trace": [
     {
-      "t": "4.2",
+      "t": "3.4",
       "x": 540,
-      "y": 854,
+      "y": 869,
       "vx": 0,
-      "vy": 34,
+      "vy": 0,
       "a": "0.00",
       "fuel": 100,
       "cargo": 1,
@@ -622,39 +733,39 @@
       "mode": "playing"
     },
     {
-      "t": "5.2",
-      "x": 501,
-      "y": 845,
-      "vx": -76,
-      "vy": -66,
-      "a": "-0.42",
-      "fuel": 96,
+      "t": "4.5",
+      "x": 507,
+      "y": 783,
+      "vx": -82,
+      "vy": -105,
+      "a": "-0.37",
+      "fuel": 97,
       "cargo": 1,
       "delivered": 0,
       "mode": "playing"
     },
     {
-      "t": "6.3",
-      "x": 397,
-      "y": 676,
-      "vx": -104,
-      "vy": -222,
-      "a": "0.84",
-      "fuel": 93,
+      "t": "5.5",
+      "x": 406,
+      "y": 632,
+      "vx": -99,
+      "vy": -143,
+      "a": "-1.94",
+      "fuel": 95,
       "cargo": 1,
       "delivered": 0,
       "mode": "playing"
     },
     {
-      "t": "7.3",
-      "x": 303,
-      "y": 488,
-      "vx": -25,
-      "vy": -48,
-      "a": "2.47",
-      "fuel": 100,
-      "cargo": 0,
-      "delivered": 1,
+      "t": "6.6",
+      "x": 317,
+      "y": 512,
+      "vx": -51,
+      "vy": -80,
+      "a": "2.35",
+      "fuel": 94,
+      "cargo": 1,
+      "delivered": 0,
       "mode": "playing"
     }
   ],

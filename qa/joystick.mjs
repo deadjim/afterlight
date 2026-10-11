@@ -95,6 +95,7 @@ for(const config of [{name:'portrait',width:390,height:844},{name:'landscape',wi
   const depleted=await snap();
   assert.equal(depleted.ship.shieldCharge,0,`${config.name} mobile Shield fully depletes`);
   assert.equal(depleted.ship.shieldActive,false,`${config.name} depleted Shield goes inactive`);
+  await page.waitForFunction(()=>document.querySelector('[data-control="shield"]')?.classList.contains('is-depleted'),null,{timeout:500});
   assert.equal(await shield.evaluate(e=>e.classList.contains('is-depleted')),true,`${config.name} depleted visual appears`);
   await send('touchEnd',[shieldPoint]);
   await page.waitForTimeout(1750);

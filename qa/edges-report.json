@@ -5,23 +5,38 @@
     "worldWidth": 6000,
     "camera": {
       "x": 540,
-      "y": 841.8883380202359
+      "y": 841.6751250922954
     },
     "orbit": {
       "enter": 5500,
-      "exit": 5250
+      "exit": 5250,
+      "spaceFuelMultiplier": 2
+    },
+    "homePlanet": {
+      "radiusPx": 612,
+      "centerYPx": 1476,
+      "opacity": 0,
+      "distance": 0,
+      "far": 0
+    },
+    "joystick": {
+      "pointerId": null,
+      "dx": 0,
+      "dy": 0,
+      "turn": 0,
+      "throttle": 0
     },
     "ship": {
       "x": 540,
-      "y": 838.077492718404,
+      "y": 837.8064791804164,
       "vx": 0,
-      "vy": -16.793756035285437,
+      "vy": -16.260812279250153,
       "a": 0,
       "fuel": 100,
       "hull": 100,
       "cargo": 1,
       "invuln": 0,
-      "shotTime": -4.183333333333324,
+      "shotTime": -4.19999999999999,
       "shield": 0,
       "shieldCharge": 100,
       "shieldActive": false,
@@ -32,16 +47,41 @@
       "boostFlash": 0,
       "power": 1,
       "speedLimit": 400,
-      "altitude": 46.58646201249826,
+      "altitude": 46.85747555048579,
       "inSpace": false,
       "preOrbitWarned": false,
       "orbitEntryTime": null,
       "orbitEntryFuel": null,
       "fuelWarned": false,
       "prevX": 540,
-      "prevY": 838.3573886523254
+      "prevY": 838.077492718404
     },
     "delivered": 0,
+    "salvageCount": 0,
+    "spaceBodies": [
+      {
+        "id": 1,
+        "name": "EMBER RELAY",
+        "x": 980,
+        "y": -7000,
+        "radius": 91,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 980,
+        "dockY": -6857
+      },
+      {
+        "id": 2,
+        "name": "AZURE VAULT",
+        "x": 2450,
+        "y": -13000,
+        "radius": 112,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 2450,
+        "dockY": -12836
+      }
+    ],
     "pads": [
       {
         "id": 1,
@@ -86,34 +126,73 @@
     "flyingEnemies": [
       {
         "id": 1,
-        "x": 1326.4918232579885,
-        "y": 614.4797636886136,
+        "x": 1324.8468873105958,
+        "y": 615.5191590730283,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.1
       },
       {
         "id": 2,
-        "x": 2675.2650176304523,
-        "y": 652.930196288275,
+        "x": 2676.4788822746123,
+        "y": 652.704863054037,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.1
       },
       {
         "id": 3,
-        "x": 4551.737763853836,
-        "y": 632.8469781623613,
+        "x": 4552.55557683119,
+        "y": 632.8895407964064,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.1
+      },
+      {
+        "id": 100,
+        "x": 775.0633113815366,
+        "y": -7048.3404853248585,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.4
+      },
+      {
+        "id": 101,
+        "x": 1213.359161436024,
+        "y": -6829.9588317125645,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
+      },
+      {
+        "id": 102,
+        "x": 2104.0383614772018,
+        "y": -13064.383851734898,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
+      },
+      {
+        "id": 103,
+        "x": 2722.0996545905145,
+        "y": -12911.449640787148,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
       }
     ],
     "entities": {
       "particles": 15,
       "bullets": 0,
       "enemyBullets": 0,
-      "flyingEnemies": 3
+      "flyingEnemies": 7
     },
     "score": 250,
     "objective": {
@@ -121,7 +200,7 @@
       "y": 425,
       "label": "CARRIER"
     },
-    "time": 4.183333333333324
+    "time": 4.19999999999999
   },
   "afterCrash": {
     "mode": "playing",
@@ -129,11 +208,26 @@
     "worldWidth": 6000,
     "camera": {
       "x": 800,
-      "y": 849.0519127719139
+      "y": 889.644849781795
     },
     "orbit": {
       "enter": 5500,
-      "exit": 5250
+      "exit": 5250,
+      "spaceFuelMultiplier": 2
+    },
+    "homePlanet": {
+      "radiusPx": 612,
+      "centerYPx": 1476,
+      "opacity": 0,
+      "distance": 0,
+      "far": 0
+    },
+    "joystick": {
+      "pointerId": null,
+      "dx": 0,
+      "dy": 0,
+      "turn": 0,
+      "throttle": 0
     },
     "ship": {
       "x": 800,
@@ -145,7 +239,7 @@
       "hull": 91.3985005,
       "cargo": 1,
       "invuln": 0.33333333333333337,
-      "shotTime": -4.3666666666666565,
+      "shotTime": -4.383333333333323,
       "shield": 0,
       "shieldCharge": 100,
       "shieldActive": false,
@@ -166,6 +260,31 @@
       "prevY": 844.8983984725293
     },
     "delivered": 0,
+    "salvageCount": 0,
+    "spaceBodies": [
+      {
+        "id": 1,
+        "name": "EMBER RELAY",
+        "x": 980,
+        "y": -7000,
+        "radius": 91,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 980,
+        "dockY": -6857
+      },
+      {
+        "id": 2,
+        "name": "AZURE VAULT",
+        "x": 2450,
+        "y": -13000,
+        "radius": 112,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 2450,
+        "dockY": -12836
+      }
+    ],
     "pads": [
       {
         "id": 1,
@@ -210,34 +329,73 @@
     "flyingEnemies": [
       {
         "id": 1,
-        "x": 1308.946182247997,
-        "y": 625.860784258044,
+        "x": 1307.4153397955197,
+        "y": 626.879027704441,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.1
       },
       {
         "id": 2,
-        "x": 2689.438741937902,
-        "y": 649.2671697680521,
+        "x": 2690.813293481704,
+        "y": 648.808516581673,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.1
       },
       {
         "id": 3,
-        "x": 4561.726948394673,
-        "y": 632.0783794247895,
+        "x": 4562.740893417596,
+        "y": 631.8744227055371,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.1
+      },
+      {
+        "id": 100,
+        "x": 779.6602739121263,
+        "y": -7055.64008996867,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.4
+      },
+      {
+        "id": 101,
+        "x": 1214.055327336202,
+        "y": -6820.665082439333,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
+      },
+      {
+        "id": 102,
+        "x": 2107.417698127334,
+        "y": -13059.095773721554,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
+      },
+      {
+        "id": 103,
+        "x": 2718.381861828122,
+        "y": -12902.326889251794,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
       }
     ],
     "entities": {
       "particles": 18,
       "bullets": 0,
       "enemyBullets": 0,
-      "flyingEnemies": 3
+      "flyingEnemies": 7
     },
     "score": 250,
     "objective": {
@@ -245,7 +403,7 @@
       "y": 425,
       "label": "CARRIER"
     },
-    "time": 4.3666666666666565
+    "time": 4.383333333333323
   },
   "pickedSecond": {
     "mode": "playing",
@@ -257,7 +415,22 @@
     },
     "orbit": {
       "enter": 5500,
-      "exit": 5250
+      "exit": 5250,
+      "spaceFuelMultiplier": 2
+    },
+    "homePlanet": {
+      "radiusPx": 612,
+      "centerYPx": 1476,
+      "opacity": 0,
+      "distance": 0,
+      "far": 0
+    },
+    "joystick": {
+      "pointerId": null,
+      "dx": 0,
+      "dy": 0,
+      "turn": 0,
+      "throttle": 0
     },
     "ship": {
       "x": 1040,
@@ -268,7 +441,7 @@
       "fuel": 100,
       "hull": 91.3985005,
       "cargo": 2,
-      "invuln": 0.30000000000000004,
+      "invuln": 0.3166666666666667,
       "shotTime": -4.39999999999999,
       "shield": 0,
       "shieldCharge": 100,
@@ -290,6 +463,31 @@
       "prevY": 804.2013260774437
     },
     "delivered": 0,
+    "salvageCount": 0,
+    "spaceBodies": [
+      {
+        "id": 1,
+        "name": "EMBER RELAY",
+        "x": 980,
+        "y": -7000,
+        "radius": 91,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 980,
+        "dockY": -6857
+      },
+      {
+        "id": 2,
+        "name": "AZURE VAULT",
+        "x": 2450,
+        "y": -13000,
+        "radius": 112,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 2450,
+        "dockY": -12836
+      }
+    ],
     "pads": [
       {
         "id": 1,
@@ -337,6 +535,7 @@
         "x": 1305.8960420158473,
         "y": 627.8924497212994,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.0833333333333335
       },
@@ -345,6 +544,7 @@
         "x": 2692.2014598597398,
         "y": 648.3297494341742,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.1
       },
@@ -353,15 +553,52 @@
         "x": 4563.771953710711,
         "y": 631.6484202669574,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.1
+      },
+      {
+        "id": 100,
+        "x": 780.0697431838889,
+        "y": -7056.35725829743,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.4
+      },
+      {
+        "id": 101,
+        "x": 1214.1366600352885,
+        "y": -6819.856444739734,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
+      },
+      {
+        "id": 102,
+        "x": 2107.738505030604,
+        "y": -13058.683244549327,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
+      },
+      {
+        "id": 103,
+        "x": 2718.056685126321,
+        "y": -12901.462935078007,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
       }
     ],
     "entities": {
       "particles": 48,
       "bullets": 0,
       "enemyBullets": 0,
-      "flyingEnemies": 3
+      "flyingEnemies": 7
     },
     "score": 500,
     "objective": {
@@ -381,7 +618,22 @@
     },
     "orbit": {
       "enter": 5500,
-      "exit": 5250
+      "exit": 5250,
+      "spaceFuelMultiplier": 2
+    },
+    "homePlanet": {
+      "radiusPx": 612,
+      "centerYPx": 1476,
+      "opacity": 0,
+      "distance": 0,
+      "far": 0
+    },
+    "joystick": {
+      "pointerId": null,
+      "dx": 0,
+      "dy": 0,
+      "turn": 0,
+      "throttle": 0
     },
     "ship": {
       "x": 260,
@@ -392,7 +644,7 @@
       "fuel": 100,
       "hull": 91.3985005,
       "cargo": 0,
-      "invuln": 0.2333333333333334,
+      "invuln": 0.25000000000000006,
       "shotTime": -4.466666666666656,
       "shield": 0,
       "shieldCharge": 100,
@@ -414,6 +666,31 @@
       "prevY": 425
     },
     "delivered": 5,
+    "salvageCount": 0,
+    "spaceBodies": [
+      {
+        "id": 1,
+        "name": "EMBER RELAY",
+        "x": 980,
+        "y": -7000,
+        "radius": 91,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 980,
+        "dockY": -6857
+      },
+      {
+        "id": 2,
+        "name": "AZURE VAULT",
+        "x": 2450,
+        "y": -13000,
+        "radius": 112,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 2450,
+        "dockY": -12836
+      }
+    ],
     "pads": [
       {
         "id": 1,
@@ -461,6 +738,7 @@
         "x": 1299.9380644577604,
         "y": 631.8884475898401,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.0833333333333335
       },
@@ -469,6 +747,7 @@
         "x": 2697.8867868070665,
         "y": 646.2181755327956,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.1
       },
@@ -477,15 +756,52 @@
         "x": 4568.0647445881405,
         "y": 630.526229301017,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.1
+      },
+      {
+        "id": 100,
+        "x": 781.6926312998412,
+        "y": -7059.308049344845,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.4
+      },
+      {
+        "id": 101,
+        "x": 1214.4918942279,
+        "y": -6816.690671880965,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
+      },
+      {
+        "id": 102,
+        "x": 2109.043676111244,
+        "y": -13057.15121805465,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
+      },
+      {
+        "id": 103,
+        "x": 2716.7780602847797,
+        "y": -12897.95814701389,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.5
       }
     ],
     "entities": {
       "particles": 172,
       "bullets": 0,
       "enemyBullets": 0,
-      "flyingEnemies": 3
+      "flyingEnemies": 7
     },
     "score": 4050,
     "objective": {
@@ -506,7 +822,22 @@
     },
     "orbit": {
       "enter": 5500,
-      "exit": 5250
+      "exit": 5250,
+      "spaceFuelMultiplier": 2
+    },
+    "homePlanet": {
+      "radiusPx": 612,
+      "centerYPx": 1476,
+      "opacity": 0,
+      "distance": 0,
+      "far": 0
+    },
+    "joystick": {
+      "pointerId": null,
+      "dx": 0,
+      "dy": 0,
+      "turn": 0,
+      "throttle": 0
     },
     "ship": {
       "x": 390,
@@ -537,6 +868,31 @@
       "fuelWarned": false
     },
     "delivered": 0,
+    "salvageCount": 0,
+    "spaceBodies": [
+      {
+        "id": 1,
+        "name": "EMBER RELAY",
+        "x": 980,
+        "y": -7000,
+        "radius": 91,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 980,
+        "dockY": -6857
+      },
+      {
+        "id": 2,
+        "name": "AZURE VAULT",
+        "x": 2450,
+        "y": -13000,
+        "radius": 112,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 2450,
+        "dockY": -12836
+      }
+    ],
     "pads": [
       {
         "id": 1,
@@ -601,6 +957,7 @@
         "x": 1230,
         "y": 630,
         "hp": 3,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.6
       },
@@ -609,6 +966,7 @@
         "x": 2320,
         "y": 630,
         "hp": 3,
+        "space": false,
         "shotCount": 0,
         "cooldown": 3.0300000000000002
       },
@@ -617,6 +975,7 @@
         "x": 4110,
         "y": 630,
         "hp": 3,
+        "space": false,
         "shotCount": 0,
         "cooldown": 3.46
       },
@@ -625,6 +984,7 @@
         "x": 5680,
         "y": 630,
         "hp": 3,
+        "space": false,
         "shotCount": 0,
         "cooldown": 3.89
       },
@@ -633,15 +993,52 @@
         "x": 6990,
         "y": 630,
         "hp": 3,
+        "space": false,
         "shotCount": 0,
         "cooldown": 4.32
+      },
+      {
+        "id": 100,
+        "x": 745,
+        "y": -7100,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.4
+      },
+      {
+        "id": 101,
+        "x": 1285,
+        "y": -6855,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.85
+      },
+      {
+        "id": 102,
+        "x": 2160,
+        "y": -13120,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 3.3
+      },
+      {
+        "id": 103,
+        "x": 2770,
+        "y": -12875,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 3.75
       }
     ],
     "entities": {
       "particles": 0,
       "bullets": 0,
       "enemyBullets": 0,
-      "flyingEnemies": 5
+      "flyingEnemies": 9
     },
     "score": 4050,
     "objective": {
@@ -652,17 +1049,29 @@
     },
     "time": 0
   },
-  "nextBriefing": "INCOMING TRANSMISSION\n\nMISSION BRIEF / INCOMING\n02 / DEEP SIGNAL\n\nSix crew remain across a wider orbital ring. Choose either direction and follow the nearest beacon. Red sentries and flying interceptors patrol the sky. Their aim lines warn before they fire; shoot back or time your shield. Pads and the carrier replenish fuel.\n\nLAUNCH CRAFT\n\nROTATE · BOOST · RESCUE · RETURN",
+  "nextBriefing": "INCOMING TRANSMISSION\n\nMISSION BRIEF / INCOMING\n02 / DEEP SIGNAL\n\nSix crew remain across a wider orbital ring. Choose either direction and follow the nearest beacon. Red sentries and flying interceptors patrol the sky. Their aim lines warn before they fire; evade the line or shoot back. Pads and the carrier replenish fuel.\n\nLAUNCH CRAFT\n\nROTATE · BOOST · RESCUE · RETURN",
   "errors": [],
   "pointerCancel": {
     "fuelStart": 100,
     "during": {
-      "fuel": 98.29000000000002,
-      "pressed": true
+      "fuel": 98.62394640336765,
+      "joystick": {
+        "pointerId": 2,
+        "dx": 0.5547001174654465,
+        "dy": -0.8320503468443601,
+        "turn": 0.4822094389133098,
+        "throttle": 0.8047097056329768
+      }
     },
     "after": {
-      "fuel": 98.16333333333336,
-      "pressed": false
+      "fuel": 98.4710515592974,
+      "joystick": {
+        "pointerId": null,
+        "dx": 0,
+        "dy": 0,
+        "turn": 0,
+        "throttle": 0
+      }
     }
   },
   "mobilePause": "paused",
@@ -676,7 +1085,22 @@
     },
     "orbit": {
       "enter": 5500,
-      "exit": 5250
+      "exit": 5250,
+      "spaceFuelMultiplier": 2
+    },
+    "homePlanet": {
+      "radiusPx": 573.9200000000001,
+      "centerYPx": 1384.1599999999999,
+      "opacity": 0,
+      "distance": 0,
+      "far": 0
+    },
+    "joystick": {
+      "pointerId": null,
+      "dx": 0,
+      "dy": 0,
+      "turn": 0,
+      "throttle": 0
     },
     "ship": {
       "x": 540,
@@ -707,6 +1131,31 @@
       "fuelWarned": false
     },
     "delivered": 0,
+    "salvageCount": 0,
+    "spaceBodies": [
+      {
+        "id": 1,
+        "name": "EMBER RELAY",
+        "x": 980,
+        "y": -7000,
+        "radius": 91,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 980,
+        "dockY": -6857
+      },
+      {
+        "id": 2,
+        "name": "AZURE VAULT",
+        "x": 2450,
+        "y": -13000,
+        "radius": 112,
+        "claimed": false,
+        "docks": 0,
+        "dockX": 2450,
+        "dockY": -12836
+      }
+    ],
     "pads": [
       {
         "id": 1,
@@ -754,6 +1203,7 @@
         "x": 1400,
         "y": 630,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 2.6
       },
@@ -762,6 +1212,7 @@
         "x": 2800,
         "y": 630,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 3.0300000000000002
       },
@@ -770,15 +1221,52 @@
         "x": 4700,
         "y": 630,
         "hp": 2,
+        "space": false,
         "shotCount": 0,
         "cooldown": 3.46
+      },
+      {
+        "id": 100,
+        "x": 745,
+        "y": -7100,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.4
+      },
+      {
+        "id": 101,
+        "x": 1285,
+        "y": -6855,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 2.85
+      },
+      {
+        "id": 102,
+        "x": 2160,
+        "y": -13120,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 3.3
+      },
+      {
+        "id": 103,
+        "x": 2770,
+        "y": -12875,
+        "hp": 4,
+        "space": true,
+        "shotCount": 0,
+        "cooldown": 3.75
       }
     ],
     "entities": {
       "particles": 0,
       "bullets": 0,
       "enemyBullets": 0,
-      "flyingEnemies": 3
+      "flyingEnemies": 7
     },
     "score": 0,
     "objective": {
@@ -791,7 +1279,7 @@
   },
   "mobileFrameMs": {
     "median": 16.699999999999818,
-    "p95": 16.799999999999727,
+    "p95": 16.700000000000273,
     "max": 16.800000000000182
   },
   "desktopFrameMs": {

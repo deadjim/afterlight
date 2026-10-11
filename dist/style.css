@@ -138,25 +138,31 @@ kbd { display: inline-flex; align-items: center; justify-content: center; min-wi
 .panel-controls { display: flex; flex-wrap: wrap; gap: 12px 18px; margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--line); color: #9db5af; font-size: 9px; font-weight: 700; letter-spacing: .1em; }
 .result-panel .panel-sequence span { color: var(--amber); }
 
-.touch-controls { display: none; position: absolute; z-index: 11; left: 0; right: 0; bottom: 0; align-items: end; justify-content: space-between; gap: 20px; padding: 0 max(24px, env(safe-area-inset-right)) max(19px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left)); pointer-events: none; touch-action: none; }
-.touch-group { display: flex; align-items: end; gap: 8px; pointer-events: auto; }
-.touch-actions { gap: 7px; }
-.touch-button { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: 68px; height: 68px; border: 1px solid rgba(137, 217, 209, .46); border-radius: 50%; background: rgba(5, 21, 27, .62); color: var(--cyan); backdrop-filter: blur(5px); user-select: none; -webkit-user-select: none; touch-action: none; transition: border-color .12s, background .12s, transform .12s, color .12s; }
-.touch-button svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: miter; }
-.touch-button span { font: 600 9px/1 var(--display); letter-spacing: .12em; }
-.touch-button:active, .touch-button.active, .touch-button.is-active, .touch-button.is-pressed { background: rgba(82, 195, 187, .32); border-color: var(--cyan-bright); transform: scale(.95); }
-.touch-fire { color: var(--coral); border-color: rgba(220, 121, 107, .65); }
-.touch-fire:active, .touch-fire.active, .touch-fire.is-active, .touch-fire.is-pressed { background: rgba(220, 121, 107, .26); border-color: var(--coral); }
-.touch-thrust { width: 78px; height: 78px; color: var(--amber); border-color: rgba(243, 189, 119, .68); }
-.touch-thrust:active, .touch-thrust.active, .touch-thrust.is-active, .touch-thrust.is-pressed { background: rgba(243, 189, 119, .28); border-color: var(--amber); }
-.touch-utility { width: 57px; height: 57px; }
-.touch-utility svg { width: 24px; height: 24px; }
-.touch-utility::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; pointer-events: none; background: conic-gradient(from -90deg, var(--cyan) var(--shield-charge, 100%), rgba(133,217,211,.1) 0); -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px)); mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px)); }
-.touch-utility.is-depleted { color: #947f7c; border-color: rgba(220, 121, 107, .42); }
-.touch-utility.is-depleted::before { background: conic-gradient(from -90deg, var(--coral) var(--shield-charge, 0%), rgba(220,121,107,.1) 0); }
-.touch-utility.is-active { box-shadow: 0 0 20px rgba(133,217,211,.2); }
+.touch-controls { display: none; position: absolute; z-index: 11; left: 0; right: 0; bottom: 0; align-items: end; justify-content: space-between; gap: 20px; padding: 0 max(22px, env(safe-area-inset-right)) max(20px, env(safe-area-inset-bottom)) max(22px, env(safe-area-inset-left)); pointer-events: none; touch-action: none; }
+.flight-joystick { --stick-x: 0px; --stick-y: 0px; position: relative; width: 124px; height: 124px; flex: 0 0 auto; border: 1px solid rgba(133, 217, 211, .64); border-radius: 50%; background: radial-gradient(circle, rgba(11, 37, 41, .2) 0 37%, rgba(11, 35, 39, .63) 38% 66%, rgba(5, 20, 26, .73) 67%); box-shadow: 0 0 0 5px rgba(133, 217, 211, .035), inset 0 0 28px rgba(5, 19, 25, .6), 0 0 23px rgba(39, 175, 170, .11); color: var(--cyan); pointer-events: auto; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+.flight-joystick::before { content: ''; position: absolute; inset: 14px; border: 1px dashed rgba(133, 217, 211, .2); border-radius: 50%; pointer-events: none; }
+.flight-joystick::after { content: ''; position: absolute; left: 50%; top: 0; height: 9px; border-left: 2px solid var(--amber); transform: translateX(-50%); box-shadow: 0 0 10px rgba(243, 189, 119, .43); pointer-events: none; }
+.joystick-direction { position: absolute; z-index: 1; left: 50%; transform: translateX(-50%); white-space: nowrap; pointer-events: none; font: 700 9px/1 var(--display); letter-spacing: .13em; text-shadow: 0 1px 5px var(--void-deep); }
+.joystick-direction-up { top: 16px; color: var(--amber); }
+.joystick-direction-side { bottom: 13px; color: #9acac6; }
+.joystick-knob { position: absolute; z-index: 2; left: calc(50% - 26px); top: calc(50% - 26px); display: grid; place-items: center; width: 52px; height: 52px; border: 1px solid rgba(181, 244, 234, .87); border-radius: 50%; background: radial-gradient(circle at 36% 31%, #294e50 0%, #12333a 52%, #0a2028 100%); box-shadow: 0 0 0 4px rgba(133, 217, 211, .07), inset 0 0 15px rgba(133, 217, 211, .07), 0 0 16px rgba(133, 217, 211, .22); transform: translate(var(--stick-x), var(--stick-y)); pointer-events: none; }
+.joystick-knob-core { display: block; width: 11px; height: 11px; border: 1px solid var(--cyan-bright); transform: rotate(45deg); box-shadow: 0 0 8px rgba(181, 244, 234, .5); }
+.flight-joystick:active, .flight-joystick.is-active { border-color: var(--cyan-bright); box-shadow: 0 0 0 5px rgba(133, 217, 211, .065), 0 0 27px rgba(133, 217, 211, .27); }
+.touch-button { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: 86px; height: 86px; flex: 0 0 auto; border: 1px solid rgba(220, 121, 107, .79); border-radius: 50%; background: rgba(32, 16, 22, .76); color: var(--coral); box-shadow: 0 0 0 5px rgba(220, 121, 107, .035), inset 0 0 17px rgba(220, 121, 107, .08), 0 0 24px rgba(220, 121, 107, .1); user-select: none; -webkit-user-select: none; touch-action: none; pointer-events: auto; transition: border-color .12s, background .12s, transform .12s, color .12s; }
+.touch-button svg { width: 34px; height: 34px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: miter; }
+.touch-button span { font: 700 10px/1 var(--display); letter-spacing: .16em; }
+.touch-button:active, .touch-button.active, .touch-button.is-active, .touch-button.is-pressed { background: rgba(220, 121, 107, .3); border-color: #ff9b8c; color: #ff9b8c; transform: scale(.95); }
 
-@media (pointer: coarse) { .touch-controls { display: flex; } .hud-bottom { bottom: 100px; } .overlay:not(.is-hidden):not([hidden]) ~ .touch-controls { display: none; } }
+@media (pointer: coarse) {
+  .touch-controls { display: flex; }
+  .hud-bottom { bottom: 145px; }
+  .readout-shield { display: none; }
+  #game:has(#titleScreen:not(.is-hidden):not([hidden])) .mission-chip { display: none; }
+  .control-guide .guide-lines, .panel-controls > span { display: none; }
+  .control-guide p { color: #9fb5b0; font-size: 11px; line-height: 1.5; }
+  .panel-controls::before { content: 'LEFT STICK  /  STEER + THRUST     FIRE  /  RIGHT'; color: #9db5af; }
+  .overlay:not(.is-hidden):not([hidden]) ~ .touch-controls { display: none; }
+}
 @media (pointer: fine) { .control-guide p { display: none; } }
 @media (max-width: 900px) {
   .title-content { width: min(62vw, 610px); padding-left: 6vw; }
@@ -201,12 +207,9 @@ kbd { display: inline-flex; align-items: center; justify-content: center; min-wi
   .title-footer span:nth-child(3) { display: none; }
 }
 @media (max-width: 650px) and (pointer: coarse) {
-  .hud-bottom { bottom: max(105px, calc(env(safe-area-inset-bottom) + 93px)); align-items: start; }
+  .hud-bottom { bottom: max(143px, calc(env(safe-area-inset-bottom) + 130px)); align-items: start; }
   .objective-strip { align-self: end; }
-  .touch-controls { padding: 0 max(14px, env(safe-area-inset-right)) max(13px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left)); gap: 9px; }
-  .touch-button { width: 62px; height: 62px; }
-  .touch-thrust { width: 72px; height: 72px; }
-  .touch-utility { width: 52px; height: 52px; }
+  .touch-controls { padding: 0 max(14px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left)); }
 }
 @media (max-width: 450px) {
   .title-content { padding-top: 56px; }
@@ -223,10 +226,7 @@ kbd { display: inline-flex; align-items: center; justify-content: center; min-wi
   .panel-sequence { margin-top: 38px; }
   .info-panel p:not(.eyebrow):not(.panel-note) { font-size: 12px; }
   .readout-score { display: none; }
-  .touch-button { width: 54px; height: 54px; }
-  .touch-button svg { width: 23px; height: 23px; }
-  .touch-thrust { width: 68px; height: 68px; }
-  .touch-utility { width: 47px; height: 47px; }
+  .touch-button { width: 82px; height: 82px; }
 }
 @media (max-height: 600px) and (min-width: 651px) {
   .hud-top { padding-top: max(13px, env(safe-area-inset-top)); }
@@ -254,23 +254,40 @@ kbd { display: inline-flex; align-items: center; justify-content: center; min-wi
   #briefingScreen .primary-button { margin-top: 14px; }
   #briefingScreen .panel-note { margin-top: 11px; padding-top: 10px; }
 }
+@media (max-height: 350px) and (pointer: coarse) {
+  #briefingScreen { padding: 8px 20px; }
+  #briefingScreen .info-panel { padding: 12px 27px; }
+  #briefingScreen .eyebrow { font-size: 8px; }
+  #briefingScreen .panel-sequence { margin-top: 7px; }
+  #briefingScreen h2 { margin: 6px 0 8px; font-size: 39px; }
+  #briefingScreen p:not(.eyebrow):not(.panel-note) { font-size: 11px; line-height: 1.37; }
+  #briefingScreen .primary-button { min-height: 36px; margin-top: 10px; }
+  #briefingScreen .panel-note { display: none; }
+}
 @media (max-height: 450px) and (pointer: coarse) {
+  #pauseScreen, #resultScreen { padding: 12px 20px; }
+  .pause-panel, .result-panel { padding: 18px 28px; }
+  .pause-panel .panel-sequence, .result-panel .panel-sequence { margin-top: 12px; }
+  .pause-panel h2, #resultTitle { margin: 9px 0 11px; font-size: 48px; }
+  .pause-panel p:not(.eyebrow), .result-panel p:not(.eyebrow) { font-size: 12px; line-height: 1.45; }
+  .pause-panel .panel-actions, .result-panel .primary-button { margin-top: 15px; }
+  .pause-panel .primary-button, .pause-panel .secondary-button, .result-panel .primary-button { min-height: 42px; }
+  .pause-panel .panel-controls { margin-top: 13px; padding-top: 11px; }
   .touch-controls { padding-bottom: max(8px, env(safe-area-inset-bottom)); }
   .hud-bottom { left: 50%; right: auto; bottom: max(11px, env(safe-area-inset-bottom)); width: auto; padding: 0; transform: translateX(-50%); }
   .ship-readouts { width: auto; gap: 15px; padding: 5px 13px 3px; background: rgba(3, 12, 16, .72); border: 1px solid rgba(133, 217, 211, .13); }
   .readout { min-width: 55px; border-top: 0; padding-top: 0; }
   .readout strong { margin-top: 4px; font-size: 20px; }
   .objective-strip { display: none; }
-  .touch-button { width: 57px; height: 57px; }
-  .touch-thrust { width: 65px; height: 65px; }
-  .touch-utility { width: 48px; height: 48px; }
+  .flight-joystick { width: 116px; height: 116px; }
+  .touch-button { width: 80px; height: 80px; }
   .title-content { padding-top: 45px; }
   .title-content h1 { font-size: clamp(76px, 16vh, 95px); }
   .title-description { max-width: 390px; }
   .control-guide { display: none; }
 }
 @media (max-width: 650px) and (max-height: 450px) and (pointer: coarse) {
-  .hud-bottom { left: 44%; }
+  .hud-bottom { left: 50%; }
   .ship-readouts { gap: 7px; padding: 4px 7px 3px; }
   .readout { min-width: 45px; }
   .readout strong { font-size: 17px; }
@@ -279,12 +296,14 @@ kbd { display: inline-flex; align-items: center; justify-content: center; min-wi
   .readout-crew .mini-label::after { content: 'CREW'; font-size: 6px; }
 }
 @media (max-width: 350px) and (pointer: coarse) {
+  #briefingScreen .info-panel { padding: 20px 24px; }
+  #briefingScreen .panel-sequence { margin-top: 24px; }
   .ship-readouts { gap: 6px; }
   .readout { min-width: 42px; }
   .readout strong { font-size: 19px; }
   .readout .mini-label { letter-spacing: .07em; }
-  .touch-button { width: 48px; height: 48px; }
-  .touch-utility { width: 44px; height: 44px; }
-  .touch-thrust { width: 60px; height: 60px; }
+  .flight-joystick { width: 112px; height: 112px; }
+  .touch-button { width: 76px; height: 76px; }
+  .hud-bottom { bottom: max(132px, calc(env(safe-area-inset-bottom) + 124px)); }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } }

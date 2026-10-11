@@ -16,6 +16,8 @@ qa/*.png
 !qa/wrap-report.json
 !qa/audio-report.json
 !qa/balance-report.json
+!qa/expedition-report.json
+!qa/space-expedition.png
 !qa/desktop-title.png
 !qa/desktop-flight.png
 !qa/portrait-flight.png
@@ -24,3 +26,4 @@ qa/*.png
 !qa/landscape-sector3-briefing.png
 !qa/portrait-final-result.png
 !qa/landscape-final-result.png
+!qa/joystick-report.json

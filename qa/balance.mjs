@@ -90,7 +90,7 @@ for(const c of viewports) {
     const o0=await snap();assert.equal(o0.ship.inSpace,true,'assisted orbit position registers as space');
     await page.keyboard.down('ArrowUp');await page.waitForTimeout(550);await page.keyboard.up('ArrowUp');const o1=await snap();
     const orbitRate=(o0.ship.fuel-o1.ship.fuel)/(o1.time-o0.time);
-    assert.ok(orbitRate/groundRate>8.5&&orbitRate/groundRate<11.5,`orbit fuel burn ratio ${orbitRate/groundRate}`);
+    assert.ok(orbitRate/groundRate>1.8&&orbitRate/groundRate<2.2,`orbit fuel burn ratio ${orbitRate/groundRate}`);
     report.climbs.desktop.fuelRates={groundRate,orbitRate,ratio:orbitRate/groundRate};
     await place(page,260,(await ground(page,260))-200,0,0,0);
     await page.waitForTimeout(100);
@@ -179,7 +179,11 @@ for(const c of viewports) {
 {
   const {context,page,errors,snap}=await open(viewports[0]);
   const start=await snap(),width=start.worldWidth,first=start.flyingEnemies[0];
-  assert.equal(start.entities.flyingEnemies,3,'stage one starts with three bounded interceptors');
+  const initialGround=start.flyingEnemies.filter(e=>!e.space&&e.hp>0).length;
+  const initialSpace=start.flyingEnemies.filter(e=>e.space&&e.hp>0).length;
+  assert.equal(initialGround,3,'stage one starts with three ground interceptors');
+  assert.equal(initialSpace,4,'stage one starts with four orbital guardians');
+  assert.equal(start.entities.flyingEnemies,7,'active enemy count includes both bounded groups');
   // Position on a wrapped image, but use actual Fire input and simulated bullets.
   await page.keyboard.down('Space');
   for(let i=0;i<15;i++){
@@ -192,7 +196,7 @@ for(const c of viewports) {
   const destroyed=await snap(),target=destroyed.flyingEnemies.find(e=>e.id===first.id);
   assert.equal(target.hp,0,'actual Fire input destroys interceptor across wrapped image');
   assert.ok(destroyed.score>=start.score+200,'interceptor kill awards score');
-  assert.equal(destroyed.entities.flyingEnemies,2,'interceptor count falls and stays bounded');
+  assert.equal(destroyed.entities.flyingEnemies,6,'interceptor kill reduces active enemy count');
   const second=destroyed.flyingEnemies.find(e=>e.hp>0);
   let maxEnemyBullets=0;
   for(let i=0;i<34;i++){
@@ -204,7 +208,7 @@ for(const c of viewports) {
   const aimed=await snap();
   assert.ok(aimed.flyingEnemies.find(e=>e.id===second.id).shotCount>0,'interceptor acquires ship across world seam');
   assert.ok(maxEnemyBullets>0,'interceptor fired physical projectiles');
-  report.enemies={initial:start.entities.flyingEnemies,destroyed:{id:target.id,hp:target.hp,score:destroyed.score,remaining:destroyed.entities.flyingEnemies},aimed:{id:second.id,shots:aimed.flyingEnemies.find(e=>e.id===second.id).shotCount,maxEnemyBullets}};
+  report.enemies={initial:{ground:initialGround,space:initialSpace,total:start.entities.flyingEnemies},destroyed:{id:target.id,hp:target.hp,score:destroyed.score,remaining:destroyed.entities.flyingEnemies},aimed:{id:second.id,shots:aimed.flyingEnemies.find(e=>e.id===second.id).shotCount,maxEnemyBullets}};
   checkErrors(errors,'enemies');await context.close();
 }
 

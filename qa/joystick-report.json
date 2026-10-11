@@ -1,0 +1,59 @@
+{
+  "cases": [
+    {
+      "config": {
+        "name": "portrait",
+        "width": 390,
+        "height": 844
+      },
+      "dead": {
+        "throttle": 0,
+        "turn": 0
+      },
+      "active": {
+        "throttle": 0.6594265951452413,
+        "turn": 0.659426384358344,
+        "fuelUsed": 0.9188010559023212,
+        "angleChanged": 0.7616374739338874
+      },
+      "analogAudio": {
+        "samples": 22,
+        "example": 0.6594265951452413
+      },
+      "firingBullets": 2,
+      "far": {
+        "dx": 0.7761139672514761,
+        "dy": -0.6305926655434354
+      },
+      "errors": []
+    },
+    {
+      "config": {
+        "name": "landscape",
+        "width": 844,
+        "height": 390
+      },
+      "dead": {
+        "throttle": 0,
+        "turn": 0
+      },
+      "active": {
+        "throttle": 0.6594264897517994,
+        "turn": 0.6594264897517994,
+        "fuelUsed": 0.877037231370025,
+        "angleChanged": 0.7270177049513589
+      },
+      "analogAudio": {
+        "samples": 21,
+        "example": 0.6594264897517994
+      },
+      "firingBullets": 2,
+      "far": {
+        "dx": 0.7761140040197461,
+        "dy": -0.6305926202901819
+      },
+      "errors": []
+    }
+  ],
+  "errors": []
+}

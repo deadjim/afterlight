@@ -33,6 +33,7 @@ for (const config of cases) {
   await page.waitForTimeout(100);
   const briefingState = await inspect(page);
   await page.screenshot({ path: path.join(root, `smoke-${config.name}-briefing.png`), fullPage: true });
+  if(config.mobile)await assertOverlayFits(page,'#briefingScreen .info-panel',config,'briefing');
   await page.locator('#briefingButton').click();
   await page.waitForTimeout(700);
   await page.screenshot({ path: path.join(root, `smoke-${config.name}-flight.png`), fullPage: true });
@@ -41,13 +42,19 @@ for (const config of cases) {
   if(mobileLayout){
     assert.deepEqual(mobileLayout.outOfBounds,[],`${config.name} touch buttons fully inside viewport`);
     assert.deepEqual(mobileLayout.overlaps,[],`${config.name} HUD readouts clear touch buttons`);
+    assert.deepEqual(mobileLayout.legacy,[],`${config.name} retired mobile controls are absent`);
   }
   if (config.mobile) {
-    const left = await center(page, '[data-control="left"]');
-    const thrust = await center(page, '[data-control="thrust"]');
+    const joystick = await center(page, '#flightJoystick');
+    const fire = await center(page, '[data-control="fire"]');
+    const joystickBox = await page.locator('#flightJoystick').boundingBox();
     const session = await context.newCDPSession(page);
-    await session.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: left.x, y: left.y, id: 1 }, { x: thrust.x, y: thrust.y, id: 2 }] });
+    await session.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: joystick.x, y: joystick.y, id: 1 }, { x: fire.x, y: fire.y, id: 2 }] });
+    await session.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: joystick.x+joystickBox.width*.28, y: joystick.y-joystickBox.height*.28, id: 1 }, { x: fire.x, y: fire.y, id: 2 }] });
     await page.waitForTimeout(600);
+    const active=await inspect(page);
+    assert.ok(active.snapshot.entities.bullets>0,`${config.name} simultaneous joystick and Fire creates projectiles`);
+    assert.ok(active.snapshot.joystick?.throttle>0&&Math.abs(active.snapshot.joystick?.turn)>0,`${config.name} diagonal joystick thrusts and steers`);
     await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
   } else {
     await page.keyboard.down('ArrowLeft');
@@ -62,6 +69,7 @@ for (const config of cases) {
   await page.waitForTimeout(100);
   const pausedState = await inspect(page);
   await page.screenshot({ path: path.join(root, `smoke-${config.name}-pause.png`), fullPage: true });
+  if(config.mobile)await assertOverlayFits(page,'#pauseScreen .info-panel',config,'pause');
   await page.locator('#resumeButton').click();
   await page.waitForTimeout(100);
   const resumedState = await inspect(page);
@@ -72,6 +80,25 @@ for (const config of cases) {
   assert.equal(flightState.elements.touchControls.visible,config.mobile,`${config.name} touch controls visibility`);
   assert.equal(pausedState.snapshot.mode,'paused');
   assert.equal(resumedState.snapshot.mode,'playing');
+  if(config.name==='small-landscape'){
+    await page.waitForTimeout(350);
+    await page.evaluate(()=>{const d=window.__afterlightDebug;d.setResources({hull:1});d.setShip(800,d.ground(800)+50,0,350,0)});
+    await page.waitForFunction(()=>window.__afterlightDebug.snapshot().mode==='result',null,{timeout:2000});
+    await page.screenshot({path:path.join(root,'smoke-small-landscape-result.png')});
+    await assertOverlayFits(page,'#resultScreen .info-panel',config,'result');
+    await page.evaluate(()=>window.__afterlightDebug.start(3));
+    await page.waitForTimeout(1100);
+    const pads=(await inspect(page)).snapshot.pads;
+    for(const pad of pads){
+      await page.evaluate(x=>window.__afterlightDebug.setShip(x,window.__afterlightDebug.ground(x)-14,0,5,0),pad.x);
+      await page.waitForFunction(id=>!window.__afterlightDebug.snapshot().pads.find(p=>p.id===id).occupied,pad.id,{timeout:1500});
+    }
+    await page.evaluate(()=>window.__afterlightDebug.setShip(260,425,0,0,0));
+    await page.waitForFunction(()=>window.__afterlightDebug.snapshot().mode==='result',null,{timeout:2000});
+    assert.equal(await page.locator('#resultTitle').innerText(),'ALL SIGNALS FOUND','small landscape final-result content');
+    await page.screenshot({path:path.join(root,'smoke-small-landscape-final-result.png')});
+    await assertOverlayFits(page,'#resultScreen .info-panel',config,'final result');
+  }
   assert.deepEqual(flightState.document,flightState.viewport,`${config.name} no viewport overflow`);
   assert.deepEqual(errors,[],`${config.name} browser errors`);
   report.push({ config, titleState, briefingState, flightState, mobileLayout, afterControlState, pausedState, resumedState, errors });
@@ -85,6 +112,15 @@ async function center(page, selector) {
   const box = await page.locator(selector).boundingBox();
   if (!box) throw new Error(`Missing ${selector}`);
   return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
+}
+
+async function assertOverlayFits(page,selector,config,label){
+  const panel=await page.locator(selector).boundingBox();
+  assert.ok(panel&&panel.y>=-1&&panel.y+panel.height<=config.height+1,`${config.name} ${label} panel fits viewport: ${JSON.stringify(panel)}`);
+  for(const button of await page.locator(`${selector} button`).all()){
+    const box=await button.boundingBox();
+    assert.ok(box&&box.y>=-1&&box.y+box.height<=config.height+1,`${config.name} ${label} action button fully visible: ${JSON.stringify(box)}`);
+  }
 }
 
 async function inspect(page) {
@@ -109,7 +145,8 @@ async function inspect(page) {
 async function inspectMobileLayout(page){
   return page.evaluate(()=>{
     const rect=el=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom,w:r.width,h:r.height}};
-    const controls=[...document.querySelectorAll('.touch-controls [data-control]')].map(el=>({id:el.dataset.control,...rect(el)}));
+    const controls=[...document.querySelectorAll('.touch-controls [data-control], #flightJoystick')].map(el=>({id:el.dataset.control||el.id,...rect(el)}));
+    const legacy=[...document.querySelectorAll('[data-control="left"], [data-control="right"], [data-control="thrust"], [data-control="shield"]')].filter(el=>rect(el).w>0).map(el=>el.dataset.control);
     const ids=['hudCrew','hudFuel','hudHull','hudShield','hudBoost','hudAltitude','hudScore','hudObjective'];
     const hud=ids.map(id=>({id,...rect(document.getElementById(id))})).filter(r=>r.w>0&&r.h>0);
     const outOfBounds=controls.filter(r=>r.x<-.5||r.y<-.5||r.right>innerWidth+.5||r.bottom>innerHeight+.5).map(r=>r.id);
@@ -118,6 +155,6 @@ async function inspectMobileLayout(page){
       const w=Math.min(a.right,b.right)-Math.max(a.x,b.x),h=Math.min(a.bottom,b.bottom)-Math.max(a.y,b.y);
       if(w>1&&h>1)overlaps.push({control:a.id,hud:b.id,w,h});
     }
-    return {controls,hud,outOfBounds,overlaps};
+    return {controls,hud,outOfBounds,overlaps,legacy};
   });
 }
